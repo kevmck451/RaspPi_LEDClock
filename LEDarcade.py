@@ -11466,14 +11466,6 @@ def DisplayLevel(level,rgb):
 
 
 
-
-
-
-
-  
-
-
-
 def GetElapsedSeconds(starttime):
   elapsed_time = time.time() - starttime
   elapsed_hours   = elapsed_time / 3600
@@ -11483,7 +11475,6 @@ def GetElapsedSeconds(starttime):
   #print("Clock Timer: {:0>2}:{:0>2}:{:05.2f}".format(int(elapsed_hours),int(elapsed_minutes),elapsed_seconds),"Elapsed seconds:",elapsed_seconds, "Check seconds:",seconds)
   
   return elapsed_time
-
 
 
 
@@ -11777,7 +11768,7 @@ def ShowTitleScreen(
       print('FallingSand')
       ScreenArray2  = ([[]])
       ScreenArray2  = [[ (0,0,0) for i in range(HatWidth)] for i in range(HatHeight)]
-      TransitionBetweenScreenArrays(ScreenArray,ScreenArray2,TransitionType=1)
+      TransitionBetweenScreenArrays(ScreenArray,ScreenArray2,TransitionType=2)
 
   elif(ExitEffect == 5):
       #Bounce
