@@ -12,33 +12,12 @@ HatHeight = 32
 HatWidth  = 64
 
 
-print ("---------------------------------------------------------------")
-print ("WELCOME TO THE LED ARCADE             ")
-print ("")
-print ("BY DATAGOD")
-print ("")
-print ("This program will demonstrate several LED functions that have")
-print ("been developed as part of the Arcade Retro Clock RGB project.")
-print ("---------------------------------------------------------------")
-print ("")
-print ("")
-
-
-
-
-
 #--------------------------------------
 #  SHOW TITLE SCREEN                 --
 #--------------------------------------
 
 
 while (1==1):
-
-
-
-
- 
-
 
   #This allows you to create a title screen with different size text
   #some scrolling text, an animation and even a nice fade to black
