@@ -36,6 +36,20 @@ while (1==1):
     ExitEffect          = 4            # 0=Random / 1=shrink / 2=zoom out / 3=bounce
     )
 
+
+  LED.ShowTitleScreen(
+    BigText='IM SHITTING',
+    BigTextRGB=LED.HighBlue,
+    BigTextShadowRGB=LED.ShadowGreen,
+    LittleText='RIGHT',
+    LittleTextRGB=LED.HighYellow,
+    LittleTextShadowRGB=LED.ShadowRed,
+    ScrollText='NOW!!!!!!!!!!!!',
+    ScrollTextRGB=LED.HighGreen,
+    ScrollSleep=ScrollSleep,  # time in seconds to control the scrolling (0.005 is fast, 0.1 is kinda slow)
+    DisplayTime=1,  # time in seconds to wait before exiting
+    ExitEffect=2  # 0=Random / 1=shrink / 2=zoom out / 3=bounce
+  )
   """
 
   #--------------------------------------
