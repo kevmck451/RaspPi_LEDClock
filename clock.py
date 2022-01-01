@@ -65,7 +65,7 @@ while 1==1:
       ClockStyle = 1,
       CenterHoriz = True,
       v   = 1, 
-      hh  = 24,
+      hh  = 12,
       RGB = LED.HighBlue,
       ShadowRGB     = LED.ShadowBlue,
       ZoomFactor    = 2,
