@@ -12727,14 +12727,14 @@ def DisplayDigitalClock(
       ClockAreaSprite = Sprite((ClockSprite.width*2)+3,(ClockSprite.height*2),0,0,0,[])
       ClockAreaSprite.h = ClockH -3
       ClockAreaSprite.v = 1
-      CopySpriteToScreenArrayZoom(ClockSprite,h=ClockH,v=0,ColorTuple=(0,0,150),FillerTuple=(0,0,0),ZoomFactor=2,Fill=True)
+      CopySpriteToScreenArrayZoom(ClockSprite,h=ClockH,v=0,ColorTuple=(0,0,300),FillerTuple=(0,0,0),ZoomFactor=2,Fill=True)
 
       while (Done == False):
 
         if (ClockSprite.hhmm != datetime.now().strftime('%H:%M')):
           #ClearBuffers() #clean the internal graphic buffers
           ClockSprite = CreateClockSprite(hh)
-          ScreenArray = CopySpriteToScreenArrayZoom(ClockSprite,45,0,(0,0,150),(0,0,0),1,Fill=True)
+          ScreenArray = CopySpriteToScreenArrayZoom(ClockSprite,45,0,(0,0,300),(0,0,0),1,Fill=True)
 
 
         r = random.randint(1,7)
@@ -12746,7 +12746,7 @@ def DisplayDigitalClock(
 
           h = HatWidth - (ClockSprite.width * 2)
           ClockSprite = CreateClockSprite(hh)
-          ScreenArray = CopySpriteToScreenArrayZoom(ClockSprite,h=h,v=0,ColorTuple=(0,0,150),FillerTuple=(0,0,0),ZoomFactor=2,Fill=True,InputScreenArray=ScreenArray)
+          ScreenArray = CopySpriteToScreenArrayZoom(ClockSprite,h=h,v=0,ColorTuple=(0,0,300),FillerTuple=(0,0,0),ZoomFactor=2,Fill=True,InputScreenArray=ScreenArray)
 
           RunningMan3Sprite.framerate = 2
           RunningMan3Sprite.h = -4
@@ -12787,7 +12787,7 @@ def DisplayDigitalClock(
           if (ClockSprite.hhmm != datetime.now().strftime('%H:%M')):
             #ClearBuffers() #clean the internal graphic buffers
             ClockSprite = CreateClockSprite(hh)
-            CopySpriteToPixelsZoom(ClockSprite,h=h,v=0,ColorTuple=(0,0,150),FillerTuple=(0,0,0),ZoomFactor=2,Fill=True)
+            CopySpriteToPixelsZoom(ClockSprite,h=h,v=0,ColorTuple=(0,0,300),FillerTuple=(0,0,0),ZoomFactor=2,Fill=True)
 
 
           #Fade to Black
@@ -12808,7 +12808,7 @@ def DisplayDigitalClock(
           ScreenArray = copy.deepcopy(EmptyArray)
           h = HatWidth - (ClockSprite.width * 2)
           ClockSprite = CreateClockSprite(hh)
-          ScreenArray = CopySpriteToScreenArrayZoom(ClockSprite,h=h,v=0,ColorTuple=(0,0,150),FillerTuple=(0,0,0),ZoomFactor=2,Fill=True)
+          ScreenArray = CopySpriteToScreenArrayZoom(ClockSprite,h=h,v=0,ColorTuple=(0,0,300),FillerTuple=(0,0,0),ZoomFactor=2,Fill=True)
           DotZerkRobotWalking.InitializeScreenArray()
 
 
@@ -12838,7 +12838,7 @@ def DisplayDigitalClock(
             print("ClockSprite.hhm: ",ClockSprite.hhmm, "Other:",datetime.now().strftime('%H:%M'))
             #ClearBuffers() #clean the internal graphic buffers
             ClockSprite = CreateClockSprite(hh)
-            CopySpriteToPixelsZoom(ClockSprite,h,0,(0,0,150),(0,0,0),2,Fill=True)
+            CopySpriteToPixelsZoom(ClockSprite,h,0,(0,0,300),(0,0,0),2,Fill=True)
 
 
           #Fade to Black
@@ -12866,7 +12866,7 @@ def DisplayDigitalClock(
 
           h = HatWidth - (ClockSprite.width * 2)
           ClockSprite = CreateClockSprite(hh)
-          ScreenArray = CopySpriteToScreenArrayZoom(ClockSprite,h=h,v=0,ColorTuple=(0,0,150),FillerTuple=(0,0,0),ZoomFactor=2,Fill=True,InputScreenArray=ScreenArray)
+          ScreenArray = CopySpriteToScreenArrayZoom(ClockSprite,h=h,v=0,ColorTuple=(0,0,300),FillerTuple=(0,0,0),ZoomFactor=2,Fill=True,InputScreenArray=ScreenArray)
 
 
 
@@ -12895,7 +12895,7 @@ def DisplayDigitalClock(
             print("ClockSprite.hhm: ",ClockSprite.hhmm, "Other:",datetime.now().strftime('%H:%M'))
             #ClearBuffers() #clean the internal graphic buffers
             ClockSprite = CreateClockSprite(hh)
-            CopySpriteToPixelsZoom(ClockSprite,h,0,(0,0,150),(0,0,0),2,Fill=True)
+            CopySpriteToPixelsZoom(ClockSprite,h,0,(0,0,300),(0,0,0),2,Fill=True)
 
 
           #Fade to Black
@@ -12913,7 +12913,7 @@ def DisplayDigitalClock(
 
           h = HatWidth - (ClockSprite.width * 2)
           ClockSprite = CreateClockSprite(hh)
-          ScreenArray = CopySpriteToScreenArrayZoom(ClockSprite,h=h,v=0,ColorTuple=(0,0,150),FillerTuple=(0,0,0),ZoomFactor=2,Fill=True,InputScreenArray=ScreenArray)
+          ScreenArray = CopySpriteToScreenArrayZoom(ClockSprite,h=h,v=0,ColorTuple=(0,0,300),FillerTuple=(0,0,0),ZoomFactor=2,Fill=True,InputScreenArray=ScreenArray)
 
 
           #Make a screen array (buffer)
@@ -12951,10 +12951,10 @@ def DisplayDigitalClock(
             print("ClockSprite.hhm: ",ClockSprite.hhmm, "Other:",datetime.now().strftime('%H:%M'))
             #ClearBuffers() #clean the internal graphic buffers
 
-            ScreenArray1 = CopySpriteToScreenArrayZoom(ClockSprite,ClockH,0,  (0,0,150),(0,0,0),ZoomFactor=1,Fill=True)
+            ScreenArray1 = CopySpriteToScreenArrayZoom(ClockSprite,ClockH,0,  (0,0,300),(0,0,0),ZoomFactor=1,Fill=True)
             ClockSprite = CreateClockSprite(hh)
 
-            ScreenArray2 = CopySpriteToScreenArrayZoom(ClockSprite,ClockH,0,  (0,0,150),(0,0,0),ZoomFactor=1,Fill=True)
+            ScreenArray2 = CopySpriteToScreenArrayZoom(ClockSprite,ClockH,0,  (0,0,300),(0,0,0),ZoomFactor=1,Fill=True)
             TransitionBetweenScreenArrays(ScreenArray1,ScreenArray2)
             #CopySpriteToPixelsZoom(ClockSprite,ClockH,0,(150,0,0),(0,0,0),2,Fill=True)
 
@@ -12972,7 +12972,7 @@ def DisplayDigitalClock(
         if (r==5):
           h = HatWidth - (ClockSprite.width * 2)
           ClockSprite = CreateClockSprite(hh)
-          ScreenArray = CopySpriteToScreenArrayZoom(ClockSprite,h=h,v=0,ColorTuple=(0,0,150),FillerTuple=(0,0,0),ZoomFactor=2,Fill=True,InputScreenArray=ScreenArray)
+          ScreenArray = CopySpriteToScreenArrayZoom(ClockSprite,h=h,v=0,ColorTuple=(0,0,300),FillerTuple=(0,0,0),ZoomFactor=2,Fill=True,InputScreenArray=ScreenArray)
 
           #Make a screen array (buffer)
           #copy sprite frames
@@ -13143,10 +13143,10 @@ def DisplayDigitalClock(
               print("ClockSprite.hhm: ",ClockSprite.hhmm, "Other:",datetime.now().strftime('%H:%M'))
               #ClearBuffers() #clean the internal graphic buffers
 
-              ScreenArray1 = CopySpriteToScreenArrayZoom(ClockSprite,ClockH,0,  (0,0,150),(0,0,0),ZoomFactor=2,Fill=True)
+              ScreenArray1 = CopySpriteToScreenArrayZoom(ClockSprite,ClockH,0,  (0,0,300),(0,0,0),ZoomFactor=2,Fill=True)
               ClockSprite = CreateClockSprite(hh)
 
-              ScreenArray2 = CopySpriteToScreenArrayZoom(ClockSprite,ClockH,0,  (0,0,150),(0,0,0),ZoomFactor=2,Fill=True)
+              ScreenArray2 = CopySpriteToScreenArrayZoom(ClockSprite,ClockH,0,  (0,0,300),(0,0,0),ZoomFactor=2,Fill=True)
               TransitionBetweenScreenArrays(ScreenArray1,ScreenArray2)
               #CopySpriteToPixelsZoom(ClockSprite,ClockH,0,(150,0,0),(0,0,0),2,Fill=True)
 
@@ -13176,7 +13176,7 @@ def DisplayDigitalClock(
           ClockAreaSprite = Sprite((ClockSprite.width*2)+3,(ClockSprite.height*2),0,0,0,[])
           ClockAreaSprite.h = ClockH -3
           ClockAreaSprite.v = 1
-          ScreenArray = CopySpriteToScreenArrayZoom(ClockSprite,h=h,v=0,ColorTuple=(0,0,150),FillerTuple=(0,0,0),ZoomFactor=2,Fill=True,InputScreenArray=ScreenArray)
+          ScreenArray = CopySpriteToScreenArrayZoom(ClockSprite,h=h,v=0,ColorTuple=(0,0,300),FillerTuple=(0,0,0),ZoomFactor=2,Fill=True,InputScreenArray=ScreenArray)
 
           #Make a screen array (buffer)
           #copy sprite frames
@@ -13308,10 +13308,10 @@ def DisplayDigitalClock(
               print("ClockSprite.hhm: ",ClockSprite.hhmm, "Other:",datetime.now().strftime('%H:%M'))
               #ClearBuffers() #clean the internal graphic buffers
 
-              ScreenArray1 = CopySpriteToScreenArrayZoom(ClockSprite,ClockH,0,  (0,0,150),(0,0,0),ZoomFactor=2,Fill=True)
+              ScreenArray1 = CopySpriteToScreenArrayZoom(ClockSprite,ClockH,0,  (0,0,300),(0,0,0),ZoomFactor=2,Fill=True)
               ClockSprite = CreateClockSprite(hh)
 
-              ScreenArray2 = CopySpriteToScreenArrayZoom(ClockSprite,ClockH,0,  (0,0,150),(0,0,0),ZoomFactor=2,Fill=True)
+              ScreenArray2 = CopySpriteToScreenArrayZoom(ClockSprite,ClockH,0,  (0,0,300),(0,0,0),ZoomFactor=2,Fill=True)
               TransitionBetweenScreenArrays(ScreenArray1,ScreenArray2)
               #CopySpriteToPixelsZoom(ClockSprite,ClockH,0,(150,0,0),(0,0,0),2,Fill=True)
 
@@ -13336,11 +13336,11 @@ def DisplayDigitalClock(
           ClockH = HatWidth - (ClockSprite.width * 2)
           ClockSprite = CreateClockSprite(hh)
           #we need to make a fake sprite to take the place of the clock which is zoomed)
-          ScreenArray = CopySpriteToScreenArrayZoom(ClockSprite,h=h,v=0,ColorTuple=(0,0,150),FillerTuple=(0,0,0),ZoomFactor=2,Fill=True,InputScreenArray=ScreenArray)
+          ScreenArray = CopySpriteToScreenArrayZoom(ClockSprite,h=h,v=0,ColorTuple=(0,0,300),FillerTuple=(0,0,0),ZoomFactor=2,Fill=True,InputScreenArray=ScreenArray)
 
-          ScreenArray = CopySpriteToScreenArrayZoom(ClockSprite,h=ClockH,v=0,ColorTuple=(0,0,150),FillerTuple=(0,0,0),ZoomFactor=2,Fill=True)
+          ScreenArray = CopySpriteToScreenArrayZoom(ClockSprite,h=ClockH,v=0,ColorTuple=(0,0,300),FillerTuple=(0,0,0),ZoomFactor=2,Fill=True)
           ScreenArray1 = copy.deepcopy(ScreenArray)
-          ScreenArray2 = CopySpriteToScreenArrayZoom(ClockSprite,h=h,v=0,ColorTuple=(0,0,150),FillerTuple=(0,0,0),ZoomFactor=2,Fill=True)
+          ScreenArray2 = CopySpriteToScreenArrayZoom(ClockSprite,h=h,v=0,ColorTuple=(0,0,300),FillerTuple=(0,0,0),ZoomFactor=2,Fill=True)
           TransitionBetweenScreenArrays(ScreenArray2,ScreenArray1,TransitionType=1)
 
 
@@ -13366,7 +13366,7 @@ def DisplayDigitalClock(
             print("ClockSprite.hhm: ",ClockSprite.hhmm, "Other:",datetime.now().strftime('%H:%M'))
             #ClearBuffers() #clean the internal graphic buffers
             ClockSprite = CreateClockSprite(hh)
-            CopySpriteToPixelsZoom(ClockSprite,h,0,(0,0,150),(0,0,0),2,Fill=True)
+            CopySpriteToPixelsZoom(ClockSprite,h,0,(0,0,300),(0,0,0),2,Fill=True)
 
 
           #Fade to Black
@@ -13380,7 +13380,7 @@ def DisplayDigitalClock(
           #DotZerkRobotWalkingSmall.EraseZoom(40,22,2)
 
           ClockSprite = CreateClockSprite(hh)
-          ScreenArray2 = CopySpriteToScreenArrayZoom(ClockSprite,h=h,v=0,ColorTuple=(0,0,150),FillerTuple=(0,0,0),ZoomFactor=2,Fill=True)
+          ScreenArray2 = CopySpriteToScreenArrayZoom(ClockSprite,h=h,v=0,ColorTuple=(0,0,300),FillerTuple=(0,0,0),ZoomFactor=2,Fill=True)
           TransitionBetweenScreenArrays(EmptyArray,ScreenArray2,TransitionType=2)
 
 
