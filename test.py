@@ -36,7 +36,7 @@ while (1==1):
     ExitEffect          = 4            # 0=Random / 1=shrink / 2=zoom out / 3=bounce
     )
 
-  LED.ShowGlowingText(CenterHoriz=True,CenterVert=False,h=0,v=8,Text='BONESAW!!!',RGB=LED.HighYellow,ShadowRGB=LED.ShadowYellow,ZoomFactor= 2,GlowLevels=25,DropShadow=True)
+  LED.ShowGlowingText(CenterHoriz=True,CenterVert=False,h=0,v=8,Text='KFBR392',RGB=LED.HighYellow,ShadowRGB=LED.ShadowYellow,ZoomFactor= 2,GlowLevels=25,DropShadow=True)
   time.sleep(3)
 
   LED.ShowTitleScreen(
