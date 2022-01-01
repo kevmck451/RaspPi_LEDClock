@@ -37,6 +37,8 @@ while (1==1):
     )
 
   LED.ShowGlowingText(CenterHoriz=True,CenterVert=False,h=0,v=8,Text='KFBR392',RGB=LED.HighYellow,ShadowRGB=LED.ShadowYellow,ZoomFactor= 2,GlowLevels=25,DropShadow=True)
+  time.sleep(2)
+  LED.ZoomImage(smiling-poop-emoji.jpg, 1, 4, 2, 5)
   time.sleep(3)
 
   LED.ShowTitleScreen(
