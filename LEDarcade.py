@@ -8,7 +8,7 @@
 # make sure we use setpixel to draw, not .SetPixel.  We need to always update the buffer.
 
 # The buffer is a 2D array.  32 lines of 64 pixels
-# BUFFER[V][H]  
+# BUFFER[V][H]
 
 # We write to the LED directory for simplicity
 # We write to the Canvas and swap to the LED for speed
@@ -109,14 +109,13 @@ KeyboardPoll     = 10
 BrightColorCount = 27
 
 
-
 #Initialize Matrix objects
 options = RGBMatrixOptions()
 
 options.rows       = HatHeight
 options.cols       = HatWidth
 options.brightness = 100
-#stops sparkling 
+#stops sparkling
 options.gpio_slowdown = 5
 
 
@@ -138,7 +137,7 @@ options.gpio_slowdown = 5
 #The matrix object is what is used to interact with the LED display
 TheMatrix    = RGBMatrix(options = options)
 
-#Screen array is a copy of the matrix light layout because RGBMatrix is not queryable.  
+#Screen array is a copy of the matrix light layout because RGBMatrix is not queryable.
 ScreenArray  = ([[]])
 ScreenArray  = [[ (0,0,0) for i in range(HatWidth)] for i in range(HatHeight)]
 
@@ -149,20 +148,16 @@ EmptyArray  = [[ (0,0,0) for i in range(HatWidth)] for i in range(HatHeight)]
 #Canvas is an object that we can paint to (setpixels) and then swap to the main display for a super fast update (vsync)
 Canvas = TheMatrix.CreateFrameCanvas()
 Canvas.Fill(0,0,0)
-   
+
 
 #Twitch specific
 TwitchTimerOn = False
-
 
 #-----------------------------
 # Timers                    --
 #-----------------------------
 
 StartTime = time.time()
-
-
-
 
 
 #Sprite display locations
@@ -174,18 +169,6 @@ CurrencyH,   CurrencyV,   CurrencyRGB   = 54,14, (0,150,0)
 
 #Sprite filler tuple
 SpriteFillerRGB = (0,4,0)
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 #------------------------------------------------------------------------------
@@ -204,13 +187,11 @@ SpriteFillerRGB = (0,4,0)
 def ApplyGamma(color,TheGamma):
   #Need to round to integer
   NewColor = int(color * TheGamma)
-  
+
   if NewColor > 255: NewColor = 255
-  
+
   #print ("Old:",color," New:",NewColor)
   return NewColor
-
-
 
 
 #Yellow
@@ -797,13 +778,6 @@ BrightColorList.append((SDHighCyanR,SDHighCyanG,SDHighCyanB))
 BrightColorList.append((SDMaxCyanR,SDMaxCyanG,SDMaxCyanB))
 
 
-
-
-
-
-
-
-
 #ColorList.append((SDDarkR,SDDarkG,SDDarkB))
 #ColorList.append((SDLowR,SDLowG,SDLowB))
 #ColorList.append((SDMedR,SDMedG,SDMedB))
@@ -819,7 +793,7 @@ BrightColorList.append((SDMaxCyanR,SDMaxCyanG,SDMaxCyanB))
   # NewR = r * Gamma
   # NewG = g * Gamma
   # NewB = b * Gamma
-  
+
   # if NewR > 255: NewR = 255
   # if NewG > 255: NewG = 255
   # if NewB > 255: NewB = 255
@@ -855,10 +829,6 @@ def ClearBuffers():
   ScreenArray  = [[]]
   ScreenArray  = [[ (0,0,0) for i in range(HatWidth)] for i in range(HatHeight)]
   Canvas.Clear()
-
-
-
-
 
 
 #------------------------------------------------------------------------------
@@ -898,8 +868,6 @@ def setpixels(TheBuffer):
       setpixel(x,y,r,g,b)
 
 
-
-      
 def setpixelsWithClock(TheBuffer,ClockSprite,h,v):
   x = 0
   y = 0
@@ -915,10 +883,6 @@ def setpixelsWithClock(TheBuffer,ClockSprite,h,v):
       setpixel(x,y,r,g,b)
 
 
-
-      
-      
-
 def setpixel(x, y, r, g, b):
   global ScreenArray
 
@@ -927,15 +891,13 @@ def setpixel(x, y, r, g, b):
     ScreenArray[y][x] = (r,g,b)
 
 
-
-    
 def setpixelRGB(x, y, RGB):
   global ScreenArray
   r,g,b = RGB
   if (CheckBoundary(x,y) == 0):
     TheMatrix.SetPixel(x,y,r,g,b)
     ScreenArray[y][x] = (r,g,b)
-    
+
 
 def setpixelsLED(TheBuffer):
   x = 0
@@ -943,15 +905,13 @@ def setpixelsLED(TheBuffer):
 
   for y in range (HatHeight):
     for x in range (HatWidth):
-      
+
       r,g,b = TheBuffer[y][x]
       TheMatrix.SetPixel(x,y,r,g,b)
 
 
 def setpixelLEDOnly(x, y, r,g,b):
   TheMatrix.SetPixel(x,y,r,g,b)
-  
-
 
 
 #Bug fix because my HD is inverted horizontally
@@ -963,7 +923,7 @@ def getpixel(h,v):
   #r,g,b = unicorn.get_pixel(abs(15-h),v)
   r,g,b = ScreenArray[v][h]
   #print("Get pixel HV RGB:",h,v,"-",r,g,b)
-  return r,g,b      
+  return r,g,b
 
 
 def ShowScreenArray(InputScreenArray):
@@ -972,8 +932,8 @@ def ShowScreenArray(InputScreenArray):
       r,g,b = InputScreenArray[v][h]
       #if (r + g + b > 0):
       TheMatrix.SetPixel(h,v,r,g,b)
-        
-        
+
+
 
 def CopyScreenArrayToCanvas(ScreenArray,Canvas):
   for h in range (0,HatWidth):
@@ -1002,11 +962,8 @@ def SetBufferPixel(Buffer,x,y,r,g,b):
   if (CheckBoundary(h,v) == 0):
     Buffer[v][h] = (r,g,b)
   return Buffer
-      
 
 
-  
-  
 def ClockTimer(seconds):
   global start_time
   elapsed_time = time.time() - start_time
@@ -1019,10 +976,10 @@ def ClockTimer(seconds):
     return 1
   else:
     return 0
-  
-  
+
+
 def GetElapsedSeconds(starttime, seconds):
-  
+
   elapsed_time = time.time() - starttime
   elapsed_hours, rem = divmod(elapsed_time, 3600)
   elapsed_minutes, elapsed_seconds = divmod(rem, 60)
@@ -1036,18 +993,8 @@ def GetElapsedTime(StartTime,StopTime):
     elapsed_minutes, elapsed_seconds = divmod(rem, 60)
     return(elapsed_hours,elapsed_minutes,round(elapsed_seconds))
 
-  
-  
-  
-  
 
 
-
-
-
-
-  
-  
 class Sprite(object):
   def __init__(self,width,height,r,g,b,grid=[]):
     self.width  = width
@@ -1066,9 +1013,9 @@ class Sprite(object):
     self.velocityV   = 0
     self.on          = True
 
-  
-  
-    #Draw the sprite using an affect like in the movie Tron 
+
+
+    #Draw the sprite using an affect like in the movie Tron
   def LaserScan(self,h1,v1,speed=0.005):
     x = 0
     y = 0
@@ -1084,13 +1031,13 @@ class Sprite(object):
           Canvas.SetPixel((x+h1),y+v1,r,g,b)
           TheMatrix.SwapOnVSync(Canvas)
 
-  
+
   def DisplayIncludeBlack(self,h1,v1):
     x = 0,
     y = 0
     for count in range (0,(self.width * self.height)):
       y,x = divmod(count,self.width)
-      
+
       if self.grid[count] == 1:
         if (CheckBoundary(x+h1,y+v1) == 0):
           TheMatrix.SetPixel(x+h1,y+v1,self.r,self.g,self.b)
@@ -1135,18 +1082,18 @@ class Sprite(object):
           for zh in range (0,ZoomFactor):
             H = x+h+zh
             V = y+v+zv
-        
+
             if(CheckBoundary(H,V) == 0):
             #draw the sprite portion
               if self.grid[count] != 0:
                 ScreenArray[V][H]=(self.r,self.g,self.b)
-     
+
     return ScreenArray
-    
 
 
 
-  
+
+
 
     #Copy contents of sprite to a rgb matrix
     x = 0,
@@ -1168,7 +1115,7 @@ class Sprite(object):
 
 
   def EraseNoShow(self,h1,v1):
-    #This function draws a black sprite, erasing the sprite.  
+    #This function draws a black sprite, erasing the sprite.
     #It does NOT call #unicorn.show(), which would cause a visilble blink
     x = 0
     y = 0
@@ -1181,7 +1128,7 @@ class Sprite(object):
           #TheMatrix.SetPixel(x+h1,y+v1,0,0,0)
           TheMatrix.SetPixel(x+h1,y+v1,0,0,0)
 
-    
+
   def Erase(self,h1,v1):
     #This function draws a black sprite, erasing the sprite.  This may be useful for
     #a future "floating over the screen" type of sprite motion
@@ -1200,18 +1147,18 @@ class Sprite(object):
     x = 0
     y = 0
     flipgrid = []
-    
+
     #print ("flip:",self.width, self.height)
     for count in range (0,(self.width * self.height)):
       y,x = divmod(count,self.width)
       #print("Count:",count,"xy",x,y)
-      #print("Calculations: ",(y*self.height)+ self.height-x-1)  
-      flipgrid.append(self.grid[(y*self.height)+ self.height-x-1])  
+      #print("Calculations: ",(y*self.height)+ self.height-x-1)
+      flipgrid.append(self.grid[(y*self.height)+ self.height-x-1])
     #print("Original:", str(self.grid))
     #print("Flipped :", str(flipgrid))
-    self.grid = flipgrid      
+    self.grid = flipgrid
 
-    
+
 
 
 
@@ -1228,17 +1175,17 @@ class Sprite(object):
     x = 0
     oldh = 0
     #Buffer = copy.deepcopy(unicorn.get_pixels())
-    
+
     #modifier is used to increment or decrement the location
     if direction == "right" or direction == "down":
       modifier = 1
-    else: 
+    else:
       modifier = -1
-    
+
     #print("Modifier:",modifier)
-    
+
     if direction == "left" or direction == "right":
-      #print ("Direction: ",direction)  
+      #print ("Direction: ",direction)
       for count in range (0,moves):
         h = h + (modifier)
         #erase old sprite
@@ -1246,7 +1193,7 @@ class Sprite(object):
           oldh = h - modifier
           #print ("Scroll:",self.width, self.height, self.r, self.g, self.b,h,v)
           #TheMatrix.Clear()
-          self.Erase(oldh,v)  
+          self.Erase(oldh,v)
 
         #draw new sprite
         self.Display(h,v)
@@ -1268,7 +1215,7 @@ class Sprite(object):
           oldv = v - modifier
           #self.Erase(h,oldv)
           setpixels(Buffer)
-            
+
         #draw new sprite
         self.Display(h,v)
         #unicorn.show()
@@ -1278,10 +1225,10 @@ class Sprite(object):
         r = random.randint(0,5)
         if (r == 0):
           Key = PollKeyboard()
-        
 
-        
-  
+
+
+
   def ScrollAcrossScreen(self,h,v,direction,ScrollSleep):
     #print ("--ScrollAcrossScreen--")
     #print ("width height",self.width,self.height)
@@ -1303,30 +1250,30 @@ class Sprite(object):
       if (CheckBoundary(x+h1,y+v1) == 0):
         if (not(self.r == 0 and self.g == 0 and self.b == 0)):
           TheMatrix.SetPixel(x+h1,y+v1,self.r,self.g,self.b)
-    
+
 
 
   def Float(self,h,v,direction,moves,delay):
     #Scroll across the screen, floating over the background
-    
+
     x = 0
     oldh = 0
     #Capture Background
     Buffer = copy.deepcopy(unicorn.get_pixels())
-    
+
     #modifier is used to increment or decrement the location
     if direction == "right" or direction == "down":
       modifier = 1
-    else: 
+    else:
       modifier = -1
-    
+
     #print("Modifier:",modifier)
-    
-    
-    
+
+
+
     if direction == "left" or direction == "right":
-      #print ("Direction: ",direction)  
-      
+      #print ("Direction: ",direction)
+
       for count in range (0,moves):
         h = h + (modifier)
         #erase old sprite
@@ -1335,10 +1282,10 @@ class Sprite(object):
 
         if count >= 1:
           oldh = h - modifier
-          
+
         #draw new sprite
         self.Display(h,v)
-        #unicorn.show() 
+        #unicorn.show()
         #SendBufferPacket(RemoteDisplay,HatHeight,HatWidth)
         time.sleep(delay)
 
@@ -1347,7 +1294,7 @@ class Sprite(object):
       if (r == 0):
         Key = PollKeyboard()
 
-  
+
   def FloatAcrossScreen(self,h,v,direction,ScrollSleep):
     if (direction == "right"):
       self.Float((0- self.width),v,"right",(HatWidth + self.width),ScrollSleep)
@@ -1355,17 +1302,6 @@ class Sprite(object):
       self.Float(HatWidth-1,v,"left",(HatWidth + self.width),ScrollSleep)
     elif (direction == "up"):
       self.Float(h,HatWidth-1,"left",(HatWidth + self.height),ScrollSleep)
-
-
-
-
-
-
-
-
-
-
-
 
 
 
@@ -1394,7 +1330,7 @@ class AnimatedSprite(object):
       if self.grid[frame][count] == 1:
         if (CheckBoundary(x+h1,y+v1) == 0):
           TheMatrix.SetPixel(x+h1,y+v1,self.r,self.g,self.b)
-    #unicorn.show() 
+    #unicorn.show()
 
 
   def DisplayNoBlack(self,h1,v1,frame):
@@ -1409,7 +1345,7 @@ class AnimatedSprite(object):
         if (CheckBoundary(x+h1,y+v1) == 0):
           if (not(self.r == 0 and self.g == 0 and self.b == 0)):
             TheMatrix.SetPixel(x+h1,y+v1,self.r,self.g,self.b)
-    #unicorn.show() 
+    #unicorn.show()
 
 
 
@@ -1433,7 +1369,7 @@ class AnimatedSprite(object):
 
 
 
-          
+
   def EraseSpriteFromPlayfield(self,Playfield):
     #Erase the sprite by writing 'EmptyObject' to every spot on the playfield occupied by the sprite
     x     = 0
@@ -1463,33 +1399,33 @@ class AnimatedSprite(object):
       for count in range (0,(self.width * self.height )):
         y,x = divmod(count,self.width)
         #print("Count:",count,"xy",x,y)
-        #print("Calculations: ",(y*self.height)+ self.height-x-1)  
-        flipgrid.append(self.grid[f][(y*self.height)+ self.height-x-1])  
+        #print("Calculations: ",(y*self.height)+ self.height-x-1)
+        flipgrid.append(self.grid[f][(y*self.height)+ self.height-x-1])
       #print("Original:", str(self.grid[f]))
       #print("Flipped :", str(flipgrid))
-      self.grid[f] = flipgrid      
+      self.grid[f] = flipgrid
     gc.enable()
-          
+
   def Scroll(self,h,v,direction,moves,delay):
     #print("AnimatedSprite.scroll")
     x = 0
     oldh = 0
     #Capture Background
     Buffer = copy.deepcopy(unicorn.get_pixels())
-    
+
     #modifier is used to increment or decrement the location
     if direction == "right" or direction == "down":
       modifier = 1
-    else: 
+    else:
       modifier = -1
-    
+
     #print("Modifier:",modifier)
-    
+
     #we use f to iterate the animation frames
     f = self.frames
     if direction == "left" or direction == "right":
-      #print ("Direction: ",direction)  
-      
+      #print ("Direction: ",direction)
+
       for count in range (0,moves):
         oldf = f
         f = f+1
@@ -1505,7 +1441,7 @@ class AnimatedSprite(object):
         #draw new sprite
         setpixels(Buffer)
         self.Display(h,v,f)
-        #unicorn.show() 
+        #unicorn.show()
         #SendBufferPacket(RemoteDisplay,HatHeight,HatWidth)
         time.sleep(delay)
 
@@ -1521,13 +1457,13 @@ class AnimatedSprite(object):
     x    = 0
     oldh = 0
     Buffer = copy.deepcopy(unicorn.get_pixels())
-    
+
     #modifier is used to increment or decrement the location
     if direction == "right" or direction == "down":
       modifier = 1
-    else: 
+    else:
       modifier = -1
-    
+
     #print("Modifier:",modifier)
     oldf = self.frames
     #we use f to iterate the animation frames
@@ -1556,7 +1492,7 @@ class AnimatedSprite(object):
           #print ("Erasing Frame: ", oldf, " hv: ",h,v)
           self.Erase(h,v,oldf)
           setpixels(Buffer)
-            
+
           #draw new sprite
           #print ("Display Frame: ", f, " hv: ",h,v)
           self.Display(h,v,f)
@@ -1566,8 +1502,8 @@ class AnimatedSprite(object):
           time.sleep(delay)
           self.Erase(h,v,f)
 
-       
-  
+
+
   def ScrollAcrossScreen(self,h,v,direction,ScrollSleep):
     if (direction == "right"):
       self.Scroll((0- self.width),v,"right",(HatWidth + self.width),ScrollSleep)
@@ -1582,25 +1518,25 @@ class AnimatedSprite(object):
 
   def Float(self,h,v,direction,moves,delay):
     #Scroll across the screen, floating over the background
-    
+
     x = 0
     oldh = 0
     #Capture Background
     Buffer = copy.deepcopy(unicorn.get_pixels())
-    
+
     #modifier is used to increment or decrement the location
     if direction == "right" or direction == "down":
       modifier = 1
-    else: 
+    else:
       modifier = -1
-    
+
     #print("Modifier:",modifier)
-    
+
     #we use f to iterate the animation frames
     f = self.frames
     if direction == "left" or direction == "right":
-      #print ("Direction: ",direction)  
-      
+      #print ("Direction: ",direction)
+
       for count in range (0,moves):
         oldf = f
         f = f+1
@@ -1614,10 +1550,10 @@ class AnimatedSprite(object):
         if count >= 1:
           oldh = h - modifier
           #print ("Scroll:",self.width, self.height, self.r, self.g, self.b,h,v)
-          
+
         #draw new sprite
         self.DisplayNoBlack(h,v,f)
-        #unicorn.show() 
+        #unicorn.show()
         #SendBufferPacket(RemoteDisplay,HatHeight,HatWidth)
         time.sleep(delay)
 
@@ -1626,7 +1562,7 @@ class AnimatedSprite(object):
         if (r == 0):
           Key = PollKeyboard()
 
-  
+
   def FloatAcrossScreen(self,h,v,direction,ScrollSleep):
     if (direction == "right"):
       self.Float((0- self.width),v,"right",(HatWidth + self.width),ScrollSleep)
@@ -1643,7 +1579,7 @@ class AnimatedSprite(object):
     x = 0,
     y = 0,
     Buffer = copy.deepcopy(unicorn.get_pixels())
-    
+
     if (direction == 'forward'):
       for f in range (0,self.frames+1):
         self.Display(h,v,f)
@@ -1651,21 +1587,13 @@ class AnimatedSprite(object):
         #SendBufferPacket(RemoteDisplay,HatHeight,HatWidth)
         time.sleep(delay)
         setpixels(Buffer)
-    else:  
+    else:
       for f in range (0,self.frames+1):
         self.Display(h,v,(self.frames-f))
         #unicorn.show()
         #SendBufferPacket(RemoteDisplay,HatHeight,HatWidth)
         time.sleep(delay)
         setpixels(Buffer)
-      
-      
-
-
-
-
-
-      
 
 
 # ----------------------------
@@ -1683,9 +1611,9 @@ class ColorAnimatedSprite(object):
     self.currentframe = 1
     self.framerate    = framerate #how many ticks per frame of animation, higher the number the slower the animation
     self.grid         = [[]]      #holds numbers that indicate color of the pixel
-    self.ticks        = 0         #internal calculation of how many times a frame has been displayed.  
+    self.ticks        = 0         #internal calculation of how many times a frame has been displayed.
     self.ScreenArray = [[ (0,0,0) for i in range(HatWidth)] for i in range(HatHeight)]
-    self.direction  = random.randint(1,8) 
+    self.direction  = random.randint(1,8)
     self.directionH  = 0
     self.directionV  = 0
     self.velocityH   = 0
@@ -1742,12 +1670,12 @@ class ColorAnimatedSprite(object):
     g = 0
     b = 0
     frame = self.currentframe
-    
+
     for count in range (0,(self.width * self.height)):
       y,x = divmod(count,self.width)
       #print ("Name:",self.name," Frame:",frame, " Count: ",count, "Width Height",self.width,self.height )
       #print ("self.grid[frame][count]:",self.grid[frame][count] )
-      
+
       #check for a color pixel
       if(self.grid[frame][count] >= 0):
         #check for outside boundary
@@ -1763,7 +1691,7 @@ class ColorAnimatedSprite(object):
             setpixel(x+h1,y+v1,r,g,b)
 
             #TheMatrix.SetPixel(x+h1,y+v1,r,g,b)
-    #unicorn.show() 
+    #unicorn.show()
 
 
 
@@ -1774,7 +1702,7 @@ class ColorAnimatedSprite(object):
     r = 0
     g = 0
     b = 0
-    
+
     if (h1 < 0):
       h1 = self.h
     if (v1 < 0):
@@ -1791,17 +1719,17 @@ class ColorAnimatedSprite(object):
 
     for count in range (0,(self.width * self.height)):
       y,x = divmod(count,self.width)
-      
+
 
       if (CheckBoundary((x+h1),y+v1) == 0):
         r,g,b =  ColorList[self.grid[self.currentframe][count]]
         TheMatrix.SetPixel(x+h1,y+v1,r,g,b)
 
-       
 
-    
+
+
     return
-   
+
 
 
   def Erase(self):
@@ -1829,14 +1757,14 @@ class ColorAnimatedSprite(object):
   def EraseZoom(self,h,v,ZoomFactor=1):
     x = 0
     y = 0
-   
+
     # we round because newer animations make use of gravity and acceleration calculations
     h = round(h)
     v = round(v)
 
     for count in range (0,((self.width * ZoomFactor) * (self.height * ZoomFactor))):
       y,x = divmod(count,self.width * ZoomFactor)
-      
+
       if (CheckBoundary(x+h,y+v) == 0):
         r,g,b = self.ScreenArray[y+v][x+h]
         setpixel(x+h,y+v,r,g,b)
@@ -1850,14 +1778,14 @@ class ColorAnimatedSprite(object):
     #this is way faster than erasing the entire sprite
     x = 0
     y = 0
-   
+
     # we round because newer animations make use of gravity and acceleration calculations
     h = round(h)
     v = round(v)
 
     for count in range (0,((self.width * ZoomFactor) * (self.height * ZoomFactor))):
       y,x = divmod(count,self.width * ZoomFactor)
-      
+
       if (Back==True):
         #if(x <= (2 * ZoomFactor)):
         if(x <= 1 ):
@@ -1885,11 +1813,11 @@ class ColorAnimatedSprite(object):
   def EraseFrame(self,h,v,frame=-1):
     x = 0
     y = 0
-   
+
     # we round because newer animations make use of gravity and acceleration calculations
     h = round(h)
     v = round(v)
-    
+
     for count in range (0,(self.width * self.height)):
       y,x = divmod(count,self.width)
       setpixel(x+h,y+v,0,0,0)
@@ -1902,10 +1830,10 @@ class ColorAnimatedSprite(object):
 
 
 
-#Need Erase Frame Zoom       
+#Need Erase Frame Zoom
 
 
-          
+
   def EraseLocation(self,h,v):
     x = 0
     y = 0
@@ -1914,12 +1842,12 @@ class ColorAnimatedSprite(object):
     for count in range (0,(self.width * self.height)):
       y,x = divmod(count,self.width)
 
- 
+
       if self.grid[frame][count] > 0:
         if (CheckBoundary((x+h),y+v) == 0):
           #print ("CAS - EraseLocation HV:",x+h,y+v)
           TheMatrix.SetPixel(x+h,y+v,0,0,0)
-          
+
 
   def EraseSpriteFromPlayfield(self,Playfield):
     #Erase the sprite by writing 'EmptyObject' to every spot on the playfield occupied by the sprite
@@ -1928,12 +1856,12 @@ class ColorAnimatedSprite(object):
     count = 0
 
 
-    width   = self.width 
+    width   = self.width
     height  = self.height
     h       = self.h
     v       = self.v
     frame   = self.currentframe
-  
+
 
 
     for count in range (0,(width * height)):
@@ -1946,7 +1874,7 @@ class ColorAnimatedSprite(object):
 
 
 
-          
+
   def Scroll(self,h,v,direction,moves,delay):
     #print("CAS - Scroll -   HV Direction moves Delay", h,v,direction,moves,delay)
     x = 0
@@ -1954,21 +1882,21 @@ class ColorAnimatedSprite(object):
     r = 0
     g = 0
     b = 0
-    
-        
+
+
     #modifier is used to increment or decrement the location
     if direction == "right" or direction == "down":
       modifier = 1
-    else: 
+    else:
       modifier = -1
-    
+
     #print("Modifier:",modifier)
-    
+
     #we use f to iterate the animation frames
     f = self.frames
     if direction == "left" or direction == "right":
-      #print ("CAS - Scroll - Direction: ",direction)  
-      
+      #print ("CAS - Scroll - Direction: ",direction)
+
       for count in range (0,moves):
         #print ("CAS - Scroll - currentframe: ",self.currentframe)
         if (self.currentframe < (self.frames)):
@@ -1981,7 +1909,7 @@ class ColorAnimatedSprite(object):
 
         #draw new sprite
         #self.setpixels(Buffer)
-          
+
         self.Display(h,v)
         #unicorn.show()
         #SendBufferPacket(RemoteDisplay,HatHeight,HatWidth)
@@ -1991,7 +1919,7 @@ class ColorAnimatedSprite(object):
   def ScrollWithFrames(self,h,v,direction,moves,delay):
 
   #NOTE1: We need a rewrite.  We need to take into account movenet per tick as well as frames per tick
-  #NOTE2: We call 
+  #NOTE2: We call
 
     #print("CAS - ScrollWithFrames - HV direction moves delay", h,v,direction,moves,delay)
     x    = 0
@@ -2003,14 +1931,14 @@ class ColorAnimatedSprite(object):
     #modifier is used to increment or decrement the location
     if direction == "right" or direction == "down":
       modifier = 1
-    else: 
+    else:
       modifier = -1
-    
+
     #print("Modifier:",modifier)
     oldf = self.frames
     #we use f to iterate the animation frames
     f = self.frames
-    
+
 
     if direction == "left" or direction == "right":
       for count in range (0,moves):
@@ -2023,7 +1951,7 @@ class ColorAnimatedSprite(object):
           oldh = h
           h = h + (modifier)
           #print ("CAS - SWF - H oldh modifier",h,oldh,modifier)
-        
+
 
         m,r = divmod(self.ticks, self.framerate)
         if (r== 0):
@@ -2053,16 +1981,16 @@ class ColorAnimatedSprite(object):
         y,x = divmod(count,self.width)
        #print("y,x = divmod(",count,self.width,"): ",y,x)
         #print ("cell to flip: ",((y*self.width)+ self.width-x-1), "value: ",self.grid[f][((y*self.width)+ self.width-x-1)])
-        
-        flipgrid.append(self.grid[f][((y*self.width)+ self.width-x-1)])  
+
+        flipgrid.append(self.grid[f][((y*self.width)+ self.width-x-1)])
 
       #print("Original:", str(self.grid[f]))
       #print("Flipped :", str(flipgrid))
-      self.grid[f] = flipgrid      
+      self.grid[f] = flipgrid
     #print ("Done Flipping")
-    
-       
-  
+
+
+
   def ScrollAcrossScreen(self,h,v,direction,ScrollSleep):
     #hv seem a little messed up, investigate what their original purpose was and fix
 
@@ -2085,23 +2013,23 @@ class ColorAnimatedSprite(object):
     r = 0
     g = 0
     b = 0
-    
+
     #Capture Background
     Buffer = copy.deepcopy(unicorn.get_pixels())
-    
+
     #modifier is used to increment or decrement the location
     if direction == "right" or direction == "down":
       modifier = 1
-    else: 
+    else:
       modifier = -1
-    
+
     #print("Modifier:",modifier)
-    
+
     #we use f to iterate the animation frames
     f = self.frames
     if direction == "left" or direction == "right":
-      #print ("CAS - Scroll - Direction: ",direction)  
-      
+      #print ("CAS - Scroll - Direction: ",direction)
+
       for count in range (0,moves):
         #print ("CAS - Scroll - currentframe: ",self.currentframe)
         if (self.currentframe < (self.frames-1)):
@@ -2114,7 +2042,7 @@ class ColorAnimatedSprite(object):
 
         #draw new sprite
         setpixels(Buffer)
-          
+
         self.DisplayNoBlack(h,v)
         #unicorn.show()
         #SendBufferPacket(RemoteDisplay,HatHeight,HatWidth)
@@ -2136,7 +2064,7 @@ class ColorAnimatedSprite(object):
     x = 0,
     y = 0,
     Buffer = copy.deepcopy(unicorn.get_pixels())
-    
+
     if (direction == 'forward'):
       for f in range (0,self.frames):
         #erase old sprite
@@ -2151,11 +2079,11 @@ class ColorAnimatedSprite(object):
           self.currentframe = self.currentframe + 1
         else:
           self.currentframe = 1
-          
-        time.sleep(delay)
-        
 
-    else:  
+        time.sleep(delay)
+
+
+    else:
       for f in range (0,self.frames+1):
         #erase old sprite
         #setpixels(Buffer)
@@ -2171,11 +2099,11 @@ class ColorAnimatedSprite(object):
           self.currentframe = self.currentframe -1
         else:
           self.currentframe = self.frames
-          
-        #time.sleep(delay)
-      
 
-  #Draw the sprite using an affect like in the movie Tron 
+        #time.sleep(delay)
+
+
+  #Draw the sprite using an affect like in the movie Tron
   def LaserScan(self,h1,v1,speed=0.005):
     x = 0
     y = 0
@@ -2214,24 +2142,24 @@ class ColorAnimatedSprite(object):
           if (r > 0 or g > 0 or b > 0):
             FlashDot4((x+h1),y+v1,speed)
             TheMatrix.SetPixel((x+h1),y+v1,0,0,0)
-      #unicorn.show() 
+      #unicorn.show()
       #SendBufferPacket(RemoteDisplay,HatHeight,HatWidth)
 
 
 
-    #unicorn.show() 
+    #unicorn.show()
 
   def CopyAnimatedSpriteToPlayfield(self,Playfield, TheObject):
-    #Copy an animated sprite to the Playfield. 
+    #Copy an animated sprite to the Playfield.
     #Animated can have different shapes per frame
     #Each spot on the playfield will contain a reference to the objecttype e.g. a ship
 
-    width   = self.width 
+    width   = self.width
     height  = self.height
     h       = TheObject.h - (width // 2)
     v       = TheObject.v - (height // 2)
     frame   = self.currentframe
-  
+
     #Copy sprite to playfield
     for count in range (0,(width * height)):
       y,x = divmod(count,width)
@@ -2246,12 +2174,8 @@ class ColorAnimatedSprite(object):
               Playfield[y+v][x+h] = EmptyObject('EmptyObject')
               TheMatrix.SetPixel(x+h1,y+v1,r,g,b)
 
-           
+
     return Playfield;
-
-
-
-
 
 
 
@@ -2309,11 +2233,11 @@ class ColorAnimatedSprite(object):
       # # print("--------------------------------------------------------------")
       # # print("")
       # # print("")
-      
+
 
   # def on_display_attached(self):
     # print("--Display attached--")
-      
+
 
   # def on_connect(self):
 
@@ -2322,7 +2246,7 @@ class ColorAnimatedSprite(object):
       # print("---------------------------------------------------------------")
       # print("connection opened and handshake received ready to send messages")
       # self.hub_connection.send("AttachDisplay: ", [self.display_name])
-      
+
       # if self.on_attach is not None and callable(self.on_attach):
               # print ("--calling on_attach--")
       # self.on_attach(self)
@@ -2348,12 +2272,12 @@ class ColorAnimatedSprite(object):
       # # print("")
       # # print("")
       # # time.sleep(5)
-      
-      
+
+
   # def connect(self):
     # try:
-      # self.hub_connection.start()  
-    
+      # self.hub_connection.start()
+
     # except Exception as ErrorMessage:
       # TheTrace = traceback.format_exc()
       # print("")
@@ -2372,7 +2296,7 @@ class ColorAnimatedSprite(object):
       # print("")
       # time.sleep(5)
 
-  
+
   # def disconnect(self):
     # try:
       # self.hub_connection.stop()
@@ -2393,11 +2317,11 @@ class ColorAnimatedSprite(object):
       # print("")
       # print("")
       # time.sleep(5)
-  
+
   # def update(self):
     # #print ("PixelArray:",)
     # try:
-      # print ("Sending message")  
+      # print ("Sending message")
       # self.hub_connection.send("sendMessage", [self.PacketString])
     # except Exception as ErrorMessage:
       # TheTrace = traceback.format_exc()
@@ -2420,17 +2344,17 @@ class ColorAnimatedSprite(object):
 
   # #Send the message/packet
   # def SendPacket(self):
-    
+
     # print ("Inputstring:",self.PacketString)
     # #print ("PrevString: ",self.PreviousPacketString[1:16])
-    
-    
+
+
     # try:
-      
+
       # if (self.PreviousPacketString != self.PacketString ):
         # startTime = time.time()
-        # #r = requests.post(url = self.URLEndpoint, data = PacketString, timeout=0.3) 
-        # #r = self.TheSession.post(url = self.URLEndpoint, data = PacketString, timeout=self.timeout) 
+        # #r = requests.post(url = self.URLEndpoint, data = PacketString, timeout=0.3)
+        # #r = self.TheSession.post(url = self.URLEndpoint, data = PacketString, timeout=self.timeout)
         # self.update()
         # self.PreviousPacketString = self.PacketString
         # endTime = time.time()
@@ -2473,9 +2397,9 @@ class ColorAnimatedSprite(object):
     # HatWidth  = width
     # HatHeight = height
     # UnicornBuffer = unicorn.get_pixels()
-   
+
     # ints = []
-   
+
     # for x in range(0,HatHeight):
       # for y in range(0,HatWidth):
         # r,g,b = UnicornBuffer[x][y]
@@ -2484,7 +2408,7 @@ class ColorAnimatedSprite(object):
         # #ints.append(UnicornBuffer[x][y])
     # #pixel_string = ','.join(map(str, ints))
 
-    
+
     # self.PacketString = self.PacketString[:-1]
     # #print (pixel_string)
     # #print (string)
@@ -2493,7 +2417,7 @@ class ColorAnimatedSprite(object):
     # self.SendPacket()
     # #self.SendPacket([string])
     # return;
-  
+
 
 
 #------------------------------------------------------------------------------
@@ -2534,17 +2458,6 @@ class TextMap(object):
     TheSprite.frames = TheSprite.frames + 1
 
 
-    
-
-    
-
-
-
-
-
-
-
-
 #------------------------------------------------------------------------------
 # SPRITES                                                                    --
 #------------------------------------------------------------------------------
@@ -2554,67 +2467,67 @@ class TextMap(object):
 
 DigitList = []
 #0
-DigitList.append([1,1,1, 
+DigitList.append([1,1,1,
                   1,0,1,
                   1,0,1,
                   1,0,1,
                   1,1,1])
 #1
-DigitList.append([0,0,1, 
+DigitList.append([0,0,1,
                   0,0,1,
                   0,0,1,
                   0,0,1,
                   0,0,1])
 #2
-DigitList.append([1,1,1, 
+DigitList.append([1,1,1,
                   0,0,1,
                   1,1,1,
                   1,0,0,
                   1,1,1])
 #3
-DigitList.append([1,1,1, 
+DigitList.append([1,1,1,
                   0,0,1,
                   0,1,1,
                   0,0,1,
                   1,1,1])
 #4
-DigitList.append([1,0,1, 
+DigitList.append([1,0,1,
                   1,0,1,
                   1,1,1,
                   0,0,1,
                   0,0,1])
-               
-#5  
-DigitList.append([1,1,1, 
+
+#5
+DigitList.append([1,1,1,
                   1,0,0,
                   1,1,1,
                   0,0,1,
                   1,1,1])
 #6
-DigitList.append([1,1,1, 
+DigitList.append([1,1,1,
                   1,0,0,
                   1,1,1,
                   1,0,1,
                   1,1,1])
 #7
-DigitList.append([1,1,1, 
+DigitList.append([1,1,1,
                   0,0,1,
                   0,1,0,
                   1,0,0,
                   1,0,0])
-#8  
-DigitList.append([1,1,1, 
+#8
+DigitList.append([1,1,1,
                   1,0,1,
                   1,1,1,
                   1,0,1,
                   1,1,1])
-#9  
-DigitList.append([1,1,1, 
+#9
+DigitList.append([1,1,1,
                   1,0,1,
                   1,1,1,
                   0,0,1,
                   0,0,1])
-                    
+
 
 # List of Digit Number Numeric sprites
 DigitSpriteList = [Sprite(3,5,RedR,RedG,RedB,DigitList[i]) for i in range(0,10)]
@@ -2654,7 +2567,7 @@ AlphaList.append([1,1,1,1,0,
                   1,1,1,0,0,
                   1,0,0,0,0,
                   1,1,1,1,0])
-                  
+
 #F
 AlphaList.append([1,1,1,1,0,
                   1,0,0,0,0,
@@ -2687,7 +2600,7 @@ AlphaList.append([0,1,1,1,0,
                   0,0,1,0,0,
                   1,0,1,0,0,
                   0,1,0,0,0])
-                  
+
 #K
 AlphaList.append([1,0,0,1,0,
                   1,0,1,0,0,
@@ -2732,7 +2645,7 @@ AlphaList.append([0,1,1,1,0,
                   1,0,0,0,1,
                   1,0,0,1,0,
                   0,1,1,0,1])
-#R 
+#R
 AlphaList.append([1,1,1,0,0,
                   1,0,0,1,0,
                   1,1,1,0,0,
@@ -2788,16 +2701,16 @@ AlphaList.append([1,1,1,1,0,
                   1,1,1,1,0])
 
 
-                  
-                  
+
+
 # List of Alpha sprites
 AlphaSpriteList = [Sprite(5,5,RedR,RedG,RedB,AlphaList[i]) for i in range(0,26)]
 
 
 
-                  
-                  
-#space                  
+
+
+#space
 SpaceSprite = Sprite(
   3,
   5,
@@ -2887,7 +2800,7 @@ AmpersandSprite = Sprite(
 )
 
 
- 
+
 ColonSprite = Sprite(
   3,
   5,
@@ -3151,7 +3064,7 @@ ClockSpriteBackground = Sprite(
    0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
    0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
    0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
-   0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,  
+   0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
    ]
 )
 
@@ -3200,7 +3113,7 @@ RedGhostSprite = Sprite(
    1,1,1,1,1,
    1,0,1,0,1]
 )
-    
+
 
 OrangeGhostSprite = Sprite(
   5,
@@ -3214,7 +3127,7 @@ OrangeGhostSprite = Sprite(
    1,1,1,1,1,
    1,0,1,0,1]
 )
-    
+
 BlueGhostSprite = Sprite(
   5,
   5,
@@ -3379,7 +3292,7 @@ WormChasingChicken.grid.append(
 ChickenChasingWorm = ColorAnimatedSprite(h=0, v=0, name="Chicken", width=16, height=8, frames=4,framerate=1,grid=[])
 ChickenChasingWorm.grid.append(
   [
-    0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 
+    0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
     0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
     0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 5, 0, 0, 0, 0, 0,
     0, 0, 0, 0, 0, 0, 0, 0, 0,17, 2, 0, 0, 0, 0, 0,
@@ -3448,7 +3361,7 @@ ThreeGhostPacSprite.grid.append(
    0, 0,33, 1,33, 1,33, 0,18, 1,18, 1,18, 0, 7, 1, 7, 1, 7, 0, 0, 22,22, 0, 0,0, 0,
    0, 0,33,33,33,33,33, 0,18,18,18,18,18, 0, 7, 7, 7, 7, 7, 0, 0, 22,22,22, 0,0, 0,
    0, 0,33, 0,33, 0,33, 0,18, 0,18, 0,18, 0, 7, 0, 7, 0, 7, 0, 0, 0,22,22,22, 0, 0
-  
+
    ]
 )
 
@@ -3460,7 +3373,7 @@ ThreeGhostPacSprite.grid.append(
     0, 0,33, 1,33, 1,33, 0,18, 1,18, 1,18, 0, 7, 1, 7, 1, 7, 0, 0,22,22,22, 0, 0, 0,
     0, 0,33,33,33,33,33, 0,18,18,18,18,18, 0, 7, 7, 7, 7, 7, 0, 0,22,22,22,22,22, 0,
     0, 0,33, 0,33, 0,33, 0,18, 0,18, 0,18, 0, 7, 0, 7, 0, 7, 0, 0, 0,22,22,22, 0, 0
-  
+
    ]
 )
 
@@ -3473,7 +3386,7 @@ ThreeGhostPacSprite.grid.append(
     0, 0,33, 1,33, 1,33, 0,18, 1,18, 1,18, 0, 7, 1, 7, 1, 7, 0, 0, 23,23,23,23,23, 0,
     0, 0,33,33,33,33,33, 0,18,18,18,18,18, 0, 7, 7, 7, 7, 7, 0, 0, 23,23,23,23,23, 0,
     0, 0,33, 0,33, 0,33, 0,18, 0,18, 0,18, 0, 7, 0, 7, 0, 7, 0, 0, 0,23,23,23,0, 0
-  
+
    ]
 )
 
@@ -3486,11 +3399,11 @@ ThreeGhostPacSprite.grid.append(
     0, 0,33, 1,33, 1,33, 0,18, 1,18, 1,18, 0, 7, 1, 7, 1, 7, 0, 0, 23,23,23,0,0, 0,
     0, 0,33,33,33,33,33, 0,18,18,18,18,18, 0, 7, 7, 7, 7, 7, 0, 0, 23,23,23,23,0,  0,
     0, 0,33, 0,33, 0,33, 0,18, 0,18, 0,18, 0, 7, 0, 7, 0, 7, 0, 0, 0,23,23,23,0, 0
-  
+
    ]
 )
 
- 
+
 ThreeGhostPacSprite.grid.append(
   [
     0, 0, 0,33,33,33, 0, 0, 0,18,18,18, 0, 0, 0, 7, 7, 7, 0, 0, 0, 0,23,23,23,0, 0,
@@ -3498,7 +3411,7 @@ ThreeGhostPacSprite.grid.append(
     0, 0,33, 1,33, 1,33, 0,18, 1,18, 1,18, 0, 7, 1, 7, 1, 7, 0, 0, 23,23,0,0,0, 0,
     0, 0,33,33,33,33,33, 0,18,18,18,18,18, 0, 7, 7, 7, 7, 7, 0, 0, 23,23,0,0,0, 0,
     0, 0,33, 0,33, 0,33, 0,18, 0,18, 0,18, 0, 7, 0, 7, 0, 7, 0, 0, 0,23,23,23,0, 0
-  
+
    ]
 )
 
@@ -3514,7 +3427,7 @@ ThreeBlueGhostPacSprite.grid.append(
     0, 0,14, 2,14, 1,14, 0,14, 2,14, 2,14, 0,14, 2,14, 2,14, 0, 0, 0,0,0,23,23, 0,
     0, 0,14,14,14,14,14, 0,14,14,14,14,14, 0,14,14,14,14,14, 0, 0, 0,0,23,23,23, 0,
     0, 0,14, 0,14, 0,14, 0,14, 0,14, 0,14, 0,14, 0,14, 0,14, 0, 0, 0,23,23,23,0, 0
-  
+
    ]
 )
 
@@ -3526,7 +3439,7 @@ ThreeBlueGhostPacSprite.grid.append(
     0, 0,14, 2,14, 2,14, 0,14, 2,14, 2,14, 0,14, 2,14, 2,14, 0, 0, 0,0,0,23,23, 0,
     0, 0,14,14,14,14,14, 0,14,14,14,14,14, 0,14,14,14,14,14, 0, 0, 23,23,23,23,23, 0,
     0, 0,14, 0,14, 0,14, 0,14, 0,14, 0,14, 0,14, 0,14, 0,14, 0, 0, 0,23,23,23,0, 0
-  
+
    ]
 )
 
@@ -3539,7 +3452,7 @@ ThreeBlueGhostPacSprite.grid.append(
     0, 0,14, 2,14, 2,14, 0,14, 2,14, 2,14, 0,14, 2,14, 2,14, 0, 0, 23,23,23,23,23, 0,
     0, 0,14,14,14,14,14, 0,14,14,14,14,14, 0,14,14,14,14,14, 0, 0, 23,23,23,23,23, 0,
     0, 0,14, 0,14, 0,14, 0,14, 0,14, 0,14, 0,14, 0,14, 0,14, 0, 0, 0,23,23,23,0, 0
-  
+
    ]
 )
 
@@ -3550,11 +3463,11 @@ ThreeBlueGhostPacSprite.grid.append(
     0, 0,14, 2,14, 2,14, 0,14, 2,14, 2,14, 0,14, 2,14, 2,14, 0, 0, 0,0,23,23,23, 0,
     0, 0,14,14,14,14,14, 0,14,14,14,14,14, 0,14,14,14,14,14, 0, 0, 0,23,23,23,23, 0,
     0, 0,14, 0,14, 0,14, 0,14, 0,14, 0,14, 0,14, 0,14, 0,14, 0, 0, 0,23,23,23,0, 0
-  
+
    ]
 )
 
- 
+
 ThreeBlueGhostPacSprite.grid.append(
   [
     0,  0,0,14,14,14, 0, 0, 0,14,14,14, 0, 0, 0,14,14,14, 0, 0, 0, 0,23,23,23,0, 0,
@@ -3562,7 +3475,7 @@ ThreeBlueGhostPacSprite.grid.append(
     0, 0,14, 2,14, 2,14, 0,14, 2,14, 2,14, 0,14, 2,14, 2,14, 0, 0, 0,0,0,0,23, 0,
     0, 0,14,14,14,14,14, 0,14,14,14,14,14, 0,14,14,14,14,14, 0, 0, 0,0,0,23,23, 0,
     0, 0,14, 0,14, 0,14, 0,14, 0,14, 0,14, 0,14, 0,14, 0,14, 0, 0, 0,23,23,23,0, 0
-  
+
    ]
 )
 
@@ -3573,7 +3486,7 @@ ThreeBlueGhostPacSprite.grid.append(
     0, 0,14, 2,14, 2,14, 0,14, 2,14, 2,14, 0,14, 2,14, 2,14, 0, 0, 0,0,0,0,23, 0,
     0, 0,14,14,14,14,14, 0,14,14,14,14,14, 0,14,14,14,14,14, 0, 0, 0,0,0,23,23, 0,
     0, 0,14, 0,14, 0,14, 0,14, 0,14, 0,14, 0,14, 0,14, 0,14, 0, 0, 0,23,23,23,0,  0
-  
+
    ]
 )
 
@@ -3585,12 +3498,12 @@ ThreeBlueGhostPacSprite.grid.append(
 ThreeGhostSprite = ColorAnimatedSprite(h=0, v=0, name="ThreeGhost", width=19, height=5, frames=1, framerate=1,grid=[])
 ThreeGhostSprite.grid.append(
   [
-   0, 0,33,33,33, 0, 0, 0,18,18,18, 0, 0, 0, 7, 7, 7, 0, 0, 
-   0,33,33,33,33,33, 0,18,18,18,18,18, 0, 7, 7, 7, 7, 7, 0, 
-   0,33, 1,33, 1,33, 0,18, 1,18, 1,18, 0, 7, 1, 7, 1, 7, 0, 
-   0,33,33,33,33,33, 0,18,18,18,18,18, 0, 7, 7, 7, 7, 7, 0, 
-   0,33, 0,33, 0,33, 0,18, 0,18, 0,18, 0, 7, 0, 7, 0, 7, 0 
-  
+   0, 0,33,33,33, 0, 0, 0,18,18,18, 0, 0, 0, 7, 7, 7, 0, 0,
+   0,33,33,33,33,33, 0,18,18,18,18,18, 0, 7, 7, 7, 7, 7, 0,
+   0,33, 1,33, 1,33, 0,18, 1,18, 1,18, 0, 7, 1, 7, 1, 7, 0,
+   0,33,33,33,33,33, 0,18,18,18,18,18, 0, 7, 7, 7, 7, 7, 0,
+   0,33, 0,33, 0,33, 0,18, 0,18, 0,18, 0, 7, 0, 7, 0, 7, 0
+
    ]
 )
 
@@ -3598,12 +3511,12 @@ ThreeGhostSprite.grid.append(
 ThreeBlueGhostSprite = ColorAnimatedSprite(h=0, v=0, name="ThreeBlueGhost", width=19, height=5, frames=1, framerate=1,grid=[])
 ThreeBlueGhostSprite.grid.append(
   [
-   0, 0, 0,14,14,14, 0, 0, 0,14,14,14, 0, 0, 0,14,14,14, 0, 0, 
-   0, 0,14,14,14,14,14, 0,14,14,14,14,14, 0,14,14,14,14,14, 0, 
-   0, 0,14, 2,14, 2,14, 0,14, 2,14, 2,14, 0,14, 2,14, 2,14, 0, 
-   0, 0,14,14,14,14,14, 0,14,14,14,14,14, 0,14,14,14,14,14, 0, 
-   0, 0,14, 0,14, 0,14, 0,14, 0,14, 0,14, 0,14, 0,14, 0,14, 0 
-  
+   0, 0, 0,14,14,14, 0, 0, 0,14,14,14, 0, 0, 0,14,14,14, 0, 0,
+   0, 0,14,14,14,14,14, 0,14,14,14,14,14, 0,14,14,14,14,14, 0,
+   0, 0,14, 2,14, 2,14, 0,14, 2,14, 2,14, 0,14, 2,14, 2,14, 0,
+   0, 0,14,14,14,14,14, 0,14,14,14,14,14, 0,14,14,14,14,14, 0,
+   0, 0,14, 0,14, 0,14, 0,14, 0,14, 0,14, 0,14, 0,14, 0,14, 0
+
    ]
 )
 
@@ -3867,21 +3780,21 @@ DotZerkRobotWalkingSmall.grid.append(
 
 
 RunningManSprite = ColorAnimatedSprite(
-  h=0, 
-  v=0, 
-  name="RunningMan", 
-  width  = 19, 
-  height = 18, 
-  frames = 0, 
+  h=0,
+  v=0,
+  name="RunningMan",
+  width  = 19,
+  height = 18,
+  frames = 0,
   framerate=2,
   grid=[]  )
 
-                 
+
 
 RunningManSpriteMap = TextMap(
   h      = 1,
   v      = 1,
-  width  = 19, 
+  width  = 19,
   height = 18
   )
 
@@ -3890,7 +3803,7 @@ RunningManSpriteMap.ColorList = {
   '-' : 1,
   '.' : 2,
   'o' : 15,  # Med Blue
-  'O' : 4,  
+  'O' : 4,
   'r' : 5,
   'R' : 8,
   'b' : 12,
@@ -3910,50 +3823,25 @@ RunningManSpriteMap.TypeList = {
 
 RunningManSpriteMap.map= (
   #0.........1.........2.....
-  "                   ", 
-  "          oooo     ", 
-  "          oo       ", 
-  "      oooooooo     ", 
-  "    oooooooo       ", 
-  "    oo  oooo    oo ", 
-  "    oo  oooooooo   ", 
-  "                   ", 
-  "        oooo       ", 
-  "        oooo       ", 
-  "      oooooooooooo ", 
-  "      oo        oo ", 
-  "    oooo      oo   ", 
-  "    oo        oo   ", 
-  "  oooo             ", 
-  "  oo               ", 
-  "  oo               ", 
-  "                   ", 
+  "                   ",
+  "          oooo     ",
+  "          oo       ",
+  "      oooooooo     ",
+  "    oooooooo       ",
+  "    oo  oooo    oo ",
+  "    oo  oooooooo   ",
+  "                   ",
+  "        oooo       ",
+  "        oooo       ",
+  "      oooooooooooo ",
+  "      oo        oo ",
+  "    oooo      oo   ",
+  "    oo        oo   ",
+  "  oooo             ",
+  "  oo               ",
+  "  oo               ",
+  "                   ",
 
-  )
-      
-RunningManSpriteMap.CopyMapToColorSprite(TheSprite=RunningManSprite)
-
-
-RunningManSpriteMap.map= (
-  #0.........1.........2.....
-  "                   ", 
-  "          oooo     ", 
-  "          oo       ", 
-  "  oooooooooooo     ", 
-  "  oo    oooo       ", 
-  "  oo    oooooooooo ", 
-  "        oooo       ", 
-  "                   ", 
-  "        oooo       ", 
-  "        oooo       ", 
-  "      oooooooooooo ", 
-  "      oo        oo ", 
-  "    oooo        oo ", 
-  "    oo          oo ", 
-  "  oooo             ", 
-  "  oo               ", 
-  "                   ", 
-  "                   ", 
   )
 
 RunningManSpriteMap.CopyMapToColorSprite(TheSprite=RunningManSprite)
@@ -3961,24 +3849,24 @@ RunningManSpriteMap.CopyMapToColorSprite(TheSprite=RunningManSprite)
 
 RunningManSpriteMap.map= (
   #0.........1.........2.....
-  "                   ", 
-  "          oooo     ", 
-  "          oo       ", 
-  "      oooooooo     ", 
-  "    oooooooo       ", 
-  "    oo  oooooooooo ", 
-  "    oo  oooo       ", 
-  "                   ", 
-  "        oooo       ", 
-  "        oooo       ", 
-  "      oooooooo     ", 
-  "      oo    oo     ", 
-  "    oooo    oooo   ", 
-  "  oooo        oo   ", 
-  "  oo          oo   ", 
-  "              oooo ", 
-  "                   ", 
-  "                   ", 
+  "                   ",
+  "          oooo     ",
+  "          oo       ",
+  "  oooooooooooo     ",
+  "  oo    oooo       ",
+  "  oo    oooooooooo ",
+  "        oooo       ",
+  "                   ",
+  "        oooo       ",
+  "        oooo       ",
+  "      oooooooooooo ",
+  "      oo        oo ",
+  "    oooo        oo ",
+  "    oo          oo ",
+  "  oooo             ",
+  "  oo               ",
+  "                   ",
+  "                   ",
   )
 
 RunningManSpriteMap.CopyMapToColorSprite(TheSprite=RunningManSprite)
@@ -3986,24 +3874,24 @@ RunningManSpriteMap.CopyMapToColorSprite(TheSprite=RunningManSprite)
 
 RunningManSpriteMap.map= (
   #0.........1.........2.....
-  "                   ", 
-  "          oooo     ", 
-  "          oo       ", 
-  "        oooooo     ", 
-  "    oooooooo       ", 
-  "    oo  oooooo     ", 
-  "    oo  oooo  oo   ", 
-  "                   ", 
-  "        oooo       ", 
-  "      oooooo       ", 
-  "      oooooooo     ", 
-  "      oo    oo     ", 
-  "  oooooo    oo     ", 
-  "  oo        oo     ", 
-  "  oo        oo     ", 
-  "            oooo   ", 
-  "                   ", 
-  "                   ", 
+  "                   ",
+  "          oooo     ",
+  "          oo       ",
+  "      oooooooo     ",
+  "    oooooooo       ",
+  "    oo  oooooooooo ",
+  "    oo  oooo       ",
+  "                   ",
+  "        oooo       ",
+  "        oooo       ",
+  "      oooooooo     ",
+  "      oo    oo     ",
+  "    oooo    oooo   ",
+  "  oooo        oo   ",
+  "  oo          oo   ",
+  "              oooo ",
+  "                   ",
+  "                   ",
   )
 
 RunningManSpriteMap.CopyMapToColorSprite(TheSprite=RunningManSprite)
@@ -4011,24 +3899,24 @@ RunningManSpriteMap.CopyMapToColorSprite(TheSprite=RunningManSprite)
 
 RunningManSpriteMap.map= (
   #0.........1.........2.....
-  "                   ", 
-  "          oooo     ", 
-  "          oo       ", 
-  "        oooooo     ", 
-  "      oooooo       ", 
-  "      oooooo       ", 
-  "      oooooo       ", 
-  "      oooooooooo   ", 
-  "        oooo       ", 
-  "        oooo       ", 
-  "        oooo       ", 
-  "        oooo       ", 
-  "    oooooooo       ", 
-  "    oo    oo       ", 
-  "    oo    oo       ", 
-  "          oooo     ", 
-  "                   ", 
-  "                   ", 
+  "                   ",
+  "          oooo     ",
+  "          oo       ",
+  "        oooooo     ",
+  "    oooooooo       ",
+  "    oo  oooooo     ",
+  "    oo  oooo  oo   ",
+  "                   ",
+  "        oooo       ",
+  "      oooooo       ",
+  "      oooooooo     ",
+  "      oo    oo     ",
+  "  oooooo    oo     ",
+  "  oo        oo     ",
+  "  oo        oo     ",
+  "            oooo   ",
+  "                   ",
+  "                   ",
   )
 
 RunningManSpriteMap.CopyMapToColorSprite(TheSprite=RunningManSprite)
@@ -4036,24 +3924,49 @@ RunningManSpriteMap.CopyMapToColorSprite(TheSprite=RunningManSprite)
 
 RunningManSpriteMap.map= (
   #0.........1.........2.....
-  "                   ", 
-  "          oooo     ", 
-  "          oo       ", 
-  "        oooooo     ", 
-  "      oooooo       ", 
-  "      oooooo       ", 
-  "      oooooo       ", 
-  "        oooo       ", 
-  "        oooo       ", 
-  "        oooo       ", 
-  "        oooo       ", 
-  "        oooo       ", 
-  "    oooooooo       ", 
-  "    oo  oo         ", 
-  "    oo  oo         ", 
-  "        oooo       ", 
-  "                   ", 
-  "                   ", 
+  "                   ",
+  "          oooo     ",
+  "          oo       ",
+  "        oooooo     ",
+  "      oooooo       ",
+  "      oooooo       ",
+  "      oooooo       ",
+  "      oooooooooo   ",
+  "        oooo       ",
+  "        oooo       ",
+  "        oooo       ",
+  "        oooo       ",
+  "    oooooooo       ",
+  "    oo    oo       ",
+  "    oo    oo       ",
+  "          oooo     ",
+  "                   ",
+  "                   ",
+  )
+
+RunningManSpriteMap.CopyMapToColorSprite(TheSprite=RunningManSprite)
+
+
+RunningManSpriteMap.map= (
+  #0.........1.........2.....
+  "                   ",
+  "          oooo     ",
+  "          oo       ",
+  "        oooooo     ",
+  "      oooooo       ",
+  "      oooooo       ",
+  "      oooooo       ",
+  "        oooo       ",
+  "        oooo       ",
+  "        oooo       ",
+  "        oooo       ",
+  "        oooo       ",
+  "    oooooooo       ",
+  "    oo  oo         ",
+  "    oo  oo         ",
+  "        oooo       ",
+  "                   ",
+  "                   ",
   )
 
 RunningManSpriteMap.CopyMapToColorSprite(TheSprite=RunningManSprite)
@@ -4062,24 +3975,24 @@ RunningManSpriteMap.CopyMapToColorSprite(TheSprite=RunningManSprite)
 
 RunningManSpriteMap.map= (
   #0.........1.........2.....
-  "                   ", 
-  "          oooo     ", 
-  "          oo       ", 
-  "        oooooo     ", 
-  "      oooooo       ", 
-  "      oooooooo     ", 
-  "      oooooooo     ", 
-  "      oooooooooo   ", 
-  "        oooo       ", 
-  "        oooooo     ", 
-  "      oooooooooo   ", 
-  "      oo      oo   ", 
-  "      oo  oooooo   ", 
-  "      oo  oo       ", 
-  "      oo           ", 
-  "        oo         ", 
-  "                   ", 
-  "                   ", 
+  "                   ",
+  "          oooo     ",
+  "          oo       ",
+  "        oooooo     ",
+  "      oooooo       ",
+  "      oooooooo     ",
+  "      oooooooo     ",
+  "      oooooooooo   ",
+  "        oooo       ",
+  "        oooooo     ",
+  "      oooooooooo   ",
+  "      oo      oo   ",
+  "      oo  oooooo   ",
+  "      oo  oo       ",
+  "      oo           ",
+  "        oo         ",
+  "                   ",
+  "                   ",
   )
 
 RunningManSpriteMap.CopyMapToColorSprite(TheSprite=RunningManSprite)
@@ -4089,24 +4002,24 @@ RunningManSpriteMap.CopyMapToColorSprite(TheSprite=RunningManSprite)
 
 RunningManSpriteMap.map= (
   #0.........1.........2.....
-  "                   ", 
-  "          oooo     ", 
-  "          oo       ", 
-  "        oooooo     ", 
-  "      oooooo       ", 
-  "    oooooooo       ", 
-  "    oo  oooooooo   ", 
-  "    oo             ", 
-  "        oooo       ", 
-  "        oooooo     ", 
-  "      oooooooooooo ", 
-  "      oo        oo ", 
-  "      oo    oooooo ", 
-  "    oo      oo     ", 
-  "    oo             ", 
-  "    oo             ", 
-  "                   ", 
-  "                   ", 
+  "                   ",
+  "          oooo     ",
+  "          oo       ",
+  "        oooooo     ",
+  "      oooooo       ",
+  "    oooooooo       ",
+  "    oo  oooooooo   ",
+  "    oo             ",
+  "        oooo       ",
+  "        oooooo     ",
+  "      oooooooooooo ",
+  "      oo        oo ",
+  "      oo    oooooo ",
+  "    oo      oo     ",
+  "    oo             ",
+  "    oo             ",
+  "                   ",
+  "                   ",
   )
 
 RunningManSpriteMap.CopyMapToColorSprite(TheSprite=RunningManSprite)
@@ -4117,21 +4030,21 @@ RunningManSpriteMap.CopyMapToColorSprite(TheSprite=RunningManSprite)
 
 
 RunningMan2Sprite = ColorAnimatedSprite(
-  h=0, 
-  v=0, 
-  name="RunningMan", 
-  width  = 19, 
-  height = 18, 
-  frames = 0, 
+  h=0,
+  v=0,
+  name="RunningMan",
+  width  = 19,
+  height = 18,
+  frames = 0,
   framerate=2,
   grid=[]  )
 
-                 
+
 
 RunningMan2SpriteMap = TextMap(
   h      = 1,
   v      = 1,
-  width  = 19, 
+  width  = 19,
   height = 18
   )
 
@@ -4160,50 +4073,25 @@ RunningMan2SpriteMap.TypeList = {
 
 RunningMan2SpriteMap.map= (
   #0.........1.........2.....
-  "                   ", 
-  "          oooo     ", 
-  "          oo       ", 
-  "      oooooooo     ", 
-  "    oooooooo       ", 
-  "    oo  oooo    OO ", 
-  "    oo  oooooooo   ", 
-  "                   ", 
-  "        oooo       ", 
-  "        oooo       ", 
-  "      oooooooooooo ", 
-  "      oo        oo ", 
-  "    oooo      oo   ", 
-  "    oo        --   ", 
-  "  oooo             ", 
-  "  .o               ", 
-  "  .o               ", 
-  "                   ", 
+  "                   ",
+  "          oooo     ",
+  "          oo       ",
+  "      oooooooo     ",
+  "    oooooooo       ",
+  "    oo  oooo    OO ",
+  "    oo  oooooooo   ",
+  "                   ",
+  "        oooo       ",
+  "        oooo       ",
+  "      oooooooooooo ",
+  "      oo        oo ",
+  "    oooo      oo   ",
+  "    oo        --   ",
+  "  oooo             ",
+  "  .o               ",
+  "  .o               ",
+  "                   ",
 
-  )
-      
-RunningMan2SpriteMap.CopyMapToColorSprite(TheSprite=RunningMan2Sprite)
-
-
-RunningMan2SpriteMap.map= (
-  #0.........1.........2.....
-  "                   ", 
-  "          oooo     ", 
-  "          oo       ", 
-  "  oooooooooooo     ", 
-  "  oo    oooo       ", 
-  "  oo    ooooooooOO ", 
-  "        oooo       ", 
-  "                   ", 
-  "        oooo       ", 
-  "        oooo       ", 
-  "      oooooooooooo ", 
-  "      oo        oo ", 
-  "    oooo        oo ", 
-  "    oo          -- ", 
-  "  .ooo             ", 
-  "  .o               ", 
-  "                   ", 
-  "                   ", 
   )
 
 RunningMan2SpriteMap.CopyMapToColorSprite(TheSprite=RunningMan2Sprite)
@@ -4211,24 +4099,24 @@ RunningMan2SpriteMap.CopyMapToColorSprite(TheSprite=RunningMan2Sprite)
 
 RunningMan2SpriteMap.map= (
   #0.........1.........2.....
-  "                   ", 
-  "          oooo     ", 
-  "          oo       ", 
-  "      oooooooo     ", 
-  "    oooooooo       ", 
-  "    oo  ooooooOO   ", 
-  "    oo  oooo       ", 
-  "                   ", 
-  "        oooo       ", 
-  "        oooo       ", 
-  "      oooooooo     ", 
-  "      oo    oo     ", 
-  "    oooo    oooo   ", 
-  "  .ooo        oo   ", 
-  "  .o          oo   ", 
-  "              ---- ", 
-  "                   ", 
-  "                   ", 
+  "                   ",
+  "          oooo     ",
+  "          oo       ",
+  "  oooooooooooo     ",
+  "  oo    oooo       ",
+  "  oo    ooooooooOO ",
+  "        oooo       ",
+  "                   ",
+  "        oooo       ",
+  "        oooo       ",
+  "      oooooooooooo ",
+  "      oo        oo ",
+  "    oooo        oo ",
+  "    oo          -- ",
+  "  .ooo             ",
+  "  .o               ",
+  "                   ",
+  "                   ",
   )
 
 RunningMan2SpriteMap.CopyMapToColorSprite(TheSprite=RunningMan2Sprite)
@@ -4236,24 +4124,24 @@ RunningMan2SpriteMap.CopyMapToColorSprite(TheSprite=RunningMan2Sprite)
 
 RunningMan2SpriteMap.map= (
   #0.........1.........2.....
-  "                   ", 
-  "          oooo     ", 
-  "          oo       ", 
-  "        oooooo     ", 
-  "    oooooooo       ", 
-  "    oo  oooo       ", 
-  "    oo  ooooooOO   ", 
-  "                   ", 
-  "        oooo       ", 
-  "      oooooo       ", 
-  "      oooooooo     ", 
-  "      oo    oo     ", 
-  "  .ooooo    oo     ", 
-  "  .o        oo     ", 
-  "  .o        oo     ", 
-  "            ----   ", 
-  "                   ", 
-  "                   ", 
+  "                   ",
+  "          oooo     ",
+  "          oo       ",
+  "      oooooooo     ",
+  "    oooooooo       ",
+  "    oo  ooooooOO   ",
+  "    oo  oooo       ",
+  "                   ",
+  "        oooo       ",
+  "        oooo       ",
+  "      oooooooo     ",
+  "      oo    oo     ",
+  "    oooo    oooo   ",
+  "  .ooo        oo   ",
+  "  .o          oo   ",
+  "              ---- ",
+  "                   ",
+  "                   ",
   )
 
 RunningMan2SpriteMap.CopyMapToColorSprite(TheSprite=RunningMan2Sprite)
@@ -4261,24 +4149,24 @@ RunningMan2SpriteMap.CopyMapToColorSprite(TheSprite=RunningMan2Sprite)
 
 RunningMan2SpriteMap.map= (
   #0.........1.........2.....
-  "                   ", 
-  "          oooo     ", 
-  "          oo       ", 
-  "        oooooo     ", 
-  "      oooooo       ", 
-  "      oooooo       ", 
-  "      oooooo       ", 
-  "      ooooooOO     ", 
-  "        oooo       ", 
-  "        oooo       ", 
-  "        oooo       ", 
-  "        oooo       ", 
-  "    .ooooooo       ", 
-  "    .o    oo       ", 
-  "    .o    oo       ", 
-  "          ----     ", 
-  "                   ", 
-  "                   ", 
+  "                   ",
+  "          oooo     ",
+  "          oo       ",
+  "        oooooo     ",
+  "    oooooooo       ",
+  "    oo  oooo       ",
+  "    oo  ooooooOO   ",
+  "                   ",
+  "        oooo       ",
+  "      oooooo       ",
+  "      oooooooo     ",
+  "      oo    oo     ",
+  "  .ooooo    oo     ",
+  "  .o        oo     ",
+  "  .o        oo     ",
+  "            ----   ",
+  "                   ",
+  "                   ",
   )
 
 RunningMan2SpriteMap.CopyMapToColorSprite(TheSprite=RunningMan2Sprite)
@@ -4286,77 +4174,49 @@ RunningMan2SpriteMap.CopyMapToColorSprite(TheSprite=RunningMan2Sprite)
 
 RunningMan2SpriteMap.map= (
   #0.........1.........2.....
-  "                   ", 
-  "          oooo     ", 
-  "          oo       ", 
-  "        oooooo     ", 
-  "      oooooo       ", 
-  "      oooooo       ", 
-  "      ooooOO       ", 
-  "        oooo       ", 
-  "        oooo       ", 
-  "        oooo       ", 
-  "        oooo       ", 
-  "        oooo       ", 
-  "    .ooooooo       ", 
-  "    .o  oo         ", 
-  "    .o  oo         ", 
-  "        ----       ", 
-  "                   ", 
-  "                   ", 
+  "                   ",
+  "          oooo     ",
+  "          oo       ",
+  "        oooooo     ",
+  "      oooooo       ",
+  "      oooooo       ",
+  "      oooooo       ",
+  "      ooooooOO     ",
+  "        oooo       ",
+  "        oooo       ",
+  "        oooo       ",
+  "        oooo       ",
+  "    .ooooooo       ",
+  "    .o    oo       ",
+  "    .o    oo       ",
+  "          ----     ",
+  "                   ",
+  "                   ",
   )
 
 RunningMan2SpriteMap.CopyMapToColorSprite(TheSprite=RunningMan2Sprite)
 
 
-
 RunningMan2SpriteMap.map= (
   #0.........1.........2.....
-  "                   ", 
-  "          oooo     ", 
-  "          oo       ", 
-  "        oooooo     ", 
-  "      oooooo       ", 
-  "      oooooooo     ", 
-  "      oooooooo     ", 
-  "      ooOOoooooo   ", 
-  "        oooo       ", 
-  "        oooooo     ", 
-  "      oooooooooo   ", 
-  "      oo      oo   ", 
-  "      oo  .ooooo   ", 
-  "      oo  .o       ", 
-  "      -o           ", 
-  "        --         ", 
-  "                   ", 
-  "                   ", 
-  )
-
-RunningMan2SpriteMap.CopyMapToColorSprite(TheSprite=RunningMan2Sprite)
-
-
-
-
-RunningMan2SpriteMap.map= (
-  #0.........1.........2.....
-  "                   ", 
-  "          oooo     ", 
-  "          oo       ", 
-  "        oooooo     ", 
-  "      oooooo       ", 
-  "    oooooooo       ", 
-  "    oo  oooooooo   ", 
-  "    OO             ", 
-  "        oooo       ", 
-  "        oooooo     ", 
-  "      oooooooooooo ", 
-  "      oo        oo ", 
-  "      oo    .ooooo ", 
-  "    -o      .o     ", 
-  "    -o             ", 
-  "    -o             ", 
-  "                   ", 
-  "                   ", 
+  "                   ",
+  "          oooo     ",
+  "          oo       ",
+  "        oooooo     ",
+  "      oooooo       ",
+  "      oooooo       ",
+  "      ooooOO       ",
+  "        oooo       ",
+  "        oooo       ",
+  "        oooo       ",
+  "        oooo       ",
+  "        oooo       ",
+  "    .ooooooo       ",
+  "    .o  oo         ",
+  "    .o  oo         ",
+  "        ----       ",
+  "                   ",
+  "                   ",
   )
 
 RunningMan2SpriteMap.CopyMapToColorSprite(TheSprite=RunningMan2Sprite)
@@ -4365,176 +4225,24 @@ RunningMan2SpriteMap.CopyMapToColorSprite(TheSprite=RunningMan2Sprite)
 
 RunningMan2SpriteMap.map= (
   #0.........1.........2.....
-  "                   ", 
-  "          oooo     ", 
-  "          oo       ", 
-  "      oooooooo     ", 
-  "    oooooooo       ", 
-  "    oo  oooo    oo ", 
-  "    OO  oooooooo   ", 
-  "                   ", 
-  "        oooo       ", 
-  "        oooo       ", 
-  "      oooooooooooo ", 
-  "      oo        oo ", 
-  "    oooo      .o   ", 
-  "    oo        .o   ", 
-  "  -ooo             ", 
-  "  -o               ", 
-  "  -o               ", 
-  "                   ", 
-
-  )
-      
-RunningMan2SpriteMap.CopyMapToColorSprite(TheSprite=RunningMan2Sprite)
-
-
-RunningMan2SpriteMap.map= (
-  #0.........1.........2.....
-  "                   ", 
-  "          oooo     ", 
-  "          oo       ", 
-  "  oooooooooooo     ", 
-  "  oo    oooo       ", 
-  "  OO    oooooooooo ", 
-  "        oooo       ", 
-  "                   ", 
-  "        oooo       ", 
-  "        oooo       ", 
-  "      oooooooooooo ", 
-  "      oo        oo ", 
-  "    oooo        oo ", 
-  "    oo          .. ", 
-  "  -ooo             ", 
-  "  -o               ", 
-  "                   ", 
-  "                   ", 
-  )
-
-RunningMan2SpriteMap.CopyMapToColorSprite(TheSprite=RunningMan2Sprite)
-
-
-RunningMan2SpriteMap.map= (
-  #0.........1.........2.....
-  "                   ", 
-  "          oooo     ", 
-  "          oo       ", 
-  "      oooooooo     ", 
-  "    oooooooo       ", 
-  "    oo  oooooooo   ", 
-  "    OO  oooo       ", 
-  "                   ", 
-  "        oooo       ", 
-  "        oooo       ", 
-  "      oooooooo     ", 
-  "      oo    oo     ", 
-  "    oooo    oooo   ", 
-  "  -ooo        oo   ", 
-  "  -o          oo   ", 
-  "              .... ", 
-  "                   ", 
-  "                   ", 
-  )
-
-RunningMan2SpriteMap.CopyMapToColorSprite(TheSprite=RunningMan2Sprite)
-
-
-RunningMan2SpriteMap.map= (
-  #0.........1.........2.....
-  "                   ", 
-  "          oooo     ", 
-  "          oo       ", 
-  "        oooooo     ", 
-  "    oooooooo       ", 
-  "    oo  oooooo     ", 
-  "    OO  oooo  oo   ", 
-  "                   ", 
-  "        oooo       ", 
-  "      oooooo       ", 
-  "      oooooooo     ", 
-  "      oo    oo     ", 
-  "  -ooooo    oo     ", 
-  "  -o        oo     ", 
-  "  -o        oo     ", 
-  "            ....   ", 
-  "                   ", 
-  "                   ", 
-  )
-
-RunningMan2SpriteMap.CopyMapToColorSprite(TheSprite=RunningMan2Sprite)
-
-
-RunningMan2SpriteMap.map= (
-  #0.........1.........2.....
-  "                   ", 
-  "          oooo     ", 
-  "          oo       ", 
-  "        oooooo     ", 
-  "      oooooo       ", 
-  "      oooooo       ", 
-  "      oooooo       ", 
-  "      ooOOoooo     ", 
-  "        oooo       ", 
-  "        oooo       ", 
-  "        oooo       ", 
-  "        oooo       ", 
-  "    -ooooooo       ", 
-  "    -o    oo       ", 
-  "    -o    oo       ", 
-  "          ....     ", 
-  "                   ", 
-  "                   ", 
-  )
-
-RunningMan2SpriteMap.CopyMapToColorSprite(TheSprite=RunningMan2Sprite)
-
-
-RunningMan2SpriteMap.map= (
-  #0.........1.........2.....
-  "                   ", 
-  "          oooo     ", 
-  "          oo       ", 
-  "        oooooo     ", 
-  "      oooooo       ", 
-  "      oooooo       ", 
-  "      ooooOO       ", 
-  "        oooo       ", 
-  "        oooo       ", 
-  "        oooo       ", 
-  "        oooo       ", 
-  "        oooo       ", 
-  "    -ooooooo       ", 
-  "    -o  oo         ", 
-  "    -o  oo         ", 
-  "        ....       ", 
-  "                   ", 
-  "                   ", 
-  )
-
-RunningMan2SpriteMap.CopyMapToColorSprite(TheSprite=RunningMan2Sprite)
-
-
-
-RunningMan2SpriteMap.map= (
-  #0.........1.........2.....
-  "                   ", 
-  "          oooo     ", 
-  "          oo       ", 
-  "        oooooo     ", 
-  "      oooooo       ", 
-  "      oooooooo     ", 
-  "      oooooooo     ", 
-  "      ooooooooOO   ", 
-  "        oooo       ", 
-  "        oooooo     ", 
-  "      oooooooooo   ", 
-  "      oo      oo   ", 
-  "      oo  -ooooo   ", 
-  "      oo  -o       ", 
-  "      .o           ", 
-  "        ..         ", 
-  "                   ", 
-  "                   ", 
+  "                   ",
+  "          oooo     ",
+  "          oo       ",
+  "        oooooo     ",
+  "      oooooo       ",
+  "      oooooooo     ",
+  "      oooooooo     ",
+  "      ooOOoooooo   ",
+  "        oooo       ",
+  "        oooooo     ",
+  "      oooooooooo   ",
+  "      oo      oo   ",
+  "      oo  .ooooo   ",
+  "      oo  .o       ",
+  "      -o           ",
+  "        --         ",
+  "                   ",
+  "                   ",
   )
 
 RunningMan2SpriteMap.CopyMapToColorSprite(TheSprite=RunningMan2Sprite)
@@ -4544,24 +4252,229 @@ RunningMan2SpriteMap.CopyMapToColorSprite(TheSprite=RunningMan2Sprite)
 
 RunningMan2SpriteMap.map= (
   #0.........1.........2.....
-  "                   ", 
-  "          oooo     ", 
-  "          oo       ", 
-  "        oooooo     ", 
-  "      oooooo       ", 
-  "    oooooooo       ", 
-  "    oo  ooooooOO   ", 
-  "    oo             ", 
-  "        oooo       ", 
-  "        oooooo     ", 
-  "      oooooooooooo ", 
-  "      oo        oo ", 
-  "      oo    -ooooo ", 
-  "    .o      -o     ", 
-  "    .o             ", 
-  "    .o             ", 
-  "                   ", 
-  "                   ", 
+  "                   ",
+  "          oooo     ",
+  "          oo       ",
+  "        oooooo     ",
+  "      oooooo       ",
+  "    oooooooo       ",
+  "    oo  oooooooo   ",
+  "    OO             ",
+  "        oooo       ",
+  "        oooooo     ",
+  "      oooooooooooo ",
+  "      oo        oo ",
+  "      oo    .ooooo ",
+  "    -o      .o     ",
+  "    -o             ",
+  "    -o             ",
+  "                   ",
+  "                   ",
+  )
+
+RunningMan2SpriteMap.CopyMapToColorSprite(TheSprite=RunningMan2Sprite)
+
+
+
+RunningMan2SpriteMap.map= (
+  #0.........1.........2.....
+  "                   ",
+  "          oooo     ",
+  "          oo       ",
+  "      oooooooo     ",
+  "    oooooooo       ",
+  "    oo  oooo    oo ",
+  "    OO  oooooooo   ",
+  "                   ",
+  "        oooo       ",
+  "        oooo       ",
+  "      oooooooooooo ",
+  "      oo        oo ",
+  "    oooo      .o   ",
+  "    oo        .o   ",
+  "  -ooo             ",
+  "  -o               ",
+  "  -o               ",
+  "                   ",
+
+  )
+
+RunningMan2SpriteMap.CopyMapToColorSprite(TheSprite=RunningMan2Sprite)
+
+
+RunningMan2SpriteMap.map= (
+  #0.........1.........2.....
+  "                   ",
+  "          oooo     ",
+  "          oo       ",
+  "  oooooooooooo     ",
+  "  oo    oooo       ",
+  "  OO    oooooooooo ",
+  "        oooo       ",
+  "                   ",
+  "        oooo       ",
+  "        oooo       ",
+  "      oooooooooooo ",
+  "      oo        oo ",
+  "    oooo        oo ",
+  "    oo          .. ",
+  "  -ooo             ",
+  "  -o               ",
+  "                   ",
+  "                   ",
+  )
+
+RunningMan2SpriteMap.CopyMapToColorSprite(TheSprite=RunningMan2Sprite)
+
+
+RunningMan2SpriteMap.map= (
+  #0.........1.........2.....
+  "                   ",
+  "          oooo     ",
+  "          oo       ",
+  "      oooooooo     ",
+  "    oooooooo       ",
+  "    oo  oooooooo   ",
+  "    OO  oooo       ",
+  "                   ",
+  "        oooo       ",
+  "        oooo       ",
+  "      oooooooo     ",
+  "      oo    oo     ",
+  "    oooo    oooo   ",
+  "  -ooo        oo   ",
+  "  -o          oo   ",
+  "              .... ",
+  "                   ",
+  "                   ",
+  )
+
+RunningMan2SpriteMap.CopyMapToColorSprite(TheSprite=RunningMan2Sprite)
+
+
+RunningMan2SpriteMap.map= (
+  #0.........1.........2.....
+  "                   ",
+  "          oooo     ",
+  "          oo       ",
+  "        oooooo     ",
+  "    oooooooo       ",
+  "    oo  oooooo     ",
+  "    OO  oooo  oo   ",
+  "                   ",
+  "        oooo       ",
+  "      oooooo       ",
+  "      oooooooo     ",
+  "      oo    oo     ",
+  "  -ooooo    oo     ",
+  "  -o        oo     ",
+  "  -o        oo     ",
+  "            ....   ",
+  "                   ",
+  "                   ",
+  )
+
+RunningMan2SpriteMap.CopyMapToColorSprite(TheSprite=RunningMan2Sprite)
+
+
+RunningMan2SpriteMap.map= (
+  #0.........1.........2.....
+  "                   ",
+  "          oooo     ",
+  "          oo       ",
+  "        oooooo     ",
+  "      oooooo       ",
+  "      oooooo       ",
+  "      oooooo       ",
+  "      ooOOoooo     ",
+  "        oooo       ",
+  "        oooo       ",
+  "        oooo       ",
+  "        oooo       ",
+  "    -ooooooo       ",
+  "    -o    oo       ",
+  "    -o    oo       ",
+  "          ....     ",
+  "                   ",
+  "                   ",
+  )
+
+RunningMan2SpriteMap.CopyMapToColorSprite(TheSprite=RunningMan2Sprite)
+
+
+RunningMan2SpriteMap.map= (
+  #0.........1.........2.....
+  "                   ",
+  "          oooo     ",
+  "          oo       ",
+  "        oooooo     ",
+  "      oooooo       ",
+  "      oooooo       ",
+  "      ooooOO       ",
+  "        oooo       ",
+  "        oooo       ",
+  "        oooo       ",
+  "        oooo       ",
+  "        oooo       ",
+  "    -ooooooo       ",
+  "    -o  oo         ",
+  "    -o  oo         ",
+  "        ....       ",
+  "                   ",
+  "                   ",
+  )
+
+RunningMan2SpriteMap.CopyMapToColorSprite(TheSprite=RunningMan2Sprite)
+
+
+
+RunningMan2SpriteMap.map= (
+  #0.........1.........2.....
+  "                   ",
+  "          oooo     ",
+  "          oo       ",
+  "        oooooo     ",
+  "      oooooo       ",
+  "      oooooooo     ",
+  "      oooooooo     ",
+  "      ooooooooOO   ",
+  "        oooo       ",
+  "        oooooo     ",
+  "      oooooooooo   ",
+  "      oo      oo   ",
+  "      oo  -ooooo   ",
+  "      oo  -o       ",
+  "      .o           ",
+  "        ..         ",
+  "                   ",
+  "                   ",
+  )
+
+RunningMan2SpriteMap.CopyMapToColorSprite(TheSprite=RunningMan2Sprite)
+
+
+
+
+RunningMan2SpriteMap.map= (
+  #0.........1.........2.....
+  "                   ",
+  "          oooo     ",
+  "          oo       ",
+  "        oooooo     ",
+  "      oooooo       ",
+  "    oooooooo       ",
+  "    oo  ooooooOO   ",
+  "    oo             ",
+  "        oooo       ",
+  "        oooooo     ",
+  "      oooooooooooo ",
+  "      oo        oo ",
+  "      oo    -ooooo ",
+  "    .o      -o     ",
+  "    .o             ",
+  "    .o             ",
+  "                   ",
+  "                   ",
   )
 
 RunningMan2SpriteMap.CopyMapToColorSprite(TheSprite=RunningMan2Sprite)
@@ -4575,21 +4488,21 @@ RunningMan2SpriteMap.CopyMapToColorSprite(TheSprite=RunningMan2Sprite)
 
 
 RunningMan3Sprite = ColorAnimatedSprite(
-  h=0, 
-  v=0, 
-  name="RunningMan", 
-  width  = 33, 
-  height = 18, 
-  frames = 0, 
+  h=0,
+  v=0,
+  name="RunningMan",
+  width  = 33,
+  height = 18,
+  frames = 0,
   framerate=2,
   grid=[]  )
 
-                 
+
 
 RunningMan3SpriteMap = TextMap(
   h      = 1,
   v      = 1,
-  width  = 33, 
+  width  = 33,
   height = 18
   )
 
@@ -4608,57 +4521,32 @@ RunningMan3SpriteMap.ColorList = {
 
 RunningMan3SpriteMap.TypeList = {
   ' ' : 'Empty'
-  
+
 }
 
 
 
 RunningMan3SpriteMap.map= (
   #0.........1.........2.........3...
-  "                                 ", 
-  "               oooo          **  ", 
-  "               oo         ##     ", 
-  "           oooooooo    ##        ", 
-  "         oooooooo   #oo          ", 
-  "         oo  oooo##oo            ", 
-  "         oo  o##o                ", 
-  "         oo##                    ", 
-  "        ##   oooo                ", 
-  "     ##      oooo                ", 
-  "  ##        ooooooooooo          ", 
-  "           oo        oo          ", 
-  "         oooo      oo            ", 
-  "         oo        --            ", 
-  "       oooo                      ", 
-  "       .o                        ", 
-  "       .o                        ", 
-  "                                 ", 
+  "                                 ",
+  "               oooo          **  ",
+  "               oo         ##     ",
+  "           oooooooo    ##        ",
+  "         oooooooo   #oo          ",
+  "         oo  oooo##oo            ",
+  "         oo  o##o                ",
+  "         oo##                    ",
+  "        ##   oooo                ",
+  "     ##      oooo                ",
+  "  ##        ooooooooooo          ",
+  "           oo        oo          ",
+  "         oooo      oo            ",
+  "         oo        --            ",
+  "       oooo                      ",
+  "       .o                        ",
+  "       .o                        ",
+  "                                 ",
 
-  )
-      
-RunningMan3SpriteMap.CopyMapToColorSprite(TheSprite=RunningMan3Sprite)
-
-
-RunningMan3SpriteMap.map= (
-  #0.........1.........2.....
-  "                                 ", 
-  "               oooo          **  ", 
-  "               oo         ##     ", 
-  "           oooooooo    ##        ", 
-  "         oooooooo   #oo          ", 
-  "         oo  oooo##oo            ", 
-  "         oo  o##o                ", 
-  "         oo##                    ", 
-  "        ##   oooo                ", 
-  "     ##      oooo                ", 
-  "  ##        ooooooooooo          ", 
-  "           oo        oo          ", 
-  "         oooo        oo          ", 
-  "         oo          --          ", 
-  "       .ooo                      ", 
-  "       .o                        ", 
-  "                                 ", 
-  "                                 ", 
   )
 
 RunningMan3SpriteMap.CopyMapToColorSprite(TheSprite=RunningMan3Sprite)
@@ -4666,24 +4554,24 @@ RunningMan3SpriteMap.CopyMapToColorSprite(TheSprite=RunningMan3Sprite)
 
 RunningMan3SpriteMap.map= (
   #0.........1.........2.....
-  "                                 ", 
-  "               oooo          **  ", 
-  "               oo         ##     ", 
-  "           oooooooo    ##        ", 
-  "         oooooooo   #oo          ", 
-  "         oo  oooo##oo            ", 
-  "         oo  o##o                ", 
-  "         oo##                    ", 
-  "        ##   oooo                ", 
-  "     ##      oooo                ", 
-  "  ##        ooooooo              ", 
-  "           oo    oo              ", 
-  "         oooo    oooo            ", 
-  "       .ooo        oo            ", 
-  "       .o          oo            ", 
-  "                   ----          ", 
-  "                                 ", 
-  "                                 ", 
+  "                                 ",
+  "               oooo          **  ",
+  "               oo         ##     ",
+  "           oooooooo    ##        ",
+  "         oooooooo   #oo          ",
+  "         oo  oooo##oo            ",
+  "         oo  o##o                ",
+  "         oo##                    ",
+  "        ##   oooo                ",
+  "     ##      oooo                ",
+  "  ##        ooooooooooo          ",
+  "           oo        oo          ",
+  "         oooo        oo          ",
+  "         oo          --          ",
+  "       .ooo                      ",
+  "       .o                        ",
+  "                                 ",
+  "                                 ",
   )
 
 RunningMan3SpriteMap.CopyMapToColorSprite(TheSprite=RunningMan3Sprite)
@@ -4691,24 +4579,24 @@ RunningMan3SpriteMap.CopyMapToColorSprite(TheSprite=RunningMan3Sprite)
 
 RunningMan3SpriteMap.map= (
   #0.........1.........2.....
-  "                                 ", 
-  "               oooo          **  ", 
-  "               oo         ##     ", 
-  "           oooooooo    ##        ", 
-  "         oooooooo   #oo          ", 
-  "         oo  oooo##oo            ", 
-  "         oo  o##o                ", 
-  "         oo##                    ", 
-  "        ##   oooo                ", 
-  "     ##      oooo                ", 
-  "  ##        ooooooo              ", 
-  "           oo    oo              ", 
-  "       .ooooo    oo              ", 
-  "       .o        oo              ", 
-  "       .o        oo              ", 
-  "                 ----            ", 
-  "                                 ", 
-  "                                 ", 
+  "                                 ",
+  "               oooo          **  ",
+  "               oo         ##     ",
+  "           oooooooo    ##        ",
+  "         oooooooo   #oo          ",
+  "         oo  oooo##oo            ",
+  "         oo  o##o                ",
+  "         oo##                    ",
+  "        ##   oooo                ",
+  "     ##      oooo                ",
+  "  ##        ooooooo              ",
+  "           oo    oo              ",
+  "         oooo    oooo            ",
+  "       .ooo        oo            ",
+  "       .o          oo            ",
+  "                   ----          ",
+  "                                 ",
+  "                                 ",
   )
 
 RunningMan3SpriteMap.CopyMapToColorSprite(TheSprite=RunningMan3Sprite)
@@ -4716,24 +4604,24 @@ RunningMan3SpriteMap.CopyMapToColorSprite(TheSprite=RunningMan3Sprite)
 
 RunningMan3SpriteMap.map= (
   #0.........1.........2.....
-  "                                 ", 
-  "               oooo          **  ", 
-  "               oo         ##     ", 
-  "           oooooooo    ##        ", 
-  "         oooooooo   #oo          ", 
-  "         oo  oooo##oo            ", 
-  "         oo  o##o                ", 
-  "         oo##                    ", 
-  "        ##   oooo                ", 
-  "     ##      oooo                ", 
-  "  ##        oooooo               ", 
-  "             oooo                ", 
-  "         .ooooooo                ", 
-  "         .o    oo                ", 
-  "         .o    oo                ", 
-  "               ----              ", 
-  "                                 ", 
-  "                                 ", 
+  "                                 ",
+  "               oooo          **  ",
+  "               oo         ##     ",
+  "           oooooooo    ##        ",
+  "         oooooooo   #oo          ",
+  "         oo  oooo##oo            ",
+  "         oo  o##o                ",
+  "         oo##                    ",
+  "        ##   oooo                ",
+  "     ##      oooo                ",
+  "  ##        ooooooo              ",
+  "           oo    oo              ",
+  "       .ooooo    oo              ",
+  "       .o        oo              ",
+  "       .o        oo              ",
+  "                 ----            ",
+  "                                 ",
+  "                                 ",
   )
 
 RunningMan3SpriteMap.CopyMapToColorSprite(TheSprite=RunningMan3Sprite)
@@ -4741,77 +4629,49 @@ RunningMan3SpriteMap.CopyMapToColorSprite(TheSprite=RunningMan3Sprite)
 
 RunningMan3SpriteMap.map= (
   #0.........1.........2.....
-  "                                 ", 
-  "               oooo          **  ", 
-  "               oo         ##     ", 
-  "           oooooooo    ##        ", 
-  "         oooooooo   #oo          ", 
-  "         oo  oooo##oo            ", 
-  "         oo  o##o                ", 
-  "         oo##                    ", 
-  "        ##   oooo                ", 
-  "     ##      oooo                ", 
-  "  ##        oooooo               ", 
-  "             oooo                ", 
-  "         .ooooooo                ", 
-  "         .o  oo                  ", 
-  "         .o  oo                  ", 
-  "             ----                ", 
-  "                                 ", 
-  "                                 ", 
+  "                                 ",
+  "               oooo          **  ",
+  "               oo         ##     ",
+  "           oooooooo    ##        ",
+  "         oooooooo   #oo          ",
+  "         oo  oooo##oo            ",
+  "         oo  o##o                ",
+  "         oo##                    ",
+  "        ##   oooo                ",
+  "     ##      oooo                ",
+  "  ##        oooooo               ",
+  "             oooo                ",
+  "         .ooooooo                ",
+  "         .o    oo                ",
+  "         .o    oo                ",
+  "               ----              ",
+  "                                 ",
+  "                                 ",
   )
 
 RunningMan3SpriteMap.CopyMapToColorSprite(TheSprite=RunningMan3Sprite)
 
 
-
 RunningMan3SpriteMap.map= (
   #0.........1.........2.....
-  "                                 ", 
-  "               oooo          **  ", 
-  "               oo         ##     ", 
-  "           oooooooo    ##        ", 
-  "         oooooooo   #oo          ", 
-  "         oo  oooo##oo            ", 
-  "         oo  o##o                ", 
-  "         oo##                    ", 
-  "        ##   oooo                ", 
-  "     ##      oooo                ", 
-  "  ##        ooooooooo            ", 
-  "           oo      oo            ", 
-  "           oo  .ooooo            ", 
-  "           oo  .o                ", 
-  "           -o                    ", 
-  "             --                  ", 
-  "                                 ", 
-  "                                 ", 
-  )
-
-RunningMan3SpriteMap.CopyMapToColorSprite(TheSprite=RunningMan3Sprite)
-
-
-
-
-RunningMan3SpriteMap.map= (
-  #0.........1.........2.....
-  "                                 ", 
-  "               oooo          **  ", 
-  "               oo         ##     ", 
-  "           oooooooo    ##        ", 
-  "         oooooooo   #oo          ", 
-  "         oo  oooo##oo            ", 
-  "         oo  o##o                ", 
-  "         oo##                    ", 
-  "        ##   oooo                ", 
-  "     ##      oooo                ", 
-  "  ##        ooooooooooo          ", 
-  "           oo        oo          ", 
-  "           oo    .ooooo          ", 
-  "         -o      .o              ", 
-  "         -o                      ", 
-  "         -o                      ", 
-  "                                 ", 
-  "                                 ", 
+  "                                 ",
+  "               oooo          **  ",
+  "               oo         ##     ",
+  "           oooooooo    ##        ",
+  "         oooooooo   #oo          ",
+  "         oo  oooo##oo            ",
+  "         oo  o##o                ",
+  "         oo##                    ",
+  "        ##   oooo                ",
+  "     ##      oooo                ",
+  "  ##        oooooo               ",
+  "             oooo                ",
+  "         .ooooooo                ",
+  "         .o  oo                  ",
+  "         .o  oo                  ",
+  "             ----                ",
+  "                                 ",
+  "                                 ",
   )
 
 RunningMan3SpriteMap.CopyMapToColorSprite(TheSprite=RunningMan3Sprite)
@@ -4820,176 +4680,24 @@ RunningMan3SpriteMap.CopyMapToColorSprite(TheSprite=RunningMan3Sprite)
 
 RunningMan3SpriteMap.map= (
   #0.........1.........2.....
-  "                                 ", 
-  "               oooo          **  ", 
-  "               oo         ##     ", 
-  "           oooooooo    ##        ", 
-  "         oooooooo   #oo          ", 
-  "         oo  oooo##oo            ", 
-  "         oo  o##o                ", 
-  "         oo##                    ", 
-  "        ##   oooo                ", 
-  "     ##      oooo                ", 
-  "  ##        ooooooooooo          ", 
-  "           oo        oo          ", 
-  "         oooo      .o            ", 
-  "         oo        .o            ", 
-  "       -ooo                      ", 
-  "       -o                        ", 
-  "       -o                        ", 
-  "                                 ", 
-
-  )
-      
-RunningMan3SpriteMap.CopyMapToColorSprite(TheSprite=RunningMan3Sprite)
-
-
-RunningMan3SpriteMap.map= (
-  #0.........1.........2.....
-  "                                 ", 
-  "               oooo          **  ", 
-  "               oo         ##     ", 
-  "           oooooooo    ##        ", 
-  "         oooooooo   #oo          ", 
-  "         oo  oooo##oo            ", 
-  "         oo  o##o                ", 
-  "         oo##                    ", 
-  "        ##   oooo                ", 
-  "     ##      oooo                ", 
-  "  ##        ooooooooooo          ", 
-  "           oo        oo          ", 
-  "         oooo        oo          ", 
-  "         oo          ..          ", 
-  "       -ooo                      ", 
-  "       -o                        ", 
-  "                                 ", 
-  "                                 ", 
-  )
-
-RunningMan3SpriteMap.CopyMapToColorSprite(TheSprite=RunningMan3Sprite)
-
-
-RunningMan3SpriteMap.map= (
-  #0.........1.........2.....
-  "                                 ", 
-  "               oooo          **  ", 
-  "               oo         ##     ", 
-  "           oooooooo    ##        ", 
-  "         oooooooo   #oo          ", 
-  "         oo  oooo##oo            ", 
-  "         oo  o##o                ", 
-  "         oo##                    ", 
-  "        ##   oooo                ", 
-  "     ##      oooo                ", 
-  "  ##        ooooooo              ", 
-  "           oo    oo              ", 
-  "         oooo    oooo            ", 
-  "       -ooo        oo            ", 
-  "       -o          oo            ", 
-  "                   ....          ", 
-  "                                 ", 
-  "                                 ", 
-  )
-
-RunningMan3SpriteMap.CopyMapToColorSprite(TheSprite=RunningMan3Sprite)
-
-
-RunningMan3SpriteMap.map= (
-  #0.........1.........2.....
-  "                                 ", 
-  "               oooo          **  ", 
-  "               oo         ##     ", 
-  "           oooooooo    ##        ", 
-  "         oooooooo   #oo          ", 
-  "         oo  oooo##oo            ", 
-  "         oo  o##o                ", 
-  "         oo##                    ", 
-  "        ##   oooo                ", 
-  "     ##      oooo                ", 
-  "  ##        ooooooo              ", 
-  "           oo    oo              ", 
-  "       -ooooo    oo              ", 
-  "       -o        oo              ", 
-  "       -o        oo              ", 
-  "                 ....            ", 
-  "                                 ", 
-  "                                 ", 
-  )
-
-RunningMan3SpriteMap.CopyMapToColorSprite(TheSprite=RunningMan3Sprite)
-
-
-RunningMan3SpriteMap.map= (
-  #0.........1.........2.....
-  "                                 ", 
-  "               oooo          **  ", 
-  "               oo         ##     ", 
-  "           oooooooo    ##        ", 
-  "         oooooooo   #oo          ", 
-  "         oo  oooo##oo            ", 
-  "         oo  o##o                ", 
-  "         oo##                    ", 
-  "        ##   oooo                ", 
-  "     ##      oooo                ", 
-  "  ##        oooooo               ", 
-  "             oooo                ", 
-  "         -ooooooo                ", 
-  "         -o    oo                ", 
-  "         -o    oo                ", 
-  "               ....              ", 
-  "                                 ", 
-  "                                 ", 
-  )
-
-RunningMan3SpriteMap.CopyMapToColorSprite(TheSprite=RunningMan3Sprite)
-
-
-RunningMan3SpriteMap.map= (
-  #0.........1.........2.....
-  "                                 ", 
-  "               oooo          **  ", 
-  "               oo         ##     ", 
-  "           oooooooo    ##        ", 
-  "         oooooooo   #oo          ", 
-  "         oo  oooo##oo            ", 
-  "         oo  o##o                ", 
-  "         oo##                    ", 
-  "        ##   oooo                ", 
-  "     ##      oooo                ", 
-  "  ##        oooooo               ", 
-  "             oooo                ", 
-  "         -ooooooo                ", 
-  "         -o  oo                  ", 
-  "         -o  oo                  ", 
-  "             ....                ", 
-  "                                 ", 
-  "                                 ", 
-  )
-
-RunningMan3SpriteMap.CopyMapToColorSprite(TheSprite=RunningMan3Sprite)
-
-
-
-RunningMan3SpriteMap.map= (
-  #0.........1.........2.....
-  "                                 ", 
-  "               oooo          **  ", 
-  "               oo         ##     ", 
-  "           oooooooo    ##        ", 
-  "         oooooooo   #oo          ", 
-  "         oo  oooo##oo            ", 
-  "         oo  o##o                ", 
-  "         oo##                    ", 
-  "        ##   oooo                ", 
-  "     ##      oooo                ", 
-  "  ##        ooooooooo            ", 
-  "           oo      oo            ", 
-  "           oo  -ooooo            ", 
-  "           oo  -o                ", 
-  "           .o                    ", 
-  "             ..                  ", 
-  "                                 ", 
-  "                                 ", 
+  "                                 ",
+  "               oooo          **  ",
+  "               oo         ##     ",
+  "           oooooooo    ##        ",
+  "         oooooooo   #oo          ",
+  "         oo  oooo##oo            ",
+  "         oo  o##o                ",
+  "         oo##                    ",
+  "        ##   oooo                ",
+  "     ##      oooo                ",
+  "  ##        ooooooooo            ",
+  "           oo      oo            ",
+  "           oo  .ooooo            ",
+  "           oo  .o                ",
+  "           -o                    ",
+  "             --                  ",
+  "                                 ",
+  "                                 ",
   )
 
 RunningMan3SpriteMap.CopyMapToColorSprite(TheSprite=RunningMan3Sprite)
@@ -4999,24 +4707,229 @@ RunningMan3SpriteMap.CopyMapToColorSprite(TheSprite=RunningMan3Sprite)
 
 RunningMan3SpriteMap.map= (
   #0.........1.........2.....
-  "                                 ", 
-  "               oooo          **  ", 
-  "               oo         ##     ", 
-  "           oooooooo    ##        ", 
-  "         oooooooo   #oo          ", 
-  "         oo  oooo##oo            ", 
-  "         oo  o##o                ", 
-  "         oo##                    ", 
-  "        ##   oooo                ", 
-  "     ##      oooo                ", 
-  "  ##        ooooooooooo          ", 
-  "           oo        oo          ", 
-  "           oo    -ooooo          ", 
-  "         .o      -o              ", 
-  "         .o                      ", 
-  "         .o                      ", 
-  "                                 ", 
-  "                                 ", 
+  "                                 ",
+  "               oooo          **  ",
+  "               oo         ##     ",
+  "           oooooooo    ##        ",
+  "         oooooooo   #oo          ",
+  "         oo  oooo##oo            ",
+  "         oo  o##o                ",
+  "         oo##                    ",
+  "        ##   oooo                ",
+  "     ##      oooo                ",
+  "  ##        ooooooooooo          ",
+  "           oo        oo          ",
+  "           oo    .ooooo          ",
+  "         -o      .o              ",
+  "         -o                      ",
+  "         -o                      ",
+  "                                 ",
+  "                                 ",
+  )
+
+RunningMan3SpriteMap.CopyMapToColorSprite(TheSprite=RunningMan3Sprite)
+
+
+
+RunningMan3SpriteMap.map= (
+  #0.........1.........2.....
+  "                                 ",
+  "               oooo          **  ",
+  "               oo         ##     ",
+  "           oooooooo    ##        ",
+  "         oooooooo   #oo          ",
+  "         oo  oooo##oo            ",
+  "         oo  o##o                ",
+  "         oo##                    ",
+  "        ##   oooo                ",
+  "     ##      oooo                ",
+  "  ##        ooooooooooo          ",
+  "           oo        oo          ",
+  "         oooo      .o            ",
+  "         oo        .o            ",
+  "       -ooo                      ",
+  "       -o                        ",
+  "       -o                        ",
+  "                                 ",
+
+  )
+
+RunningMan3SpriteMap.CopyMapToColorSprite(TheSprite=RunningMan3Sprite)
+
+
+RunningMan3SpriteMap.map= (
+  #0.........1.........2.....
+  "                                 ",
+  "               oooo          **  ",
+  "               oo         ##     ",
+  "           oooooooo    ##        ",
+  "         oooooooo   #oo          ",
+  "         oo  oooo##oo            ",
+  "         oo  o##o                ",
+  "         oo##                    ",
+  "        ##   oooo                ",
+  "     ##      oooo                ",
+  "  ##        ooooooooooo          ",
+  "           oo        oo          ",
+  "         oooo        oo          ",
+  "         oo          ..          ",
+  "       -ooo                      ",
+  "       -o                        ",
+  "                                 ",
+  "                                 ",
+  )
+
+RunningMan3SpriteMap.CopyMapToColorSprite(TheSprite=RunningMan3Sprite)
+
+
+RunningMan3SpriteMap.map= (
+  #0.........1.........2.....
+  "                                 ",
+  "               oooo          **  ",
+  "               oo         ##     ",
+  "           oooooooo    ##        ",
+  "         oooooooo   #oo          ",
+  "         oo  oooo##oo            ",
+  "         oo  o##o                ",
+  "         oo##                    ",
+  "        ##   oooo                ",
+  "     ##      oooo                ",
+  "  ##        ooooooo              ",
+  "           oo    oo              ",
+  "         oooo    oooo            ",
+  "       -ooo        oo            ",
+  "       -o          oo            ",
+  "                   ....          ",
+  "                                 ",
+  "                                 ",
+  )
+
+RunningMan3SpriteMap.CopyMapToColorSprite(TheSprite=RunningMan3Sprite)
+
+
+RunningMan3SpriteMap.map= (
+  #0.........1.........2.....
+  "                                 ",
+  "               oooo          **  ",
+  "               oo         ##     ",
+  "           oooooooo    ##        ",
+  "         oooooooo   #oo          ",
+  "         oo  oooo##oo            ",
+  "         oo  o##o                ",
+  "         oo##                    ",
+  "        ##   oooo                ",
+  "     ##      oooo                ",
+  "  ##        ooooooo              ",
+  "           oo    oo              ",
+  "       -ooooo    oo              ",
+  "       -o        oo              ",
+  "       -o        oo              ",
+  "                 ....            ",
+  "                                 ",
+  "                                 ",
+  )
+
+RunningMan3SpriteMap.CopyMapToColorSprite(TheSprite=RunningMan3Sprite)
+
+
+RunningMan3SpriteMap.map= (
+  #0.........1.........2.....
+  "                                 ",
+  "               oooo          **  ",
+  "               oo         ##     ",
+  "           oooooooo    ##        ",
+  "         oooooooo   #oo          ",
+  "         oo  oooo##oo            ",
+  "         oo  o##o                ",
+  "         oo##                    ",
+  "        ##   oooo                ",
+  "     ##      oooo                ",
+  "  ##        oooooo               ",
+  "             oooo                ",
+  "         -ooooooo                ",
+  "         -o    oo                ",
+  "         -o    oo                ",
+  "               ....              ",
+  "                                 ",
+  "                                 ",
+  )
+
+RunningMan3SpriteMap.CopyMapToColorSprite(TheSprite=RunningMan3Sprite)
+
+
+RunningMan3SpriteMap.map= (
+  #0.........1.........2.....
+  "                                 ",
+  "               oooo          **  ",
+  "               oo         ##     ",
+  "           oooooooo    ##        ",
+  "         oooooooo   #oo          ",
+  "         oo  oooo##oo            ",
+  "         oo  o##o                ",
+  "         oo##                    ",
+  "        ##   oooo                ",
+  "     ##      oooo                ",
+  "  ##        oooooo               ",
+  "             oooo                ",
+  "         -ooooooo                ",
+  "         -o  oo                  ",
+  "         -o  oo                  ",
+  "             ....                ",
+  "                                 ",
+  "                                 ",
+  )
+
+RunningMan3SpriteMap.CopyMapToColorSprite(TheSprite=RunningMan3Sprite)
+
+
+
+RunningMan3SpriteMap.map= (
+  #0.........1.........2.....
+  "                                 ",
+  "               oooo          **  ",
+  "               oo         ##     ",
+  "           oooooooo    ##        ",
+  "         oooooooo   #oo          ",
+  "         oo  oooo##oo            ",
+  "         oo  o##o                ",
+  "         oo##                    ",
+  "        ##   oooo                ",
+  "     ##      oooo                ",
+  "  ##        ooooooooo            ",
+  "           oo      oo            ",
+  "           oo  -ooooo            ",
+  "           oo  -o                ",
+  "           .o                    ",
+  "             ..                  ",
+  "                                 ",
+  "                                 ",
+  )
+
+RunningMan3SpriteMap.CopyMapToColorSprite(TheSprite=RunningMan3Sprite)
+
+
+
+
+RunningMan3SpriteMap.map= (
+  #0.........1.........2.....
+  "                                 ",
+  "               oooo          **  ",
+  "               oo         ##     ",
+  "           oooooooo    ##        ",
+  "         oooooooo   #oo          ",
+  "         oo  oooo##oo            ",
+  "         oo  o##o                ",
+  "         oo##                    ",
+  "        ##   oooo                ",
+  "     ##      oooo                ",
+  "  ##        ooooooooooo          ",
+  "           oo        oo          ",
+  "           oo    -ooooo          ",
+  "         .o      -o              ",
+  "         .o                      ",
+  "         .o                      ",
+  "                                 ",
+  "                                 ",
   )
 
 RunningMan3SpriteMap.CopyMapToColorSprite(TheSprite=RunningMan3Sprite)
@@ -5029,21 +4942,21 @@ RunningMan3SpriteMap.CopyMapToColorSprite(TheSprite=RunningMan3Sprite)
 
 
 BigSpiderLegOutSprite = ColorAnimatedSprite(
-  h=0, 
-  v=0, 
-  name="Spider", 
-  width  = 40, 
-  height = 11, 
-  frames = 0, 
+  h=0,
+  v=0,
+  name="Spider",
+  width  = 40,
+  height = 11,
+  frames = 0,
   framerate=2,
   grid=[]  )
 
-                
+
 
 BigSpiderLegOutSpriteMap = TextMap(
   h      = 1,
   v      = 1,
-  width  = 40, 
+  width  = 40,
   height = 11
   )
 
@@ -5051,8 +4964,8 @@ BigSpiderLegOutSpriteMap.ColorList = {
   ' ' : 0,
   '.' : 1,
   '-' : 2,
-  'o' : 3,  
-  'O' : 4,  
+  'o' : 3,
+  'O' : 4,
   '*' : 8,
   '#' : 14,
   'b' : 15,
@@ -5069,33 +4982,15 @@ BigSpiderLegOutSpriteMap.TypeList = {
 BigSpiderLegOutSpriteMap.map= (
   #0.........1.........2.........3
   "                                        ",
-  "      ..    ......    ..                ", 
-  "     .--.  .------.  .--.               ", 
-  "    .-  -..-o*oo*o-..-  -.              ", 
-  "   .-    -.-oOOOOo-.-    -.             ", 
-  "   .-     .-oooooo-.     -.             ", 
-  "   .-      .------.      -.             ", 
-  "   .-       ......       -.             ", 
-  "   .-                    -.             ", 
-  "   .-                    -.             ", 
-  "                                        ", 
-  )
-
-BigSpiderLegOutSpriteMap.CopyMapToColorSprite(TheSprite=BigSpiderLegOutSprite)
-
-
-BigSpiderLegOutSpriteMap.map= (
-  #0.........1.........2.........3
-  "                     ..                 ", 
-  "      ..    ......  .--.                ", 
-  "     .--.  .------. .--.                ", 
-  "    .-  -..-o*oo*o-..- -.               ", 
-  "   .-    -.-oOOOOo-.-  -.               ", 
-  "   .-     .-oooooo-.   -.               ", 
-  "   .-      .------.    -.               ", 
-  "   .-       ......     -.               ", 
-  "   .-                  -.               ", 
-  "   .-                                   ", 
+  "      ..    ......    ..                ",
+  "     .--.  .------.  .--.               ",
+  "    .-  -..-o*oo*o-..-  -.              ",
+  "   .-    -.-oOOOOo-.-    -.             ",
+  "   .-     .-oooooo-.     -.             ",
+  "   .-      .------.      -.             ",
+  "   .-       ......       -.             ",
+  "   .-                    -.             ",
+  "   .-                    -.             ",
   "                                        ",
   )
 
@@ -5104,17 +4999,35 @@ BigSpiderLegOutSpriteMap.CopyMapToColorSprite(TheSprite=BigSpiderLegOutSprite)
 
 BigSpiderLegOutSpriteMap.map= (
   #0.........1.........2.........3
-  "                     ...                ", 
-  "      ..    ......  .---.               ", 
-  "     .--.  .------. .-  -.              ", 
-  "    .-  -..-o*oo*o-..-  -.              ", 
-  "   .-    -.-oOOOOo-.-   -.              ", 
-  "   .-     .-oooooo-.    -.              ", 
-  "   .-      .------.     -.              ", 
-  "   .-       ......      -.              ", 
-  "   .-                                   ", 
-  "   .-                                   ", 
-  "                                        ", 
+  "                     ..                 ",
+  "      ..    ......  .--.                ",
+  "     .--.  .------. .--.                ",
+  "    .-  -..-o*oo*o-..- -.               ",
+  "   .-    -.-oOOOOo-.-  -.               ",
+  "   .-     .-oooooo-.   -.               ",
+  "   .-      .------.    -.               ",
+  "   .-       ......     -.               ",
+  "   .-                  -.               ",
+  "   .-                                   ",
+  "                                        ",
+  )
+
+BigSpiderLegOutSpriteMap.CopyMapToColorSprite(TheSprite=BigSpiderLegOutSprite)
+
+
+BigSpiderLegOutSpriteMap.map= (
+  #0.........1.........2.........3
+  "                     ...                ",
+  "      ..    ......  .---.               ",
+  "     .--.  .------. .-  -.              ",
+  "    .-  -..-o*oo*o-..-  -.              ",
+  "   .-    -.-oOOOOo-.-   -.              ",
+  "   .-     .-oooooo-.    -.              ",
+  "   .-      .------.     -.              ",
+  "   .-       ......      -.              ",
+  "   .-                                   ",
+  "   .-                                   ",
+  "                                        ",
    )
 
 
@@ -5123,17 +5036,17 @@ BigSpiderLegOutSpriteMap.CopyMapToColorSprite(TheSprite=BigSpiderLegOutSprite)
 
 BigSpiderLegOutSpriteMap.map= (
   #0.........1.........2.........3
-  "                     .....              ", 
-  "      ..    ......  .-----.             ", 
-  "     .--.  .------. .-    -.            ", 
-  "    .-  -..-o*oo*o-..-    -.            ", 
-  "   .-    -.-oOOOOo-.-     -.            ", 
-  "   .-     .-oooooo-.      -.            ", 
-  "   .-      .------.                     ", 
-  "   .-       ......                      ", 
-  "   .-                                   ", 
-  "   .-                                   ", 
-  "                                        ", 
+  "                     .....              ",
+  "      ..    ......  .-----.             ",
+  "     .--.  .------. .-    -.            ",
+  "    .-  -..-o*oo*o-..-    -.            ",
+  "   .-    -.-oOOOOo-.-     -.            ",
+  "   .-     .-oooooo-.      -.            ",
+  "   .-      .------.                     ",
+  "   .-       ......                      ",
+  "   .-                                   ",
+  "   .-                                   ",
+  "                                        ",
    )
 
 
@@ -5232,17 +5145,17 @@ BigSpiderLegOutSpriteMap.CopyMapToColorSprite(TheSprite=BigSpiderLegOutSprite)
 
 BigSpiderLegOutSpriteMap.map= (
   #0.........1.........2.........3
-  "                     .....              ", 
-  "      ..    ......  .-----.             ", 
-  "     .--.  .------. .-    -.            ", 
-  "    .-  -..-o*oo*o-..-    -.            ", 
-  "   .-    -.-oOOOOo-.-     -.            ", 
-  "   .-     .-oooooo-.      -.            ", 
-  "   .-      .------.                     ", 
-  "   .-       ......                      ", 
-  "   .-                                   ", 
-  "   .-                                   ", 
-  "                                        ", 
+  "                     .....              ",
+  "      ..    ......  .-----.             ",
+  "     .--.  .------. .-    -.            ",
+  "    .-  -..-o*oo*o-..-    -.            ",
+  "   .-    -.-oOOOOo-.-     -.            ",
+  "   .-     .-oooooo-.      -.            ",
+  "   .-      .------.                     ",
+  "   .-       ......                      ",
+  "   .-                                   ",
+  "   .-                                   ",
+  "                                        ",
    )
 
 
@@ -5253,17 +5166,17 @@ BigSpiderLegOutSpriteMap.CopyMapToColorSprite(TheSprite=BigSpiderLegOutSprite)
 
 BigSpiderLegOutSpriteMap.map= (
   #0.........1.........2.........3.........4
-  "                     ...                ", 
-  "      ..    ......  .---.               ", 
-  "     .--.  .------. .-  -.              ", 
-  "    .-  -..-o*oo*o-..-  -.              ", 
-  "   .-    -.-oOOOOo-.-   -.              ", 
-  "   .-     .-oooooo-.    -.              ", 
-  "   .-      .------.     -.              ", 
-  "   .-       ......      -.              ", 
-  "   .-                                   ", 
-  "   .-                                   ", 
-  "                                        ", 
+  "                     ...                ",
+  "      ..    ......  .---.               ",
+  "     .--.  .------. .-  -.              ",
+  "    .-  -..-o*oo*o-..-  -.              ",
+  "   .-    -.-oOOOOo-.-   -.              ",
+  "   .-     .-oooooo-.    -.              ",
+  "   .-      .------.     -.              ",
+  "   .-       ......      -.              ",
+  "   .-                                   ",
+  "   .-                                   ",
+  "                                        ",
    )
 
 
@@ -5281,21 +5194,21 @@ BigSpiderLegOutSpriteMap.CopyMapToColorSprite(TheSprite=BigSpiderLegOutSprite)
 
 
 BigSpiderWalkingSprite = ColorAnimatedSprite(
-  h=0, 
-  v=0, 
-  name="Spider", 
-  width  = 44, 
-  height = 11, 
-  frames = 0, 
+  h=0,
+  v=0,
+  name="Spider",
+  width  = 44,
+  height = 11,
+  frames = 0,
   framerate=1,
   grid=[]  )
 
-                
+
 
 BigSpiderWalkingSpriteMap = TextMap(
   h      = 1,
   v      = 1,
-  width  = 44, 
+  width  = 44,
   height = 11
   )
 
@@ -5303,8 +5216,8 @@ BigSpiderWalkingSpriteMap.ColorList = {
   ' ' : 0,
   '.' : 1,
   '-' : 2,
-  'o' : 3,  
-  'O' : 4,  
+  'o' : 3,
+  'O' : 4,
   '*' : 8,
   '#' : 14,
   'b' : 15,
@@ -5321,16 +5234,16 @@ BigSpiderWalkingSpriteMap.TypeList = {
 BigSpiderWalkingSpriteMap.map= (
   #0.........1.........2.........3.........4....
   "                                            ",
-  "      ..    ......    ..                    ", 
-  "     .--.  .------.  .--.                   ", 
-  "    .-  -..-o*oo*o-..-  -.                  ", 
-  "   .-    -.-oOOOOo-.-    -.                 ", 
-  "   .-     .-oooooo-.     -.                 ", 
-  "   .-      .------.      -.                 ", 
-  "   .-       ......       -.                 ", 
-  "   .-                    -.                 ", 
-  "   .-                    -.                 ", 
-  "                                            ", 
+  "      ..    ......    ..                    ",
+  "     .--.  .------.  .--.                   ",
+  "    .-  -..-o*oo*o-..-  -.                  ",
+  "   .-    -.-oOOOOo-.-    -.                 ",
+  "   .-     .-oooooo-.     -.                 ",
+  "   .-      .------.      -.                 ",
+  "   .-       ......       -.                 ",
+  "   .-                    -.                 ",
+  "   .-                    -.                 ",
+  "                                            ",
   )
 
 BigSpiderWalkingSpriteMap.CopyMapToColorSprite(TheSprite=BigSpiderWalkingSprite)
@@ -5338,16 +5251,16 @@ BigSpiderWalkingSpriteMap.CopyMapToColorSprite(TheSprite=BigSpiderWalkingSprite)
 
 BigSpiderWalkingSpriteMap.map= (
   #0.........1.........2.........3
-  "                     ..                     ", 
-  "      ..    ......  .---.                    ", 
-  "     .--.  .------. .-  -.                   ", 
-  "    .-  -..-o*oo*o-..-   -.                   ", 
-  "   .-    -.-oOOOOo-.-    -.                   ", 
-  "   .-     .-oooooo-.     -.                   ", 
-  "   .-      .------.      -.                   ", 
-  "   .-       ......      -.                    ", 
-  "   .-                                         ", 
-  "   .-                                        ", 
+  "                     ..                     ",
+  "      ..    ......  .---.                    ",
+  "     .--.  .------. .-  -.                   ",
+  "    .-  -..-o*oo*o-..-   -.                   ",
+  "   .-    -.-oOOOOo-.-    -.                   ",
+  "   .-     .-oooooo-.     -.                   ",
+  "   .-      .------.      -.                   ",
+  "   .-       ......      -.                    ",
+  "   .-                                         ",
+  "   .-                                        ",
   "                                             ",
   )
 
@@ -5356,17 +5269,17 @@ BigSpiderWalkingSpriteMap.CopyMapToColorSprite(TheSprite=BigSpiderWalkingSprite)
 
 BigSpiderWalkingSpriteMap.map= (
   #0.........1.........2.........3
-  "                      ...                    ", 
-  "      ..    ......   .----.                   ", 
-  "     .--.  .------. .-    -.                  ", 
-  "    .-  -..-o*oo*o-..-    -.                  ", 
-  "   .-    -.-oOOOOo-.-     -.                  ", 
-  "   .-     .-oooooo-.      -.                  ", 
-  "   .-      .------.      -.                   ", 
-  "   .-       ......                           ", 
-  "   .-                                        ", 
-  "   .-                                        ", 
-  "                                             ", 
+  "                      ...                    ",
+  "      ..    ......   .----.                   ",
+  "     .--.  .------. .-    -.                  ",
+  "    .-  -..-o*oo*o-..-    -.                  ",
+  "   .-    -.-oOOOOo-.-     -.                  ",
+  "   .-     .-oooooo-.      -.                  ",
+  "   .-      .------.      -.                   ",
+  "   .-       ......                           ",
+  "   .-                                        ",
+  "   .-                                        ",
+  "                                             ",
    )
 
 
@@ -5375,17 +5288,17 @@ BigSpiderWalkingSpriteMap.CopyMapToColorSprite(TheSprite=BigSpiderWalkingSprite)
 
 BigSpiderWalkingSpriteMap.map= (
   #0.........1.........2.........3
-  "                      .....                 ", 
-  "      ..    ......   .-----.                ", 
-  "     .--.  .------. .-      -.              ", 
-  "    .-  -..-o*oo*o-..-      -.              ", 
-  "   .-    -.-oOOOOo-.-       -.              ", 
-  "   .-     .-oooooo-.       -.               ", 
-  "   .-      .------.                         ", 
-  "   .-       ......                          ", 
-  "   .-                                       ", 
-  "   .-                                       ", 
-  "                                            ", 
+  "                      .....                 ",
+  "      ..    ......   .-----.                ",
+  "     .--.  .------. .-      -.              ",
+  "    .-  -..-o*oo*o-..-      -.              ",
+  "   .-    -.-oOOOOo-.-       -.              ",
+  "   .-     .-oooooo-.       -.               ",
+  "   .-      .------.                         ",
+  "   .-       ......                          ",
+  "   .-                                       ",
+  "   .-                                       ",
+  "                                            ",
    )
 
 
@@ -5453,16 +5366,16 @@ BigSpiderWalkingSpriteMap.CopyMapToColorSprite(TheSprite=BigSpiderWalkingSprite)
 BigSpiderWalkingSpriteMap.map= (
   #0.........1.........2.........3.........4
   "                                            ",
-  "                                            ",  
-  "                                            ",  
-  "       ........     ......                  ",  
-  "       .-------.   .------.   .....         ",  
-  "     .-        -. .-o*oo*o-...-----.        ",  
-  "    .-           -.-oOOOOo-.--     -.       ",  
-  "    .-            .-oooooo-.        -.      ",  
-  "                   .------.           -.    ",  
-  "                    ......             -.   ",  
-  "                                            ",  
+  "                                            ",
+  "                                            ",
+  "       ........     ......                  ",
+  "       .-------.   .------.   .....         ",
+  "     .-        -. .-o*oo*o-...-----.        ",
+  "    .-           -.-oOOOOo-.--     -.       ",
+  "    .-            .-oooooo-.        -.      ",
+  "                   .------.           -.    ",
+  "                    ......             -.   ",
+  "                                            ",
 )
 BigSpiderWalkingSpriteMap.CopyMapToColorSprite(TheSprite=BigSpiderWalkingSprite)
 
@@ -5470,17 +5383,17 @@ BigSpiderWalkingSpriteMap.CopyMapToColorSprite(TheSprite=BigSpiderWalkingSprite)
 BigSpiderWalkingSpriteMap.map= (
   #0.........1.........2.........3.........4...
   "                                            ",
-  "             .....                          ",  
-  "            .-----.     ......    ..        ",  
-  "           .-     -.   .------.  .--.       ",  
-  "           .-      -. .-o*oo*o-..-  -.      ",  
-  "           .-        -.-oOOOOo-.-    -.     ",  
-  "           .-         .-oooooo-.      -.    ",  
-  "                       .------.        -.   ",  
-  "                        ......         -.   ",  
-  "                                       -.   ",  
-  "                                            ",  
-  "                                            ",  
+  "             .....                          ",
+  "            .-----.     ......    ..        ",
+  "           .-     -.   .------.  .--.       ",
+  "           .-      -. .-o*oo*o-..-  -.      ",
+  "           .-        -.-oOOOOo-.-    -.     ",
+  "           .-         .-oooooo-.      -.    ",
+  "                       .------.        -.   ",
+  "                        ......         -.   ",
+  "                                       -.   ",
+  "                                            ",
+  "                                            ",
   )
 BigSpiderWalkingSpriteMap.CopyMapToColorSprite(TheSprite=BigSpiderWalkingSprite)
 
@@ -5488,16 +5401,16 @@ BigSpiderWalkingSpriteMap.CopyMapToColorSprite(TheSprite=BigSpiderWalkingSprite)
 BigSpiderWalkingSpriteMap.map= (
   #0.........1.........2.........3
   "                  .....                     ",
-  "                 .-----.  ......    ..      ",  
-  "                .-    -. .------.  .--.     ",  
-  "                .-    -..-o*oo*o-..-  -.    ",  
-  "                .-     -.-oOOOOo-.-    -.   ",  
-  "                .-      .-oooooo-.     -.   ",  
-  "                         .------.      -.   ",  
-  "                          ......       -.   ",  
-  "                                       -.   ",  
-  "                                       -.   ",  
-  "                                            ",  
+  "                 .-----.  ......    ..      ",
+  "                .-    -. .------.  .--.     ",
+  "                .-    -..-o*oo*o-..-  -.    ",
+  "                .-     -.-oOOOOo-.-    -.   ",
+  "                .-      .-oooooo-.     -.   ",
+  "                         .------.      -.   ",
+  "                          ......       -.   ",
+  "                                       -.   ",
+  "                                       -.   ",
+  "                                            ",
    )
 
 
@@ -5507,16 +5420,16 @@ BigSpiderWalkingSpriteMap.CopyMapToColorSprite(TheSprite=BigSpiderWalkingSprite)
 BigSpiderWalkingSpriteMap.map= (
   #0.........1.........2.........3
   "                    ...                     ",
-  "                  .----.  ......    ..      ",  
-  "                 .-   -. .------.  .--.     ",  
-  "                 .-   -..-o*oo*o-..-  -.    ",  
-  "                 .-    -.-oOOOOo-.-    -.   ",  
-  "                 .-     .-oooooo-.     -.   ",  
-  "                 .-      .------.      -.   ",  
-  "                          ......       -.   ",  
-  "                                       -.   ",  
-  "                                       -.   ",  
-  "                                            ",  
+  "                  .----.  ......    ..      ",
+  "                 .-   -. .------.  .--.     ",
+  "                 .-   -..-o*oo*o-..-  -.    ",
+  "                 .-    -.-oOOOOo-.-    -.   ",
+  "                 .-     .-oooooo-.     -.   ",
+  "                 .-      .------.      -.   ",
+  "                          ......       -.   ",
+  "                                       -.   ",
+  "                                       -.   ",
+  "                                            ",
  )
 
 BigSpiderWalkingSpriteMap.CopyMapToColorSprite(TheSprite=BigSpiderWalkingSprite)
@@ -5524,31 +5437,31 @@ BigSpiderWalkingSpriteMap.CopyMapToColorSprite(TheSprite=BigSpiderWalkingSprite)
 BigSpiderWalkingSpriteMap.map= (
   #0.........1.........2.........3
   "                                            ",
-  "                   .-.    ......    ..      ",  
-  "                 .----.  .------.  .--.     ",  
-  "                 .-   -..-o*oo*o-..-  -.    ",  
-  "                 .-    -.-oOOOOo-.-    -.   ",  
-  "                 .-     .-oooooo-.     -.   ",  
-  "                 .-      .------.      -.   ",  
-  "                 .-       ......       -.   ",  
-  "                                       -.   ",  
-  "                                       -.   ",  
-  "                                            ",  
+  "                   .-.    ......    ..      ",
+  "                 .----.  .------.  .--.     ",
+  "                 .-   -..-o*oo*o-..-  -.    ",
+  "                 .-    -.-oOOOOo-.-    -.   ",
+  "                 .-     .-oooooo-.     -.   ",
+  "                 .-      .------.      -.   ",
+  "                 .-       ......       -.   ",
+  "                                       -.   ",
+  "                                       -.   ",
+  "                                            ",
  )
 
 BigSpiderWalkingSpriteMap.map= (
   #0.........1.........2.........3.........4....
   "                                             ",
-  "                    ..    ......    ..       ", 
-  "                   .--.  .------.  .--.      ", 
-  "                  .-  -..-o*oo*o-..-  -.     ", 
-  "                 .-    -.-oOOOOo-.-    -.    ", 
-  "                 .-     .-oooooo-.     -.    ", 
-  "                 .-      .------.      -.    ", 
-  "                 .-       ......       -.    ", 
-  "                 .-                    -.    ", 
-  "                 .-                    -.    ", 
-  "                                             ", 
+  "                    ..    ......    ..       ",
+  "                   .--.  .------.  .--.      ",
+  "                  .-  -..-o*oo*o-..-  -.     ",
+  "                 .-    -.-oOOOOo-.-    -.    ",
+  "                 .-     .-oooooo-.     -.    ",
+  "                 .-      .------.      -.    ",
+  "                 .-       ......       -.    ",
+  "                 .-                    -.    ",
+  "                 .-                    -.    ",
+  "                                             ",
   )
 
 BigSpiderWalkingSpriteMap.CopyMapToColorSprite(TheSprite=BigSpiderWalkingSprite)
@@ -5557,20 +5470,20 @@ BigSpiderWalkingSpriteMap.CopyMapToColorSprite(TheSprite=BigSpiderWalkingSprite)
 
 
 ElectricZap = ColorAnimatedSprite(
-  h=0, 
-  v=0, 
-  name="ElectricZap", 
-  width  = 5, 
-  height = 5, 
+  h=0,
+  v=0,
+  name="ElectricZap",
+  width  = 5,
+  height = 5,
   framerate=1,
   grid=[]  )
 
-                 
+
 
 ElectricZapMap = TextMap(
   h      = 1,
   v      = 1,
-  width  = ElectricZap.width, 
+  width  = ElectricZap.width,
   height = ElectricZap.height
   )
 
@@ -5578,9 +5491,9 @@ ElectricZapMap = TextMap(
 ElectricZapMap.ColorList = {
   ' ' : 0,
   '-' : 39, #max-white
-  '.' : 9, 
-  'o' : 4, 
-  'O' : 45, 
+  '.' : 9,
+  'o' : 4,
+  'O' : 45,
   'r' : 5,
   'R' : 8,
   'b' : 12,
@@ -5596,7 +5509,7 @@ ElectricZapMap.map= (
   "  -  ",
   "     ",
   "     ",
-  
+
   )
 
 
@@ -5610,7 +5523,7 @@ ElectricZapMap.map= (
   " -.- ",
   " --- ",
   "     ",
-  
+
   )
 
 
@@ -5623,7 +5536,7 @@ ElectricZapMap.map= (
   "-.o.-",
   " -.- ",
   "  -  ",
-  
+
   )
 
 
@@ -5638,7 +5551,7 @@ ElectricZapMap.map= (
   ".oOo.",
   " .o. ",
   "  .  ",
-  
+
   )
 
 
@@ -5651,7 +5564,7 @@ ElectricZapMap.map= (
   "oO Oo",
   "  O  ",
   "  o  ",
-  
+
   )
 
 
@@ -5665,14 +5578,14 @@ ElectricZapMap.map= (
   "O   O",
   "     ",
   "  O  ",
-  
+
   )
 
 
 ElectricZapMap.CopyMapToColorSprite(TheSprite=ElectricZap)
 
 
-             
+
 
 
 
@@ -5680,12 +5593,12 @@ ElectricZapMap.CopyMapToColorSprite(TheSprite=ElectricZap)
 
 
 Rezonator = ColorAnimatedSprite(
-  h=0, 
-  v=0, 
-  name="Rezonator", 
-  width  = 20, 
-  height = 18, 
-  frames = 0, 
+  h=0,
+  v=0,
+  name="Rezonator",
+  width  = 20,
+  height = 18,
+  frames = 0,
   framerate=1,
   grid=[]  )
 
@@ -5693,7 +5606,7 @@ Rezonator = ColorAnimatedSprite(
 RezonatorMap = TextMap(
   h      = 1,
   v      = 1,
-  width  = Rezonator.width, 
+  width  = Rezonator.width,
   height = Rezonator.height
   )
 
@@ -5701,13 +5614,13 @@ RezonatorMap = TextMap(
 RezonatorMap.ColorList = {
   ' ' : 0,
   '-' : 39, #max-white
-  '.' : 6,  #dark red 
+  '.' : 6,  #dark red
   'x' : 5,  #med red
   '*' : 45, #bright white
   '#' : 8,  # bright red
   'o' : 15,
   'O' : 41,
-  
+
   }
 
 
@@ -5728,7 +5641,7 @@ RezonatorMap.map= (
     "  x..............x  ",
     "  x..............x  ",
     " xxxxxxxxxxxxxxxxxx ",
-    "  x..x        x..x  ", 
+    "  x..x        x..x  ",
     "  x..x        x..x  ",
     "  x..x        x..x  ",
     "  xxxx        xxxx  ", #10
@@ -5737,10 +5650,10 @@ RezonatorMap.map= (
     "  x..x        x..x  ",
     "  x..x        x..x  ",
     "  x...x      x...x  ",
-    "  xxxxxxx   xxxxxx  ",       
+    "  xxxxxxx   xxxxxx  ",
     "                    "  #17 (18 total)
     )
-  
+
 RezonatorMap.CopyMapToColorSprite(TheSprite=Rezonator)
 
 
@@ -5753,7 +5666,7 @@ RezonatorMap.map= (
     "  x..............x  ",
     "  x..............x  ",
     " xxxxxxxxxxxxxxxxxx ",
-    "  x..x        x..x  ", 
+    "  x..x        x..x  ",
     "  x..x        x..x  ",
     "  x..x        x..x  ",
     "  xxxx        xxxx  ", #10
@@ -5762,10 +5675,10 @@ RezonatorMap.map= (
     "  x..x        x..x  ",
     "  x..x        x..x  ",
     "  x...x      x...x  ",
-    "  xxxxxxx   xxxxxx  ",       
+    "  xxxxxxx   xxxxxx  ",
     "                    "  #17 (18 total)
     )
-  
+
 RezonatorMap.CopyMapToColorSprite(TheSprite=Rezonator)
 
 
@@ -5775,12 +5688,12 @@ RezonatorMap.CopyMapToColorSprite(TheSprite=Rezonator)
 
 
 BigRezonator = ColorAnimatedSprite(
-  h=0, 
-  v=0, 
-  name="BigRezonator", 
-  width  = 26, 
-  height = 25, 
-  frames = 0, 
+  h=0,
+  v=0,
+  name="BigRezonator",
+  width  = 26,
+  height = 25,
+  frames = 0,
   framerate=1,
   grid=[]  )
 
@@ -5788,7 +5701,7 @@ BigRezonator = ColorAnimatedSprite(
 BigRezonatorMap = TextMap(
   h      = 1,
   v      = 1,
-  width  = BigRezonator.width, 
+  width  = BigRezonator.width,
   height = BigRezonator.height
   )
 
@@ -5796,13 +5709,13 @@ BigRezonatorMap = TextMap(
 BigRezonatorMap.ColorList = {
   ' ' : 0,
   '-' : 39, #max-white
-  '.' : 6,  #med red 
+  '.' : 6,  #med red
   'x' : 5,  #dark red
   '*' : 45, #bright white
   '#' : 8,  # bright red
   'o' : 15,
-  'y' : 22, #low yellow 
-  'Y' : 42, #max yellow 
+  'y' : 22, #low yellow
+  'Y' : 42, #max yellow
   }
 
 
@@ -5827,11 +5740,11 @@ BigRezonatorMap.map= (
     "  x....................x  ",
     " xxxxxxxxxxxxxxxxxxxxxxxx ",
     "  x....x   xxxx   x....x  ", #10
-    "  x....x          x....x  ", 
-    "  x....x          x....x  ", 
-    "  x....x          x....x  ", 
-    "  x....x          x....x  ", 
-    "  xxxxxx          xxxxxx  ", 
+    "  x....x          x....x  ",
+    "  x....x          x....x  ",
+    "  x....x          x....x  ",
+    "  x....x          x....x  ",
+    "  xxxxxx          xxxxxx  ",
     "  x....x          x....x  ",
     "  x....x          x....x  ",
     "  x....x          x....x  ",
@@ -5839,7 +5752,7 @@ BigRezonatorMap.map= (
     "  x....x          x....x  ", #20
     "  x....x          x....x  ",
     "  x.....x        x.....x  ",
-    "  xxxxxxxxx     xxxxxxxx  ",       
+    "  xxxxxxxxx     xxxxxxxx  ",
     "                          " #24  (25 total)
     )
 BigRezonatorMap.CopyMapToColorSprite(TheSprite=BigRezonator)
@@ -5859,11 +5772,11 @@ BigRezonatorMap.map= (
     "  x....................x  ",
     " xxxxxxxxxxxxxxxxxxxxxxxx ",
     "  x....x   xxxx   x....x  ", #10
-    "  x....x          x....x  ", 
-    "  x....x          x....x  ", 
-    "  x....x          x....x  ", 
-    "  x....x          x....x  ", 
-    "  xxxxxx          xxxxxx  ", 
+    "  x....x          x....x  ",
+    "  x....x          x....x  ",
+    "  x....x          x....x  ",
+    "  x....x          x....x  ",
+    "  xxxxxx          xxxxxx  ",
     "  x....x          x....x  ",
     "  x....x          x....x  ",
     "  x....x          x....x  ",
@@ -5871,7 +5784,7 @@ BigRezonatorMap.map= (
     "  x....x          x....x  ", #20
     "  x....x          x....x  ",
     "  x.....x        x.....x  ",
-    "  xxxxxxxxx     xxxxxxxx  ",       
+    "  xxxxxxxxx     xxxxxxxx  ",
     "                          " #24  (25 total)
     )
 BigRezonatorMap.CopyMapToColorSprite(TheSprite=BigRezonator)
@@ -5890,12 +5803,12 @@ BigRezonatorMap.CopyMapToColorSprite(TheSprite=BigRezonator)
 
 
 BigRezonator2 = ColorAnimatedSprite(
-  h=0, 
-  v=0, 
-  name="BigRezonator", 
-  width  = 26, 
-  height = 29, 
-  frames = 0, 
+  h=0,
+  v=0,
+  name="BigRezonator",
+  width  = 26,
+  height = 29,
+  frames = 0,
   framerate=1,
   grid=[]  )
 
@@ -5903,7 +5816,7 @@ BigRezonator2 = ColorAnimatedSprite(
 BigRezonator2Map = TextMap(
   h      = 1,
   v      = 1,
-  width  = BigRezonator2.width, 
+  width  = BigRezonator2.width,
   height = BigRezonator2.height
   )
 
@@ -5911,13 +5824,13 @@ BigRezonator2Map = TextMap(
 BigRezonator2Map.ColorList = {
   ' ' : 0,
   '-' : 39, #max-white
-  '.' : 6,  #med red 
+  '.' : 6,  #med red
   'x' : 5,  #dark red
   '*' : 45, #bright white
   '#' : 8,  # bright red
   'o' : 15,
-  'y' : 22, #low yellow 
-  'Y' : 42, #max yellow 
+  'y' : 22, #low yellow
+  'Y' : 42, #max yellow
   }
 
 
@@ -5942,11 +5855,11 @@ BigRezonator2Map.map= (
     "  x....................x  ",
     " xxxxxxxxxxxxxxxxxxxxxxxx ",
     "  x....x   xxxx   x....x  ", #10
-    "  x....x          x....x  ", 
-    "  x....x          x....x  ", 
-    "  x....x          x....x  ", 
-    "  x....x          x....x  ", 
-    "  xxxxxx          xxxxxx  ", 
+    "  x....x          x....x  ",
+    "  x....x          x....x  ",
+    "  x....x          x....x  ",
+    "  x....x          x....x  ",
+    "  xxxxxx          xxxxxx  ",
     "  x....x          x....x  ",
     "  x....x          x....x  ",
     "  x....x          x....x  ",
@@ -5954,11 +5867,11 @@ BigRezonator2Map.map= (
     "  x....x          x....x  ", #20
     "  x....x          x....x  ",
     "  x.....x        x.....x  ",
-    "  xxxxxxxxx     xxxxxxxx  ",       
+    "  xxxxxxxxx     xxxxxxxx  ",
     "                          ", #24  (25 total)
-    "                          ", 
-    "                          ", 
-    "                          ", 
+    "                          ",
+    "                          ",
+    "                          ",
     "                          "
     )
 BigRezonator2Map.CopyMapToColorSprite(TheSprite=BigRezonator2)
@@ -5978,11 +5891,11 @@ BigRezonator2Map.map= (
     "  x....................x  ",
     " xxxxxxxxxxxxxxxxxxxxxxxx ",
     "   x....x  xxxx  x....x   ", #10
-    "   x....x        x....x   ", 
-    "   x....x        x....x   ", 
-    "   x....x        x....x   ", 
-    "   x....x        x....x   ", 
-    "   xxxxxx        xxxxxx   ", 
+    "   x....x        x....x   ",
+    "   x....x        x....x   ",
+    "   x....x        x....x   ",
+    "   x....x        x....x   ",
+    "   xxxxxx        xxxxxx   ",
     "   x....x        x....x   ",
     "   x....x        x....x   ",
     "   x....x        x....x   ",
@@ -5990,11 +5903,11 @@ BigRezonator2Map.map= (
     "   x....x        x....x   ", #20
     "   x....x        x....x   ",
     "   x.....x      x.....x   ",
-    "   xxxxxxxxx   xxxxxxxx   ",       
+    "   xxxxxxxxx   xxxxxxxx   ",
     "                          ", #24  (25 total)
-    "                          ", 
-    "                          ", 
-    "                          ", 
+    "                          ",
+    "                          ",
+    "                          ",
     "                          "
     )
 BigRezonator2Map.CopyMapToColorSprite(TheSprite=BigRezonator2)
@@ -6010,7 +5923,7 @@ BigRezonator2Map.CopyMapToColorSprite(TheSprite=BigRezonator2)
 
 BigRezonator2Map.map= (
     #0.........1.........2.........3
-    "                          ", 
+    "                          ",
     "                          ", #0
     "            xx            ",
     "          x.yy.x          ",
@@ -6022,11 +5935,11 @@ BigRezonator2Map.map= (
     "  x....................x  ",
     " xxxxxxxxxxxxxxxxxxxxxxxx ",
     "    x....x xxxx x....x    ", #10
-    "    x....x      x....x    ", 
-    "    x....x      x....x    ", 
-    "    x....x      x....x    ", 
-    "    x....x      x....x    ", 
-    "    xxxxxx      xxxxxx    ", 
+    "    x....x      x....x    ",
+    "    x....x      x....x    ",
+    "    x....x      x....x    ",
+    "    x....x      x....x    ",
+    "    xxxxxx      xxxxxx    ",
     "    x....x      x....x    ",
     "    x....x      x....x    ",
     "    x....x      x....x    ",
@@ -6034,10 +5947,10 @@ BigRezonator2Map.map= (
     "    x....x      x....x    ", #20
     "    x....x      x....x    ",
     "    x.....x    x.....x    ",
-    "    xxxxxxxxx xxxxxxxx    ",       
+    "    xxxxxxxxx xxxxxxxx    ",
     "                          ", #24  (25 total)
-    "                          ", 
-    "                          ", 
+    "                          ",
+    "                          ",
     "                          "
     )
 BigRezonator2Map.CopyMapToColorSprite(TheSprite=BigRezonator2)
@@ -6049,7 +5962,7 @@ BigRezonator2Map.CopyMapToColorSprite(TheSprite=BigRezonator2)
 BigRezonator2Map.map= (
     #0.........1.........2.........3
     "                          ", #0
-    "                          ", 
+    "                          ",
     "            xx            ",
     "          x.YY.x          ",
     "         x......x         ",
@@ -6060,11 +5973,11 @@ BigRezonator2Map.map= (
     "  x....................x  ",
     " xxxxxxxxxxxxxxxxxxxxxxxx ",
     "     x....xxxxxx....x     ", #10
-    "     x....x    x....x     ", 
-    "     x....x    x....x     ", 
-    "     x....x    x....x     ", 
-    "     x....x    x....x     ", 
-    "     xxxxxx    xxxxxx     ", 
+    "     x....x    x....x     ",
+    "     x....x    x....x     ",
+    "     x....x    x....x     ",
+    "     x....x    x....x     ",
+    "     xxxxxx    xxxxxx     ",
     "     x....x    x....x     ",
     "     x....x    x....x     ",
     "     x....x    x....x     ",
@@ -6072,10 +5985,10 @@ BigRezonator2Map.map= (
     "     x....x    x....x     ", #20
     "     x....x    x....x     ",
     "     x.....x  x.....x     ",
-    "     xxxxxxxxxxxxxxxx     ",       
+    "     xxxxxxxxxxxxxxxx     ",
     "                          ", #24  (25 total)
-    "                          ", 
-    "                          ", 
+    "                          ",
+    "                          ",
     "                          "
 
 
@@ -6086,8 +5999,8 @@ BigRezonator2Map.CopyMapToColorSprite(TheSprite=BigRezonator2)
 BigRezonator2Map.map= (
     #0.........1.........2.........3
     "                          ", #0
-    "                          ", 
-    "                          ", 
+    "                          ",
+    "                          ",
     "            xx            ",
     "          x.YY.x          ",
     "         x......x         ",
@@ -6098,11 +6011,11 @@ BigRezonator2Map.map= (
     "  x....................x  ",
     " xxxxxxxxxxxxxxxxxxxxxxxx ",
     "      x....xxxx....x      ", #10
-    "      x....x  x....x      ", 
-    "      x....x  x....x      ", 
-    "      x....x  x....x      ", 
-    "      x....x  x....x      ", 
-    "      xxxxxx  xxxxxx      ", 
+    "      x....x  x....x      ",
+    "      x....x  x....x      ",
+    "      x....x  x....x      ",
+    "      x....x  x....x      ",
+    "      xxxxxx  xxxxxx      ",
     "      x....x  x....x      ",
     "      x....x  x....x      ",
     "      x....x  x....x      ",
@@ -6110,55 +6023,18 @@ BigRezonator2Map.map= (
     "      x....x  x....x      ", #20
     "      x....x  x....x      ",
     "      x.....xx.....x      ",
-    "      xxxxxxxxxxxxxx      ",       
-    "                          ", #24  (25 total)
-    "                          ", 
-    "                          "
-    )
-  
-BigRezonator2Map.CopyMapToColorSprite(TheSprite=BigRezonator2)
-
-
-BigRezonator2Map.map= (
-    #0.........1.........2.........3
-    "                          ", #0
-    "                          ", 
-    "                          ", 
-    "            xx            ",
-    "          x.YY.x          ",
-    "         x......x         ",
-    " xxxxxxxxxxxxxxxxxxxxxxxx ",
-    "  x....................x  ",
-    "  x....................x  ",
-    "  x....................x  ",
-    "  x....................x  ",
-    " xxxxxxxxxxxxxxxxxxxxxxxx ",
-    "       x....xx....x       ", #10
-    "       x....xx....x       ", 
-    "       x....xx....x       ", 
-    "       x....xx....x       ", 
-    "       x....xx....x       ", 
-    "       xxxxxxxxxxxx       ", 
-    "       x....xx....x       ",
-    "       x....xx....x       ",
-    "       x....xx....x       ",
-    "       x....xx....x       ",
-    "       x....xx....x       ", #20
-    "       x....xx....x       ",
-    "       x....xx....x       ",
-    "       xxxxxxxxxxxx       ",       
+    "      xxxxxxxxxxxxxx      ",
     "                          ", #24  (25 total)
     "                          ",
     "                          "
     )
-  
+
 BigRezonator2Map.CopyMapToColorSprite(TheSprite=BigRezonator2)
 
 
 BigRezonator2Map.map= (
     #0.........1.........2.........3
     "                          ", #0
-    "                          ",
     "                          ",
     "                          ",
     "            xx            ",
@@ -6171,11 +6047,11 @@ BigRezonator2Map.map= (
     "  x....................x  ",
     " xxxxxxxxxxxxxxxxxxxxxxxx ",
     "       x....xx....x       ", #10
-    "       x....xx....x       ", 
-    "       x....xx....x       ", 
-    "       x....xx....x       ", 
-    "       x....xx....x       ", 
-    "       xxxxxxxxxxxx       ", 
+    "       x....xx....x       ",
+    "       x....xx....x       ",
+    "       x....xx....x       ",
+    "       x....xx....x       ",
+    "       xxxxxxxxxxxx       ",
     "       x....xx....x       ",
     "       x....xx....x       ",
     "       x....xx....x       ",
@@ -6183,25 +6059,18 @@ BigRezonator2Map.map= (
     "       x....xx....x       ", #20
     "       x....xx....x       ",
     "       x....xx....x       ",
-    "      xxxxxxxxxxxxxx      ",       
+    "       xxxxxxxxxxxx       ",
+    "                          ", #24  (25 total)
     "                          ",
     "                          "
     )
-  
+
 BigRezonator2Map.CopyMapToColorSprite(TheSprite=BigRezonator2)
-
-
-
-
-
-
 
 
 BigRezonator2Map.map= (
     #0.........1.........2.........3
     "                          ", #0
-    "                          ",
-    "                          ",
     "                          ",
     "                          ",
     "                          ",
@@ -6215,10 +6084,11 @@ BigRezonator2Map.map= (
     "  x....................x  ",
     " xxxxxxxxxxxxxxxxxxxxxxxx ",
     "       x....xx....x       ", #10
-    "       x....xx....x       ", 
-    "       x....xx....x       ", 
-    "       x....xx....x       ", 
-    "       xxxxxxxxxxxx       ", 
+    "       x....xx....x       ",
+    "       x....xx....x       ",
+    "       x....xx....x       ",
+    "       x....xx....x       ",
+    "       xxxxxxxxxxxx       ",
     "       x....xx....x       ",
     "       x....xx....x       ",
     "       x....xx....x       ",
@@ -6226,10 +6096,53 @@ BigRezonator2Map.map= (
     "       x....xx....x       ", #20
     "       x....xx....x       ",
     "       x....xx....x       ",
-    "      xxxxxxxxxxxxxx      ",       
+    "      xxxxxxxxxxxxxx      ",
+    "                          ",
     "                          "
     )
-  
+
+BigRezonator2Map.CopyMapToColorSprite(TheSprite=BigRezonator2)
+
+
+
+
+
+
+
+
+BigRezonator2Map.map= (
+    #0.........1.........2.........3
+    "                          ", #0
+    "                          ",
+    "                          ",
+    "                          ",
+    "                          ",
+    "                          ",
+    "            xx            ",
+    "          x.YY.x          ",
+    "         x......x         ",
+    " xxxxxxxxxxxxxxxxxxxxxxxx ",
+    "  x....................x  ",
+    "  x....................x  ",
+    "  x....................x  ",
+    "  x....................x  ",
+    " xxxxxxxxxxxxxxxxxxxxxxxx ",
+    "       x....xx....x       ", #10
+    "       x....xx....x       ",
+    "       x....xx....x       ",
+    "       x....xx....x       ",
+    "       xxxxxxxxxxxx       ",
+    "       x....xx....x       ",
+    "       x....xx....x       ",
+    "       x....xx....x       ",
+    "       x....xx....x       ",
+    "       x....xx....x       ", #20
+    "       x....xx....x       ",
+    "       x....xx....x       ",
+    "      xxxxxxxxxxxxxx      ",
+    "                          "
+    )
+
 BigRezonator2Map.CopyMapToColorSprite(TheSprite=BigRezonator2)
 
 
@@ -6248,7 +6161,7 @@ BigRezonator2Map.map= (
     "                          ", #0
     "                          ",
     "                          ",
-    "                          ", 
+    "                          ",
     "                          ",
     "                          ",
     "            xx            ",
@@ -6261,10 +6174,10 @@ BigRezonator2Map.map= (
     "  x....................x  ",
     " xxxxxxxxxxxxxxxxxxxxxxxx ",
     "       x....xx....x       ", #10
-    "       x....xx....x       ", 
-    "       x....xx....x       ", 
-    "       x....xx....x       ", 
-    "       xxxxxxxxxxxx       ", 
+    "       x....xx....x       ",
+    "       x....xx....x       ",
+    "       x....xx....x       ",
+    "       xxxxxxxxxxxx       ",
     "       x....xx....x       ",
     "       x....xx....x       ",
     "       x....xx....x       ",
@@ -6272,10 +6185,10 @@ BigRezonator2Map.map= (
     "       x....xx....x       ", #20
     "       x....xx....x       ",
     "      x.....xx.....x      ",
-    "     xxxxxxxxxxxxxxxx     ",       
-    "                          " 
+    "     xxxxxxxxxxxxxxxx     ",
+    "                          "
     )
-  
+
 BigRezonator2Map.CopyMapToColorSprite(TheSprite=BigRezonator2)
 
 
@@ -6284,9 +6197,9 @@ BigRezonator2Map.map= (
     #0.........1.........2.........3
     "                          ", #0
     "                          ",
-    "                          ", 
-    "                          ", 
-    "                          ", 
+    "                          ",
+    "                          ",
+    "                          ",
     "                          ",
     "                          ",
     "            xx            ",
@@ -6299,9 +6212,9 @@ BigRezonator2Map.map= (
     "  x....................x  ",
     " xxxxxxxxxxxxxxxxxxxxxxxx ",
     "       x....xx....x       ", #10
-    "       x....xx....x       ", 
-    "       x....xx....x       ", 
-    "       xxxxxxxxxxxx       ", 
+    "       x....xx....x       ",
+    "       x....xx....x       ",
+    "       xxxxxxxxxxxx       ",
     "       x....xx....x       ",
     "       x....xx....x       ",
     "       x....xx....x       ",
@@ -6309,10 +6222,10 @@ BigRezonator2Map.map= (
     "       x....xx....x       ", #20
     "       x....xx....x       ",
     "      x.....xx.....x      ",
-    "     xxxxxxxxxxxxxxxx     ",       
-    "                          " 
+    "     xxxxxxxxxxxxxxxx     ",
+    "                          "
     )
-  
+
 BigRezonator2Map.CopyMapToColorSprite(TheSprite=BigRezonator2)
 
 
@@ -6336,11 +6249,11 @@ BigRezonator2Map.map= (
     "  x....................x  ",
     " xxxxxxxxxxxxxxxxxxxxxxxx ",
     "       x....xx....x       ", #10
-    "       x....xx....x       ", 
-    "       x....xx....x       ", 
-    "       x....xx....x       ", 
-    "       x....xx....x       ", 
-    "       xxxxxxxxxxxx       ", 
+    "       x....xx....x       ",
+    "       x....xx....x       ",
+    "       x....xx....x       ",
+    "       x....xx....x       ",
+    "       xxxxxxxxxxxx       ",
     "       x....xx....x       ",
     "       x....xx....x       ",
     "       x....xx....x       ",
@@ -6348,11 +6261,11 @@ BigRezonator2Map.map= (
     "       x....xx....x       ", #20
     "       x....xx....x       ",
     "      x.....xx.....x      ",
-    "     xxxxxxxxxxxxxxxx     ",       
-    "                          ", 
-    "                          " 
+    "     xxxxxxxxxxxxxxxx     ",
+    "                          ",
+    "                          "
     )
-  
+
 BigRezonator2Map.CopyMapToColorSprite(TheSprite=BigRezonator2)
 
 
@@ -6360,8 +6273,8 @@ BigRezonator2Map.CopyMapToColorSprite(TheSprite=BigRezonator2)
 BigRezonator2Map.map= (
     #0.........1.........2.........3
     "                          ", #0
-    "                          ", 
-    "                          ", 
+    "                          ",
+    "                          ",
     "            xx            ",
     "          x.YY.x          ",
     "         x......x         ",
@@ -6372,11 +6285,11 @@ BigRezonator2Map.map= (
     "  x....................x  ",
     " xxxxxxxxxxxxxxxxxxxxxxxx ",
     "       x....xx....x       ", #10
-    "       x....xx....x       ", 
-    "       x....xx....x       ", 
-    "       x....xx....x       ", 
-    "       x....xx....x       ", 
-    "       xxxxxxxxxxxx       ", 
+    "       x....xx....x       ",
+    "       x....xx....x       ",
+    "       x....xx....x       ",
+    "       x....xx....x       ",
+    "       xxxxxxxxxxxx       ",
     "       x....xx....x       ",
     "       x....xx....x       ",
     "       x....xx....x       ",
@@ -6384,20 +6297,20 @@ BigRezonator2Map.map= (
     "       x....xx....x       ", #20
     "       x....xx....x       ",
     "       x....xx....x       ",
-    "       xxxxxxxxxxxx       ",       
+    "       xxxxxxxxxxxx       ",
     "                          ", #24  (25 total)
     "                          ",
     "                          "
     )
-  
+
 BigRezonator2Map.CopyMapToColorSprite(TheSprite=BigRezonator2)
 
 
 BigRezonator2Map.map= (
     #0.........1.........2.........3
     "                          ", #0
-    "                          ", 
-    "                          ", 
+    "                          ",
+    "                          ",
     "            xx            ",
     "          x.YY.x          ",
     "         x......x         ",
@@ -6408,11 +6321,11 @@ BigRezonator2Map.map= (
     "  x....................x  ",
     " xxxxxxxxxxxxxxxxxxxxxxxx ",
     "      x....xxxx....x      ", #10
-    "      x....x  x....x      ", 
-    "      x....x  x....x      ", 
-    "      x....x  x....x      ", 
-    "      x....x  x....x      ", 
-    "      xxxxxx  xxxxxx      ", 
+    "      x....x  x....x      ",
+    "      x....x  x....x      ",
+    "      x....x  x....x      ",
+    "      x....x  x....x      ",
+    "      xxxxxx  xxxxxx      ",
     "      x....x  x....x      ",
     "      x....x  x....x      ",
     "      x....x  x....x      ",
@@ -6420,12 +6333,12 @@ BigRezonator2Map.map= (
     "      x....x  x....x      ", #20
     "      x....x  x....x      ",
     "      x.....xx.....x      ",
-    "      xxxxxxxxxxxxxx      ",       
+    "      xxxxxxxxxxxxxx      ",
     "                          ", #24  (25 total)
-    "                          ", 
+    "                          ",
     "                          "
     )
-  
+
 BigRezonator2Map.CopyMapToColorSprite(TheSprite=BigRezonator2)
 
 
@@ -6445,11 +6358,11 @@ BigRezonator2Map.map= (
     "  x....................x  ",
     " xxxxxxxxxxxxxxxxxxxxxxxx ",
     "     x....xxxxxx....x     ", #10
-    "     x....x    x....x     ", 
-    "     x....x    x....x     ", 
-    "     x....x    x....x     ", 
-    "     x....x    x....x     ", 
-    "     xxxxxx    xxxxxx     ", 
+    "     x....x    x....x     ",
+    "     x....x    x....x     ",
+    "     x....x    x....x     ",
+    "     x....x    x....x     ",
+    "     xxxxxx    xxxxxx     ",
     "     x....x    x....x     ",
     "     x....x    x....x     ",
     "     x....x    x....x     ",
@@ -6457,10 +6370,10 @@ BigRezonator2Map.map= (
     "     x....x    x....x     ", #20
     "     x....x    x....x     ",
     "     x.....x  x.....x     ",
-    "     xxxxxxxxxxxxxxxx     ",       
+    "     xxxxxxxxxxxxxxxx     ",
     "                          ", #24  (25 total)
-    "                          ", 
-    "                          ", 
+    "                          ",
+    "                          ",
     "                          "
 
 
@@ -6476,7 +6389,7 @@ BigRezonator2Map.CopyMapToColorSprite(TheSprite=BigRezonator2)
 
 BigRezonator2Map.map= (
     #0.........1.........2.........3
-    "                          ", 
+    "                          ",
     "                          ", #0
     "            xx            ",
     "          x.YY.x          ",
@@ -6488,11 +6401,11 @@ BigRezonator2Map.map= (
     "  x....................x  ",
     " xxxxxxxxxxxxxxxxxxxxxxxx ",
     "    x....x xxxx x....x    ", #10
-    "    x....x      x....x    ", 
-    "    x....x      x....x    ", 
-    "    x....x      x....x    ", 
-    "    x....x      x....x    ", 
-    "    xxxxxx      xxxxxx    ", 
+    "    x....x      x....x    ",
+    "    x....x      x....x    ",
+    "    x....x      x....x    ",
+    "    x....x      x....x    ",
+    "    xxxxxx      xxxxxx    ",
     "    x....x      x....x    ",
     "    x....x      x....x    ",
     "    x....x      x....x    ",
@@ -6500,10 +6413,10 @@ BigRezonator2Map.map= (
     "    x....x      x....x    ", #20
     "    x....x      x....x    ",
     "    x.....x    x.....x    ",
-    "    xxxxxxxxx xxxxxxxx    ",       
+    "    xxxxxxxxx xxxxxxxx    ",
     "                          ", #24  (25 total)
-    "                          ", 
-    "                          ", 
+    "                          ",
+    "                          ",
     "                          "
     )
 BigRezonator2Map.CopyMapToColorSprite(TheSprite=BigRezonator2)
@@ -6530,11 +6443,11 @@ BigRezonator2Map.map= (
     "  x....................x  ",
     " xxxxxxxxxxxxxxxxxxxxxxxx ",
     "   x....x  xxxx  x....x   ", #10
-    "   x....x        x....x   ", 
-    "   x....x        x....x   ", 
-    "   x....x        x....x   ", 
-    "   x....x        x....x   ", 
-    "   xxxxxx        xxxxxx   ", 
+    "   x....x        x....x   ",
+    "   x....x        x....x   ",
+    "   x....x        x....x   ",
+    "   x....x        x....x   ",
+    "   xxxxxx        xxxxxx   ",
     "   x....x        x....x   ",
     "   x....x        x....x   ",
     "   x....x        x....x   ",
@@ -6542,11 +6455,11 @@ BigRezonator2Map.map= (
     "   x....x        x....x   ", #20
     "   x....x        x....x   ",
     "   x.....x      x.....x   ",
-    "   xxxxxxxxx   xxxxxxxx   ",       
+    "   xxxxxxxxx   xxxxxxxx   ",
     "                          ", #24  (25 total)
-    "                          ", 
-    "                          ", 
-    "                          ", 
+    "                          ",
+    "                          ",
+    "                          ",
     "                          "
     )
 BigRezonator2Map.CopyMapToColorSprite(TheSprite=BigRezonator2)
@@ -6571,11 +6484,11 @@ BigRezonator2Map.map= (
     "  x....................x  ",
     " xxxxxxxxxxxxxxxxxxxxxxxx ",
     "  x....x   xxxx   x....x  ", #10
-    "  x....x          x....x  ", 
-    "  x....x          x....x  ", 
-    "  x....x          x....x  ", 
-    "  x....x          x....x  ", 
-    "  xxxxxx          xxxxxx  ", 
+    "  x....x          x....x  ",
+    "  x....x          x....x  ",
+    "  x....x          x....x  ",
+    "  x....x          x....x  ",
+    "  xxxxxx          xxxxxx  ",
     "  x....x          x....x  ",
     "  x....x          x....x  ",
     "  x....x          x....x  ",
@@ -6583,11 +6496,11 @@ BigRezonator2Map.map= (
     "  x....x          x....x  ", #20
     "  x....x          x....x  ",
     "  x.....x        x.....x  ",
-    "  xxxxxxxxx     xxxxxxxx  ",       
+    "  xxxxxxxxx     xxxxxxxx  ",
     "                          ", #24  (25 total)
-    "                          ", 
-    "                          ", 
-    "                          ", 
+    "                          ",
+    "                          ",
+    "                          ",
     "                          "
     )
 BigRezonator2Map.CopyMapToColorSprite(TheSprite=BigRezonator2)
@@ -6600,12 +6513,12 @@ BigRezonator2Map.CopyMapToColorSprite(TheSprite=BigRezonator2)
 
 
 LightBike = ColorAnimatedSprite(
-  h=0, 
-  v=0, 
-  name="LightBike", 
-  width  = 23, 
-  height = 9, 
-  frames = 0, 
+  h=0,
+  v=0,
+  name="LightBike",
+  width  = 23,
+  height = 9,
+  frames = 0,
   framerate=1,
   grid=[]  )
 
@@ -6613,7 +6526,7 @@ LightBike = ColorAnimatedSprite(
 LightBikeMap = TextMap(
   h      = 1,
   v      = 1,
-  width  = LightBike.width, 
+  width  = LightBike.width,
   height = LightBike.height
   )
 
@@ -6636,69 +6549,69 @@ LightBikeMap.TypeList = {
 
 LightBikeMap.map= (
     #0.........1.........2.........3
-    "      -oo              ", 
-    "     -oooooooo         ", 
-    "   ----ooo.ooooo ..    ", 
-    "  .--. -....oo- .--.   ", 
-    " .-*.-. -..o.- .-*.-.  ", 
-    " .-..-.  -..o- .-..-.  ", 
-    "  .--.    ...o- .--.   ",  
-    "   ..            ..    ", 
-    "                       ", 
+    "      -oo              ",
+    "     -oooooooo         ",
+    "   ----ooo.ooooo ..    ",
+    "  .--. -....oo- .--.   ",
+    " .-*.-. -..o.- .-*.-.  ",
+    " .-..-.  -..o- .-..-.  ",
+    "  .--.    ...o- .--.   ",
+    "   ..            ..    ",
+    "                       ",
     )
 
-  
+
 LightBikeMap.CopyMapToColorSprite(TheSprite=LightBike)
 
 LightBikeMap.map= (
     #0.........1.........2.........3
-    "      -oo              ", 
-    "     -oooooooo         ", 
-    "   ----ooo.ooooo ..    ", 
-    "  .--. -....oo- .--.   ", 
-    " .-..-. -..o.- .-..-.  ", 
-    " .-*.-.  -..o- .-*.-.  ", 
-    "  .--.    ...o- .--.   ",  
-    "   ..            ..    ", 
-    "                       ", 
+    "      -oo              ",
+    "     -oooooooo         ",
+    "   ----ooo.ooooo ..    ",
+    "  .--. -....oo- .--.   ",
+    " .-..-. -..o.- .-..-.  ",
+    " .-*.-.  -..o- .-*.-.  ",
+    "  .--.    ...o- .--.   ",
+    "   ..            ..    ",
+    "                       ",
     )
 
-  
+
 LightBikeMap.CopyMapToColorSprite(TheSprite=LightBike)
 
 
 
 LightBikeMap.map= (
     #0.........1.........2.........3
-    "      -oo              ", 
-    "     -oooooooo         ", 
-    "   ----ooo.ooooo ..    ", 
-    "  .--. -....oo- .--.   ", 
-    " .-..-. -..o.- .-..-.  ", 
-    " .-.*-.  -..o- .-.*-.  ", 
-    "  .--.    ...o- .--.   ",  
-    "   ..            ..    ", 
-    "                       ", 
+    "      -oo              ",
+    "     -oooooooo         ",
+    "   ----ooo.ooooo ..    ",
+    "  .--. -....oo- .--.   ",
+    " .-..-. -..o.- .-..-.  ",
+    " .-.*-.  -..o- .-.*-.  ",
+    "  .--.    ...o- .--.   ",
+    "   ..            ..    ",
+    "                       ",
     )
 
-  
+
 LightBikeMap.CopyMapToColorSprite(TheSprite=LightBike)
 
 
 LightBikeMap.map= (
     #0.........1.........2.........3
-    "      -oo              ", 
-    "     -oooooooo         ", 
-    "   ----ooo.ooooo ..    ", 
-    "  .--. -....oo- .--.   ", 
-    " .-.*-. -..o.- .-.*-.  ", 
-    " .-..-.  -..o- .-..-.  ", 
-    "  .--.    ...o- .--.   ",  
-    "   ..            ..    ", 
-    "                       ", 
+    "      -oo              ",
+    "     -oooooooo         ",
+    "   ----ooo.ooooo ..    ",
+    "  .--. -....oo- .--.   ",
+    " .-.*-. -..o.- .-.*-.  ",
+    " .-..-.  -..o- .-..-.  ",
+    "  .--.    ...o- .--.   ",
+    "   ..            ..    ",
+    "                       ",
     )
 
-  
+
 LightBikeMap.CopyMapToColorSprite(TheSprite=LightBike)
 
 
@@ -6709,7 +6622,7 @@ SpaceInvader = ColorAnimatedSprite(h=0, v=0, name="SpaceInvader", width=13, heig
 SpaceInvader.grid.append(
   [
     0, 0, 9, 0, 0, 0, 0, 0, 0, 0, 0, 9, 0,
-    0, 0, 0, 9, 9, 9, 9, 9, 9, 9, 9, 0, 0, 
+    0, 0, 0, 9, 9, 9, 9, 9, 9, 9, 9, 0, 0,
     0, 0, 9, 9,11, 9, 9, 9,11, 9, 9, 0, 0,
     0, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 0,
     0, 9, 0, 9, 9, 9, 9, 9, 9, 9, 0, 9, 0,
@@ -6746,11 +6659,11 @@ TinyInvader.grid.append(
 )
 TinyInvader.grid.append(
   [
-   0, 0, 0, 8, 0, 0, 0, 
-   0, 0, 9, 9, 9, 0, 0, 
-   0, 9,11, 9,11, 9, 0, 
-   0, 9, 9, 9, 9, 9, 0, 
-   0, 0, 9, 0, 9, 0, 0, 
+   0, 0, 0, 8, 0, 0, 0,
+   0, 0, 9, 9, 9, 0, 0,
+   0, 9,11, 9,11, 9, 0,
+   0, 9, 9, 9, 9, 9, 0,
+   0, 0, 9, 0, 9, 0, 0,
    0, 9, 0, 0, 0, 9, 0
   ]
 )
@@ -6815,7 +6728,7 @@ LittleShipFlying.grid.append(
     0, 0, 0, 0, 0,15, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
     0, 6, 7, 8, 5, 2, 2, 2, 0, 0, 0, 0, 0, 0, 0, 0,
     0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
-    
+
    ]
 )
 
@@ -6829,17 +6742,17 @@ LittleShipFlying.grid.append(
     0, 0, 0, 0, 0,15, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
     0, 6, 7, 8, 5, 2, 2, 2, 0, 0, 0, 0, 0, 0, 0, 0,
     0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
-    
+
    ]
 )
 
 
-                  
+
 BigShipFlying = ColorAnimatedSprite(h=0, v=0, name="BigShipFlying", width=36, height=8, frames=6, framerate=1,grid=[])
 
 BigShipFlying.grid.append(
   [
-    0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 
+    0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
     0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
     0, 0, 0, 0, 0, 0, 0, 5, 5, 5, 5,14,14,14,14,14,16,14,16,14,14,14,14, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
     0, 5, 5, 5, 5, 6, 6, 7, 7, 8, 8,17,14,14, 9,14, 9,14,14,13,13,13,13, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,15, 0, 0,
@@ -6852,7 +6765,7 @@ BigShipFlying.grid.append(
 
 BigShipFlying.grid.append(
   [
-    0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 
+    0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
     0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
     0, 0, 0, 0, 0, 0, 0, 5, 5, 5, 5,14,14, 1,14,14,16,14,16,14,14,14,14, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
     0, 5, 5, 5, 5, 6, 6, 7, 8, 8, 5,17,14, 1, 9,14, 9,14,14,13,13,13,13, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0,
@@ -6878,7 +6791,7 @@ BigShipFlying.grid.append(
 
 BigShipFlying.grid.append(
   [
-    0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 
+    0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
     0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
     0, 0, 0, 0, 0, 0, 0, 5, 5, 5, 5,14,14, 1,14,14,16,14,16,14,14,14,14, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
     0, 5, 5, 5, 5, 6, 6, 7, 8, 8, 5,17,14, 1, 9,14, 9,14,14,13,13,13,13, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0,
@@ -6904,7 +6817,7 @@ BigShipFlying.grid.append(
 
 BigShipFlying.grid.append(
   [
-    0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 
+    0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
     0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
     0, 0, 0, 0, 0, 0, 0, 5, 5, 5, 5,14,14, 1,14,14,16,14,16,14,14,14,14, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
     0, 5, 5, 5, 5, 6, 6, 7, 8, 8, 5,17,14, 1, 9,14, 9,14,14,13,13,13,13, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0,
@@ -6920,7 +6833,7 @@ BigShipFlying.grid.append(
 
 #(self,h,v,name,width,height,frames,currentframe,framerate,grid):
 SatelliteSprite = ColorAnimatedSprite(
-  h=-1, v=-1, name="HomingMissile", width=3, height=3, 
+  h=-1, v=-1, name="HomingMissile", width=3, height=3,
   frames       = 7,
 
   framerate    = 1,
@@ -6973,7 +6886,7 @@ SatelliteSprite.grid.append(
 
 #(self,h,v,name,width,height,frames,currentframe,framerate,grid):
 SatelliteSprite2 = ColorAnimatedSprite(
-  h=-1, v=-1, name="HomingMissile", width=3, height=3, 
+  h=-1, v=-1, name="HomingMissile", width=3, height=3,
   frames       = 7,
 
   framerate    = 1,
@@ -7027,7 +6940,7 @@ SatelliteSprite2.grid.append(
 
 #(self,h,v,name,width,height,frames,currentframe,framerate,grid):
 SatelliteSprite3 = ColorAnimatedSprite(
-  h=-1, v=-1, name="HomingMissile", width=3, height=3, 
+  h=-1, v=-1, name="HomingMissile", width=3, height=3,
   frames       = 8,
 
   framerate    = 1,
@@ -7079,7 +6992,7 @@ SatelliteSprite3.grid.append(
 
 #(self,h,v,name,width,height,frames,currentframe,framerate,grid):
 SatelliteSprite4 = ColorAnimatedSprite(
-  h=-1, v=-1, name="HomingMissile", width=3, height=3, 
+  h=-1, v=-1, name="HomingMissile", width=3, height=3,
   frames       = 8,
 
   framerate    = 1,
@@ -7132,7 +7045,7 @@ SatelliteSprite4.grid.append(
 
 #(self,h,v,name,width,height,frames,currentframe,framerate,grid):
 SatelliteSprite5 = ColorAnimatedSprite(
-  h=-1, v=-1, name="HomingMissile", width=3, height=3, 
+  h=-1, v=-1, name="HomingMissile", width=3, height=3,
   frames       = 8,
 
   framerate    = 1,
@@ -7184,7 +7097,7 @@ SatelliteSprite5.grid.append(
 
 #(self,h,v,name,width,height,frames,currentframe,framerate,grid):
 SatelliteSprite6 = ColorAnimatedSprite(
-  h=-1, v=-1, name="HomingMissile", width=3, height=3, 
+  h=-1, v=-1, name="HomingMissile", width=3, height=3,
   frames       = 8,
 
   framerate    = 1,
@@ -7247,7 +7160,7 @@ SatelliteSprite6.grid.append(
 
 #(self,h,v,name,width,height,frames,currentframe,framerate,grid):
 SatelliteSprite7 = ColorAnimatedSprite(
-  h=-1, v=-1, name="HomingMissile", width=3, height=3, 
+  h=-1, v=-1, name="HomingMissile", width=3, height=3,
   frames       = 8,
 
   framerate    = 1,
@@ -7307,10 +7220,10 @@ SatelliteSprite7.grid.append(
 SmallUFOSprite = ColorAnimatedSprite(
   h = -1,
   v = -1,
-  name   = "HomingMissile", 
-  width  = 3, 
-  height = 3, 
-  frames = 4, 
+  name   = "HomingMissile",
+  width  = 3,
+  height = 3,
+  frames = 4,
 
   framerate    = 1,
   grid = []
@@ -7321,7 +7234,7 @@ SmallUFOSprite.grid.append(
   [ 4, 0, 0,
     0, 1, 0,
     0, 0, 4
-    
+
   ]
 )
 
@@ -7330,14 +7243,14 @@ SmallUFOSprite.grid.append(
   [ 0, 4, 0,
     0, 1, 0,
     0, 4, 0
-    
+
   ]
 )
 SmallUFOSprite.grid.append(
   [ 0, 0, 4,
     0, 1, 0,
     4, 0, 0
-    
+
   ]
 )
 
@@ -7345,7 +7258,7 @@ SmallUFOSprite.grid.append(
   [ 0, 0, 0,
     4, 1, 4,
     0, 0, 0
-    
+
   ]
 )
 
@@ -7358,10 +7271,10 @@ SmallUFOSprite.grid.append(
 SmallUFOSprite2 = ColorAnimatedSprite(
   h = -1,
   v = -1,
-  name   = "HomingMissile", 
-  width  = 3, 
-  height = 3, 
-  frames = 2, 
+  name   = "HomingMissile",
+  width  = 3,
+  height = 3,
+  frames = 2,
 
   framerate    = 1,
   grid = []
@@ -7372,7 +7285,7 @@ SmallUFOSprite2.grid.append(
   [14, 0,14,
     0,22, 0,
     0, 5, 0
-    
+
   ]
 )
 
@@ -7380,7 +7293,7 @@ SmallUFOSprite2.grid.append(
   [14, 0,14,
     0,22, 0,
     0, 8, 0
-    
+
   ]
 )
 
@@ -7392,10 +7305,10 @@ SmallUFOSprite2.grid.append(
 SmallUFOSprite3 = ColorAnimatedSprite(
   h = -1,
   v = -1,
-  name   = "HomingMissile", 
-  width  = 3, 
-  height = 3, 
-  frames = 2, 
+  name   = "HomingMissile",
+  width  = 3,
+  height = 3,
+  frames = 2,
 
   framerate    = 1,
   grid = []
@@ -7406,7 +7319,7 @@ SmallUFOSprite3.grid.append(
   [ 0,25, 0,
    25, 5,25,
     0, 8, 0
-    
+
   ]
 )
 
@@ -7414,7 +7327,7 @@ SmallUFOSprite3.grid.append(
   [ 0,25, 0,
    25, 8,25,
     0, 5, 0
-    
+
   ]
 )
 
@@ -7424,10 +7337,10 @@ SmallUFOSprite3.grid.append(
 SmallUFOSprite4 = ColorAnimatedSprite(
   h = -1,
   v = -1,
-  name   = "HomingMissile", 
-  width  = 3, 
-  height = 3, 
-  frames = 4, 
+  name   = "HomingMissile",
+  width  = 3,
+  height = 3,
+  frames = 4,
 
   framerate    = 1,
   grid = []
@@ -7438,7 +7351,7 @@ SmallUFOSprite4.grid.append(
   [ 0,25,37,
    25, 0,25,
     0,25, 0
-    
+
   ]
 )
 
@@ -7447,37 +7360,33 @@ SmallUFOSprite4.grid.append(
   [37,25, 0,
    25, 0,25,
     0,25, 0
-    
+
   ]
 )
 SmallUFOSprite4.grid.append(
   [ 0,25, 0,
    25, 0,25,
    37,25, 0
-    
+
   ]
 )
 SmallUFOSprite4.grid.append(
   [ 0,25, 0,
    25, 0,25,
     0,25,37
-    
+
   ]
 )
-
-
-
-
 
 
 #(self,h,v,name,width,height,frames,currentframe,framerate,grid):
 SmallUFOSprite5 = ColorAnimatedSprite(
   h = -1,
   v = -1,
-  name   = "HomingMissile", 
-  width  = 3, 
-  height = 3, 
-  frames = 2, 
+  name   = "HomingMissile",
+  width  = 3,
+  height = 3,
+  frames = 2,
 
   framerate    = 1,
   grid = []
@@ -7489,7 +7398,7 @@ SmallUFOSprite5.grid.append(
     0,22, 0,
     0,17, 0,
     0,17, 0
-    
+
   ]
 )
 
@@ -7498,7 +7407,7 @@ SmallUFOSprite5.grid.append(
     0,22, 0,
     0,22, 0,
     0,18, 0
-    
+
   ]
 )
 
@@ -7507,7 +7416,7 @@ SmallUFOSprite5.grid.append(
     0,17, 0,
     0,19, 0,
     0,20, 0
-    
+
   ]
 )
 
@@ -7519,10 +7428,10 @@ SmallUFOSprite5.grid.append(
 SmallUFOSprite6 = ColorAnimatedSprite(
   h = -1,
   v = -1,
-  name   = "HomingMissile", 
-  width  = 3, 
-  height = 3, 
-  frames = 4, 
+  name   = "HomingMissile",
+  width  = 3,
+  height = 3,
+  frames = 4,
 
   framerate    = 1,
   grid = []
@@ -7533,7 +7442,7 @@ SmallUFOSprite6.grid.append(
   [ 2, 0, 2,
     2, 5, 2,
     2, 0, 2
-    
+
   ]
 )
 
@@ -7542,7 +7451,7 @@ SmallUFOSprite6.grid.append(
   [ 2, 0, 2,
     2, 5, 2,
     2, 0, 2
-    
+
   ]
 )
 
@@ -7550,7 +7459,7 @@ SmallUFOSprite6.grid.append(
   [ 2, 0, 2,
     2,39, 2,
     2, 0, 2
-    
+
   ]
 )
 
@@ -7558,7 +7467,7 @@ SmallUFOSprite6.grid.append(
   [ 2, 0, 2,
     2,39, 2,
     2, 0, 2
-    
+
   ]
 )
 
@@ -7569,10 +7478,10 @@ SmallUFOSprite6.grid.append(
 SmallUFOSprite7 = ColorAnimatedSprite(
   h = -1,
   v = -1,
-  name   = "HomingMissile", 
-  width  = 3, 
-  height = 3, 
-  frames = 4, 
+  name   = "HomingMissile",
+  width  = 3,
+  height = 3,
+  frames = 4,
 
   framerate    = 1,
   grid = []
@@ -7583,7 +7492,7 @@ SmallUFOSprite7.grid.append(
   [ 2, 2, 2,
     2,25, 1,
     2, 1, 1
-    
+
   ]
 )
 
@@ -7591,7 +7500,7 @@ SmallUFOSprite7.grid.append(
   [ 2, 2, 2,
     2,25, 1,
     2, 1, 1
-    
+
   ]
 )
 
@@ -7599,7 +7508,7 @@ SmallUFOSprite7.grid.append(
   [ 2, 2, 2,
     2,43, 1,
     2, 1, 1
-    
+
   ]
 )
 
@@ -7607,7 +7516,7 @@ SmallUFOSprite7.grid.append(
   [ 2, 2, 2,
     2,43, 1,
     2, 1, 1
-    
+
   ]
 )
 
@@ -7616,10 +7525,10 @@ SmallUFOSprite7.grid.append(
 MediumUFOSprite = ColorAnimatedSprite(
   h = -1,
   v = -1,
-  name   = "HomingMissile", 
-  width  = 4, 
-  height = 4, 
-  frames = 6, 
+  name   = "HomingMissile",
+  width  = 4,
+  height = 4,
+  frames = 6,
 
   framerate    = 1,
   grid = []
@@ -7680,10 +7589,10 @@ MediumUFOSprite.grid.append(
 MediumUFOSprite2 = ColorAnimatedSprite(
   h = -1,
   v = -1,
-  name   = "HomingMissile", 
-  width  = 4, 
-  height = 4, 
-  frames = 8, 
+  name   = "HomingMissile",
+  width  = 4,
+  height = 4,
+  frames = 8,
 
   framerate    = 1,
   grid = []
@@ -7748,20 +7657,14 @@ MediumUFOSprite2.grid.append(
 
 
 
-
-
-
-
-
-
 #(self,h,v,name,width,height,frames,currentframe,framerate,grid):
 MediumUFOSprite3 = ColorAnimatedSprite(
   h = -1,
   v = -1,
-  name   = "HomingMissile", 
-  width  = 4, 
-  height = 4, 
-  frames = 8, 
+  name   = "HomingMissile",
+  width  = 4,
+  height = 4,
+  frames = 8,
 
   framerate    = 1,
   grid = []
@@ -7828,10 +7731,10 @@ MediumUFOSprite3.grid.append(
 MediumUFOSprite4 = ColorAnimatedSprite(
   h = -1,
   v = -1,
-  name   = "HomingMissile", 
-  width  = 4, 
-  height = 3, 
-  frames = 6, 
+  name   = "HomingMissile",
+  width  = 4,
+  height = 3,
+  frames = 6,
 
   framerate    = 1,
   grid = []
@@ -7875,23 +7778,19 @@ MediumUFOSprite4.grid.append(
 MediumUFOSprite4.grid.append(
   [ 0, 0, 0, 0,
     0,32,32, 0,
-    0,31,31, 0 
+    0,31,31, 0
    ]
 )
-
-
-
-
 
 
 #(self,h,v,name,width,height,frames,currentframe,framerate,grid):
 LargeUFOSprite1 = ColorAnimatedSprite(
   h = -1,
   v = -1,
-  name   = "HomingMissile", 
-  width  = 5, 
-  height = 3, 
-  frames = 6, 
+  name   = "HomingMissile",
+  width  = 5,
+  height = 3,
+  frames = 6,
 
   framerate    = 1,
   grid = []
@@ -7899,7 +7798,29 @@ LargeUFOSprite1 = ColorAnimatedSprite(
 
 
 LargeUFOSprite1.grid.append(
-  [ 
+  [
+    0, 1, 1, 1, 0,
+    1,13,39,13, 1,
+    0, 1, 1, 1, 0,
+  ]
+)
+
+LargeUFOSprite1.grid.append(
+  [
+    0, 1, 1, 1, 0,
+    1,39,13,13, 1,
+    0, 1, 1, 1, 0,
+  ]
+)
+LargeUFOSprite1.grid.append(
+  [
+    0, 1, 1, 1, 0,
+    1,39,13,13, 1,
+    0, 1, 1, 1, 0,
+  ]
+)
+LargeUFOSprite1.grid.append(
+  [
     0, 1, 1, 1, 0,
     1,13,39,13, 1,
     0, 1, 1, 1, 0,
@@ -7907,32 +7828,8 @@ LargeUFOSprite1.grid.append(
 )
 
 
-
 LargeUFOSprite1.grid.append(
-  [ 
-    0, 1, 1, 1, 0,
-    1,39,13,13, 1,
-    0, 1, 1, 1, 0,
-  ]
-)
-LargeUFOSprite1.grid.append(
-  [ 
-    0, 1, 1, 1, 0,
-    1,39,13,13, 1,
-    0, 1, 1, 1, 0,
-  ]
-)
-LargeUFOSprite1.grid.append(
-  [ 
-    0, 1, 1, 1, 0,
-    1,13,39,13, 1,
-    0, 1, 1, 1, 0,
-  ]
-)
-
-
-LargeUFOSprite1.grid.append(
-  [ 
+  [
     0, 1, 1, 1, 0,
     1,13,13,39, 1,
     0, 1, 1, 1, 0,
@@ -7940,135 +7837,123 @@ LargeUFOSprite1.grid.append(
 )
 
 LargeUFOSprite1.grid.append(
-  [ 
+  [
     0, 1, 1, 1, 0,
     1,13,13,39, 1,
     0, 1, 1, 1, 0,
   ]
 )
-
-
 
 #(self,h,v,name,width,height,frames,currentframe,framerate,grid):
 LargeUFOSprite2 = ColorAnimatedSprite(
   h = -1,
   v = -1,
-  name   = "HomingMissile", 
-  width  = 5, 
-  height = 5, 
-  frames = 5, 
+  name   = "HomingMissile",
+  width  = 5,
+  height = 5,
+  frames = 5,
 
   framerate    = 1,
   grid = []
 )
 
-
-
 LargeUFOSprite2.grid.append(
-  [ 
+  [
     0, 0, 1, 0, 0,
     0, 1, 1, 1, 0,
    39,13,13,13,13,
     0, 1, 1, 1, 0,
-    0, 0, 1, 0, 0 
+    0, 0, 1, 0, 0
   ]
 )
 LargeUFOSprite2.grid.append(
-  [ 
+  [
     0, 0, 1, 0, 0,
     0, 1, 1, 1, 0,
    13,39,13,13,13,
     0, 1, 1, 1, 0,
-    0, 0, 1, 0, 0 
+    0, 0, 1, 0, 0
   ]
 )
 LargeUFOSprite2.grid.append(
-  [ 
+  [
     0, 0, 1, 0, 0,
     0, 1, 1, 1, 0,
    13,13,39,13,13,
     0, 1, 1, 1, 0,
-    0, 0, 1, 0, 0 
+    0, 0, 1, 0, 0
   ]
 )
 
 LargeUFOSprite2.grid.append(
-  [ 
+  [
     0, 0, 1, 0, 0,
     0, 1, 1, 1, 0,
    13,13,13,39,13,
     0, 1, 1, 1, 0,
-    0, 0, 1, 0, 0 
+    0, 0, 1, 0, 0
   ]
 )
 LargeUFOSprite2.grid.append(
-  [ 
+  [
     0, 0, 1, 0, 0,
     0, 1, 1, 1, 0,
    13,13,13,13,39,
     0, 1, 1, 1, 0,
-    0, 0, 1, 0, 0 
+    0, 0, 1, 0, 0
   ]
 )
-
-
-
-
 
 
 #(self,h,v,name,width,height,frames,currentframe,framerate,grid):
 LargeUFOSprite3 = ColorAnimatedSprite(
   h = -1,
   v = -1,
-  name   = "HomingMissile", 
-  width  = 5, 
-  height = 5, 
-  frames = 4, 
+  name   = "HomingMissile",
+  width  = 5,
+  height = 5,
+  frames = 4,
 
   framerate    = 1,
   grid = []
 )
 
 
-
-
-
-
 LargeUFOSprite3.grid.append(
-  [ 
+  [
     1, 1, 1, 1, 0,
     1, 2, 2, 2, 2,
     1, 2,40,40, 2,
     1, 2, 9, 9, 2,
-    0, 2, 2, 2, 2 
+    0, 2, 2, 2, 2
   ]
 )
 
 LargeUFOSprite3.grid.append(
-  [ 
+  [
     1, 1, 1, 1, 0,
     1, 2, 2, 2, 2,
     1, 2, 9,40, 2,
     1, 2, 9,40, 2,
-    0, 2, 2, 2, 2 
+    0, 2, 2, 2, 2
   ]
 )
 LargeUFOSprite3.grid.append(
-  [ 
+  [
     1, 1, 1, 1, 0,
     1, 2, 2, 2, 2,
     1, 2, 9, 9, 2,
     1, 2,40,40, 2,
-    0, 2, 2, 2, 2 
+    0, 2, 2, 2, 2
   ]
 )
 LargeUFOSprite3.grid.append(
-  [ 
+  [
     1, 1, 1, 1, 0,
     1, 2, 2, 2, 2,
     1, 2,40, 9, 2,
     1, 2,40, 9, 2,
-    0, 2, 2, 2, 2 
+    0, 2, 2, 2, 2
   ]
 )
 
@@ -8078,10 +7963,10 @@ LargeUFOSprite3.grid.append(
 LargeUFOSprite4 = ColorAnimatedSprite(
   h = -1,
   v = -1,
-  name   = "HomingMissile", 
-  width  = 5, 
-  height = 5, 
-  frames = 10, 
+  name   = "HomingMissile",
+  width  = 5,
+  height = 5,
+  frames = 10,
 
   framerate    = 1,
   grid = []
@@ -8089,109 +7974,107 @@ LargeUFOSprite4 = ColorAnimatedSprite(
 
 
 LargeUFOSprite4.grid.append(
-  [ 
+  [
     0, 1,16, 1, 0,
     1, 1,41, 1, 1,
    16,41,41,41,16,
     1, 1,41, 1, 1,
-    0, 1,16, 1, 0 
+    0, 1,16, 1, 0
   ]
 )
 LargeUFOSprite4.grid.append(
-  [ 
+  [
     0, 1,41, 1, 0,
     1, 1,41, 1, 1,
    41,41,15,41,41,
     1, 1,41, 1, 1,
-    0, 1,41, 1, 0 
+    0, 1,41, 1, 0
   ]
 )
 LargeUFOSprite4.grid.append(
-  [ 
+  [
     0, 1,16, 1, 0,
     1, 1,15, 1, 1,
    16,15,13,15,16,
     1, 1,15, 1, 1,
-    0, 1,16, 1, 0 
+    0, 1,16, 1, 0
   ]
 )
 LargeUFOSprite4.grid.append(
-  [ 
+  [
     0, 1,15, 1, 0,
     1, 1,13, 1, 1,
    15,13,13,13,15,
     1, 1,13, 1, 1,
-    0, 1,15, 1, 0 
+    0, 1,15, 1, 0
   ]
 )
 LargeUFOSprite4.grid.append(
-  [ 
+  [
     0, 1,13, 1, 0,
     1, 1,13, 1, 1,
    13,13,13,13,13,
     1, 1,13, 1, 1,
-    0, 1,13, 1, 0 
+    0, 1,13, 1, 0
   ]
 )
 LargeUFOSprite4.grid.append(
-  [ 
+  [
     0, 1,13, 1, 0,
     1, 1,13, 1, 1,
    13,13,13,13,13,
     1, 1,13, 1, 1,
-    0, 1,13, 1, 0 
+    0, 1,13, 1, 0
   ]
 )
 LargeUFOSprite4.grid.append(
-  [ 
+  [
     0, 1,13, 1, 0,
     1, 1,13, 1, 1,
    13,13,13,13,13,
     1, 1,13, 1, 1,
-    0, 1,13, 1, 0 
+    0, 1,13, 1, 0
   ]
 )
 LargeUFOSprite4.grid.append(
-  [ 
+  [
     0, 1,13, 1, 0,
     1, 1,13, 1, 1,
    13,13,41,13,13,
     1, 1,13, 1, 1,
-    0, 1,13, 1, 0 
+    0, 1,13, 1, 0
   ]
 )
 
 LargeUFOSprite4.grid.append(
-  [ 
+  [
     0, 1,13, 1, 0,
     1, 1,13, 1, 1,
    13,13,41,13,13,
     1, 1,13, 1, 1,
-    0, 1,13, 1, 0 
+    0, 1,13, 1, 0
   ]
 )
 
 LargeUFOSprite4.grid.append(
-  [ 
+  [
     0, 1,13, 1, 0,
     1, 1,16, 1, 1,
    13,16,41,16,13,
     1, 1,16, 1, 1,
-    0, 1,13, 1, 0 
+    0, 1,13, 1, 0
   ]
 )
-
-
 
 
 #(self,h,v,name,width,height,frames,currentframe,framerate,grid):
 LargeUFOSprite5 = ColorAnimatedSprite(
   h = -4,
   v = -1,
-  name   = "HomingMissile", 
-  width  = 8, 
-  height = 5, 
-  frames = 4, 
+  name   = "HomingMissile",
+  width  = 8,
+  height = 5,
+  frames = 4,
 
   framerate    = 1,
   grid = []
@@ -8199,7 +8082,7 @@ LargeUFOSprite5 = ColorAnimatedSprite(
 
 
 LargeUFOSprite5.grid.append(
-  [ 
+  [
     0, 2, 0, 0, 0, 0, 2, 0,
     2, 0, 0, 2, 2, 0, 0, 2,
     2, 1, 1,39,39, 1, 1, 2,
@@ -8208,7 +8091,7 @@ LargeUFOSprite5.grid.append(
   ]
 )
 LargeUFOSprite5.grid.append(
-  [ 
+  [
     0, 2, 0, 0, 0, 0, 2, 0,
     2, 0, 0, 2, 2, 0, 0, 2,
     2, 1, 1,39,39, 1, 1, 2,
@@ -8218,7 +8101,7 @@ LargeUFOSprite5.grid.append(
 )
 
 LargeUFOSprite5.grid.append(
-  [ 
+  [
     0, 2, 0, 0, 0, 0, 2, 0,
     2, 0, 0, 2, 2, 0, 0, 2,
     2, 1, 1, 5, 5, 1, 1, 2,
@@ -8227,7 +8110,7 @@ LargeUFOSprite5.grid.append(
   ]
 )
 LargeUFOSprite5.grid.append(
-  [ 
+  [
     0, 2, 0, 0, 0, 0, 2, 0,
     2, 0, 0, 2, 2, 0, 0, 2,
     2, 1, 1, 5, 5, 1, 1, 2,
@@ -8235,18 +8118,15 @@ LargeUFOSprite5.grid.append(
     0, 2, 0, 0, 0, 0, 2, 0
   ]
 )
-
-
-
 
 #(self,h,v,name,width,height,frames,currentframe,framerate,grid):
 LargeUFOSprite6 = ColorAnimatedSprite(
   h = -4,
   v = -1,
-  name   = "HomingMissile", 
-  width  = 8, 
-  height = 4, 
-  frames = 6, 
+  name   = "HomingMissile",
+  width  = 8,
+  height = 4,
+  frames = 6,
 
   framerate    = 1,
   grid = []
@@ -8254,7 +8134,7 @@ LargeUFOSprite6 = ColorAnimatedSprite(
 
 
 LargeUFOSprite6.grid.append(
-  [ 
+  [
     0, 0, 0, 9, 9, 0, 0, 0,
     0, 1, 1, 1, 1, 1, 1, 0,
    39, 5, 5,39, 5, 5,39, 5,
@@ -8264,7 +8144,7 @@ LargeUFOSprite6.grid.append(
 )
 
 LargeUFOSprite6.grid.append(
-  [ 
+  [
     0, 0, 0, 9, 9, 0, 0, 0,
     0, 1, 1, 1, 1, 1, 1, 0,
    39, 5, 5,39, 5, 5,39, 5,
@@ -8275,7 +8155,7 @@ LargeUFOSprite6.grid.append(
 
 
 LargeUFOSprite6.grid.append(
-  [ 
+  [
     0, 0, 0,40,40, 0, 0, 0,
     0, 1, 1, 1, 1, 1, 1, 0,
     5,39, 5, 5,39, 5, 5,39,
@@ -8285,7 +8165,7 @@ LargeUFOSprite6.grid.append(
 )
 
 LargeUFOSprite6.grid.append(
-  [ 
+  [
     0, 0, 0,40,40, 0, 0, 0,
     0, 1, 1, 1, 1, 1, 1, 0,
     5,39, 5, 5,39, 5, 5,39,
@@ -8295,7 +8175,7 @@ LargeUFOSprite6.grid.append(
 )
 
 LargeUFOSprite6.grid.append(
-  [ 
+  [
     0, 0, 0, 9, 9, 0, 0, 0,
     0, 1, 1, 1, 1, 1, 1, 0,
     5, 5,39, 5, 5,39, 5, 5,
@@ -8305,7 +8185,7 @@ LargeUFOSprite6.grid.append(
 )
 
 LargeUFOSprite6.grid.append(
-  [ 
+  [
     0, 0, 0, 9, 9, 0, 0, 0,
     0, 1, 1, 1, 1, 1, 1, 0,
     5, 5,39, 5, 5,39, 5, 5,
@@ -8313,17 +8193,15 @@ LargeUFOSprite6.grid.append(
 
   ]
 )
-
-
 
 #(self,h,v,name,width,height,frames,currentframe,framerate,grid):
 WideUFOSprite1 = ColorAnimatedSprite(
   h = -1,
   v = -1,
-  name   = "HomingMissile", 
-  width  = 8, 
-  height = 1, 
-  frames =18, 
+  name   = "HomingMissile",
+  width  = 8,
+  height = 1,
+  frames =18,
 
   framerate    = 1,
   grid = []
@@ -8386,8 +8264,6 @@ WideUFOSprite1.grid.append(
   [39, 5, 0, 0, 0, 0, 0, 0 ]
 )
 
-
-
 ShipSprites = []
 ShipSprites.append(SatelliteSprite)
 ShipSprites.append(SatelliteSprite2)
@@ -8418,16 +8294,11 @@ ShipSprites.append(SpaceInvader)
 ShipSprites.append(SmallInvader)
 ShipSprites.append(TinyInvader)
 
-
-
-  
-
-
 AsteroidExplosion = ColorAnimatedSprite(
-  h      = 0 , 
-  v      = 0, 
+  h      = 0 ,
+  v      = 0,
   name   = 'Asteroid',
-  width  = 3, 
+  width  = 3,
   height = 3,
   frames = 5,
   framerate    = 10,
@@ -8466,13 +8337,11 @@ AsteroidExplosion.grid.append(
   ]
 )
 
-
-
 AsteroidExplosion2 = ColorAnimatedSprite(
-  h      = 0 , 
-  v      = 0, 
+  h      = 0 ,
+  v      = 0,
   name   = 'Asteroid',
-  width  = 3, 
+  width  = 3,
   height = 1,
   frames = 7,
   framerate    = 50,
@@ -8521,24 +8390,20 @@ AsteroidExplosion2.grid.append(
   ]
 )
 
-
-
-
 #------------------------------------------------------------------------------
 # FUNCTIONS                                                                  --
 #                                                                            --
 #  These functions were created before classes were introduced.              --
 #------------------------------------------------------------------------------
 
-  
 def ScrollSprite2(Sprite,h,v,direction,moves,r,g,b,delay):
   x = 0
   #modifier is used to increment or decrement the location
   if direction == "right" or direction == "down":
     modifier = 1
-  else: 
+  else:
     modifier = -1
-  
+
   if direction == "left" or direction == "right":
     for count in range (0,moves):
       h = h + (modifier)
@@ -8550,11 +8415,8 @@ def ScrollSprite2(Sprite,h,v,direction,moves,r,g,b,delay):
       #unicorn.show()
       #SendBufferPacket(RemoteDisplay,HatHeight,HatWidth)
       time.sleep(delay)
-  
-  return;
 
- 
-  
+  return;
 
 def ScrollSprite(Sprite,width,height,Direction,startH,startV,stopH,stopV,r,g,b,delay):
   x = 0
@@ -8566,9 +8428,9 @@ def ScrollSprite(Sprite,width,height,Direction,startH,startV,stopH,stopV,r,g,b,d
   #modifier is used to increment or decrement the location
   if Direction == "right" or Direction == "down":
     modifier = 1
-  else: 
+  else:
     modifier = -1
-  
+
   if Direction == "left" or Direction == "right":
     for count in range (0,movesH):
       #print ("StartH StartV StopH StopV X",startH,startV,stopH,stopV,x)
@@ -8581,22 +8443,20 @@ def ScrollSprite(Sprite,width,height,Direction,startH,startV,stopH,stopV,r,g,b,d
       #unicorn.show()
       #SendBufferPacket(RemoteDisplay,HatHeight,HatWidth)
       time.sleep(delay)
-  
+
   return;
-    
+
 def DisplaySprite(Sprite,width,height,h,v,r,g,b):
   x = 0,
   y = 0
-  
+
   for count in range (0,(width * height)):
     y,x = divmod(count,width)
     #print("Count:",count,"xy",x,y)
     if Sprite[count] == 1:
       if (CheckBoundary(x+h,y+v) == 0):
         TheMatrix.SetPixel(x+h,y+v,r,g,b)
-  return;    
-
-
+  return;
 
 def TrimSprite(Sprite1):
   height       = Sprite1.height
@@ -8609,32 +8469,32 @@ def TrimSprite(Sprite1):
   EmptyCount   = 0
   BufferX      = 0
   BufferColumn = [(0) for i in range(height)]
-  
+
   i = 0
   x = 0
   y = 0
 
-  
+
   for x in range (0,width):
-    
+
     #Find empty columns, add them to a list
-    Empty = 1  
+    Empty = 1
     for y in range (0,height):
       i = x + (y * width)
-      
+
       BufferColumn[y] = Sprite1.grid[i]
       if (Sprite1.grid[i] != 0):
         Empty = 0
-    
+
     if (Empty == 0):
       newwidth =  newwidth + 1
-    
+
     elif (Empty == 1):
       #print ("Found empty column: ",x)
       EmptyColumns.append(x)
       EmptyCount = EmptyCount +1
 
-      
+
   BufferSprite = Sprite(
     newwidth,
     height,
@@ -8643,11 +8503,11 @@ def TrimSprite(Sprite1):
     Sprite1.b,
     [0]*(newwidth*height)
     )
-      
+
   #Now that we identified the empty columns, copy data and skip those columns
   for x in range (0,width):
     Skipped = 0
-    
+
     for y in range (0,height):
       i = x + (y * width)
       b = BufferX + (y * newwidth)
@@ -8655,22 +8515,20 @@ def TrimSprite(Sprite1):
         Skipped = 1
       else:
         BufferSprite.grid[b] = Sprite1.grid[i]
-    
-    
+
+
     #advance our Buffer column counter only if we skipped a column
     if (Skipped == 0):
       BufferX = BufferX + 1
-    
-    
-  
+
+
+
   BufferSprite.width = newwidth
-  
-  
-  
+
+
+
   #print (BufferSprite.grid)
   return BufferSprite
-
-
 
 def LeftTrimSprite(Sprite1,Columns):
   height       = Sprite1.height
@@ -8683,32 +8541,32 @@ def LeftTrimSprite(Sprite1,Columns):
   EmptyCount   = 0
   BufferX      = 0
   BufferColumn = [(0) for i in range(height)]
-  
+
   i = 0
   x = 0
   y = 0
 
-  
+
   for x in range (0,width):
-    
+
     #Find empty columns, add them to a list
-    Empty = 1  
+    Empty = 1
     for y in range (0,height):
       i = x + (y * width)
-      
+
       BufferColumn[y] = Sprite1.grid[i]
       if (Sprite1.grid[i] != 0):
         Empty = 0
-    
+
     if (Empty == 0 or EmptyCount > Columns):
       newwidth =  newwidth + 1
-    
+
     elif (Empty == 1):
       #print ("Found empty column: ",x)
       EmptyColumns.append(x)
       EmptyCount = EmptyCount +1
 
-      
+
   BufferSprite = Sprite(
     newwidth,
     height,
@@ -8717,11 +8575,11 @@ def LeftTrimSprite(Sprite1,Columns):
     Sprite1.b,
     [0]*(newwidth*height)
     )
-      
+
   #Now that we identified the empty columns, copy data and skip those columns
   for x in range (0,width):
     Skipped = 0
-    
+
     for y in range (0,height):
       i = x + (y * width)
       b = BufferX + (y * newwidth)
@@ -8729,38 +8587,32 @@ def LeftTrimSprite(Sprite1,Columns):
         Skipped = 1
       else:
         BufferSprite.grid[b] = Sprite1.grid[i]
-    
-    
+
+
     #advance our Buffer column counter only if we skipped a column
     if (Skipped == 0):
       BufferX = BufferX + 1
-    
-    
-  
+
+
+
   BufferSprite.width = newwidth
-  
-  
-  
+
+
+
   #print (BufferSprite.grid)
   return BufferSprite
-    
-    
-    
-    
 
-  
-  
-def CreateShortWordSprite(ShortWord):   
+def CreateShortWordSprite(ShortWord):
 
   ShortWord = ShortWord.upper()
   TheBanner = CreateBannerSprite(ShortWord)
-      
+
 
   TheBanner.r = SDMedRedR
   TheBanner.g = SDMedRedG
   TheBanner.b = SDMedRedB
-  
-  
+
+
   #add variables to the object (python allows this, very cool!)
   TheBanner.h = (HatWidth - TheBanner.width) / 2
   TheBanner.v = -4
@@ -8775,14 +8627,12 @@ def CreateShortWordSprite(ShortWord):
   TheBanner.Delay           = 2
   TheBanner.PausePositionV  = 1
   TheBanner.PauseTimerOn    = 0
-  
+
   TheBanner.on = 1
   TheBanner.DirectionIncrement = 1
 
-  
-  return TheBanner 
 
-
+  return TheBanner
 
 def ShowShortMessage(RaceWorld,PlayerCar,ShortMessage):
   moves = 1
@@ -8793,109 +8643,92 @@ def ShowShortMessage(RaceWorld,PlayerCar,ShortMessage):
     MoveMessageSprite(moves,ShortMessageSprite)
     moves = moves + 1
     #print ("Message On")
-    
+
   ShortMessageSprite.on = 0
-
-
-
-
-
-
-
-
-
-
-
 
 def DrawDigit(Digit,h,v,r,g,b):
   #print ("Digit:",Digit)
   x = h
   y = v,
   width = 3
-  height = 5  
+  height = 5
 
   if Digit == 0:
-    Sprite = ([1,1,1, 
+    Sprite = ([1,1,1,
                1,0,1,
                1,0,1,
                1,0,1,
                1,1,1])
 
   elif Digit == 1:
-    Sprite = ([0,0,1, 
+    Sprite = ([0,0,1,
                0,0,1,
                0,0,1,
                0,0,1,
                0,0,1])
 
   elif Digit == 2:
-    Sprite = ([1,1,1, 
+    Sprite = ([1,1,1,
                0,0,1,
                0,1,0,
                1,0,0,
                1,1,1])
 
   elif Digit == 3:
-    Sprite = ([1,1,1, 
+    Sprite = ([1,1,1,
                0,0,1,
                0,1,1,
                0,0,1,
                1,1,1])
 
   elif Digit == 4:
-    Sprite = ([1,0,1, 
+    Sprite = ([1,0,1,
                1,0,1,
                1,1,1,
                0,0,1,
                0,0,1])
-               
-  
+
+
   elif Digit == 5:
-    Sprite = ([1,1,1, 
+    Sprite = ([1,1,1,
                1,0,0,
                1,1,1,
                0,0,1,
                1,1,1])
 
   elif Digit == 6:
-    Sprite = ([1,1,1, 
+    Sprite = ([1,1,1,
                1,0,0,
                1,1,1,
                1,0,1,
                1,1,1])
 
   elif Digit == 7:
-    Sprite = ([1,1,1, 
+    Sprite = ([1,1,1,
                0,0,1,
                0,1,0,
                1,0,0,
                1,0,0])
-  
+
   elif Digit == 8:
-    Sprite = ([1,1,1, 
+    Sprite = ([1,1,1,
                1,0,1,
                1,1,1,
                1,0,1,
                1,1,1])
-  
+
   elif Digit == 9:
-    Sprite = ([1,1,1, 
+    Sprite = ([1,1,1,
                1,0,1,
                1,1,1,
                0,0,1,
                0,0,1])
-  
+
 
   DisplaySprite(Sprite,width,height,h,v,r,g,b)
   #unicorn.show()
   #SendBufferPacket(RemoteDisplay,HatHeight,HatWidth)
-  return;  
-
-
-
-
-
-   
+  return;
 
 def CheckBoundaries(h,v,Direction):
   if v < 0:
@@ -8912,27 +8745,11 @@ def CheckBoundaries(h,v,Direction):
     Direction = TurnRight(Direction)
   return h,v,Direction
 
-  
-  
 def CheckBoundary(h,v):
   BoundaryHit = 0
   if v < 0 or v > HatHeight-1 or h < 0 or h > HatWidth-1:
     BoundaryHit = 1
   return BoundaryHit;
-
-
-
-
-
-
-
-
-  
-
-
-
-
-
 
 def ShowDigitalClock(h,v,duration):
   #Buffer = copy.deepcopy(unicorn.get_pixels())
@@ -8942,34 +8759,29 @@ def ShowDigitalClock(h,v,duration):
   ClockSprite.b = SDLowRedB
   ClockSpriteBackground.DisplayIncludeBlack(h-2,v-1)
   ClockSprite.Display(h,v)
-  
+
   #unicorn.show()
   #SendBufferPacket(RemoteDisplay,HatHeight,HatWidth)
   time.sleep(duration)
   #setpixels(Buffer)
   return ClockSprite;
 
-
-
 def random_message(MessageFile):
   lines = open(MessageFile).read().splitlines()
   return random.choice(lines)
 
-    
-
-
 def SaveConfigData():
-  
-  
-   
+
+
+
   print (" ")
   print ("--Save Config Data--")
   #we save the time to file as 5 minutes in future, which allows us to unplug the device temporarily
   #the time might be off, but it might be good enough
-  
+
   AdjustedTime = (datetime.now() + timedelta(minutes=5)).strftime('%k:%M:%S')
 
-  
+
   if (os.path.exists(ConfigFileName)):
     print ("Config file (",ConfigFileName,"): already exists")
     ConfigFile = SafeConfigParser()
@@ -8982,7 +8794,7 @@ def SaveConfigData():
     ConfigFile.add_section('pacdot')
     ConfigFile.add_section('crypto')
 
-    
+
   print ("Time to save: ",AdjustedTime)
   print ("Pacdot score:      " ,PacDotScore)
   print ("Pacdot high score: " ,PacDotHighScore)
@@ -9000,26 +8812,23 @@ def SaveConfigData():
     ConfigFile.write(f)
   print ("--------------------")
 
-
-
-    
 def LoadConfigData():
-  
+
 
   print ("--Load Config Data--")
   print ("PacDotHighScore Before Load: ",PacDotHighScore)
-    
+
   if (os.path.exists(ConfigFileName)):
     print ("Config file (",ConfigFileName,"): already exists")
     ConfigFile = SafeConfigParser()
     ConfigFile.read(ConfigFileName)
 
-    #Get and set time    
+    #Get and set time
     TheTime = ConfigFile.get("main","currenttime")
     print ("Setting time: ",TheTime)
     CMD = "sudo date --set " + TheTime
     #os.system(CMD)
-   
+
     #Get pacdot data
     PacDotHighScore   = ConfigFile.get("pacdot","PacdotHighScore")
     PacDotGamesPlayed = int(ConfigFile.get("pacdot","PacdotGamesPlayed"))
@@ -9030,23 +8839,14 @@ def LoadConfigData():
     CryptoBalance = ConfigFile.get("crypto","balance")
     print ("CryptoBalance:   ",CryptoBalance)
 
-    
+
   else:
     print ("Config file not found! Running with default values.")
 
-    
+
   print ("--------------------")
   print (" ")
-  
 
-
- 
-  
-    
-  
-  
-  
-  
 def SetTimeHHMM():
   DigitsEntered = 0
   H1  = 0
@@ -9080,47 +8880,47 @@ def SetTimeHHMM():
    0,1,0]
   )
 
-              
-              
+
+
   CustomHSprite = Sprite(3,5,SDLowRedR,SDLowRedG,SDLowRedB,CustomH)
   CustomMSprite = Sprite(3,5,SDLowRedR,SDLowRedG,SDLowRedB,CustomM)
   AMSprite      = Sprite(5,5,SDLowGreenR,SDLowGreenG,SDLowGreenB,AlphaSpriteList[0].grid)
   PMSprite      = Sprite(5,5,SDLowGreenR,SDLowGreenG,SDLowGreenB,AlphaSpriteList[15].grid)
   AMPMSprite    = JoinSprite(QuestionMarkSprite,CustomMSprite,1)
-  
 
 
 
 
- 
+
+
   ScreenCap  = copy.deepcopy(unicorn.get_pixels())
   ScrollScreen('up',ScreenCap,ScrollSleep)
   ShowScrollingBanner("set time: hours minutes",100,100,0,ScrollSleep)
   ScrollScreen('down',ScreenCap,ScrollSleep)
 
-  
+
   HHSprite = TrimSprite(CustomHSprite)
   HHSprite = JoinSprite (HHSprite,TrimSprite(CustomHSprite),1)
-  
+
   HHSprite.Display(1,1)
   #unicorn.show()
   #SendBufferPacket(RemoteDisplay,HatHeight,HatWidth)
-  
+
   #Get first hour digit
   while (Key != 0 and Key != 1):
     Key = PollKeyboardInt()
     time.sleep(0.15)
   H1 = Key
-  
+
   #Convert user input H1 to a sprite
   #x = ord(H1) -48
-  
+
   UserH1Sprite = Sprite(3,5,SDLowGreenR,SDLowGreenG,SDLowGreenB,DigitSpriteList[H1].grid)
   CustomHSprite.Erase(1,1)
   UserH1Sprite.Display(1,1)
   #unicorn.show()
   #SendBufferPacket(RemoteDisplay,HatHeight,HatWidth)
-  
+
   #Get second hour digit (special conditions to make sure we keep 12 hour time)
   Key = -1
   while ((H1 == 1 and (Key != 0 and Key != 1 and Key != 2))
@@ -9128,62 +8928,62 @@ def SetTimeHHMM():
     Key = PollKeyboardInt()
     time.sleep(0.15)
   H2 = Key
- 
+
   #Convert user input H2 to a sprite
   UserH2Sprite = Sprite(3,5,SDLowGreenR,SDLowGreenG,SDLowGreenB,DigitSpriteList[H2].grid)
   CustomHSprite.Erase(5,1)
   UserH2Sprite.Display(5,1)
   #unicorn.show()
   #SendBufferPacket(RemoteDisplay,HatHeight,HatWidth)
-    
-  #print ("HH: ",H1,H2)
-  
 
-  
-  
-  
+  #print ("HH: ",H1,H2)
+
+
+
+
+
   #Get minutes
   time.sleep(1)
   TheMatrix.Clear()
 
-  
+
   MMSprite = TrimSprite(CustomMSprite)
   MMSprite = JoinSprite (MMSprite,TrimSprite(CustomMSprite),1)
-  
+
   MMSprite.Display(1,1)
   #unicorn.show()
   #SendBufferPacket(RemoteDisplay,HatHeight,HatWidth)
-  
+
   #Get first minute digit
   Key = -1
   while (Key < 0 or Key >= 6):
     Key = PollKeyboardInt()
     time.sleep(0.15)
   M1 = Key
-  
+
   #Convert user input M1 to a sprite
   UserM1Sprite = Sprite(3,5,SDLowGreenR,SDLowGreenG,SDLowGreenB,DigitSpriteList[M1].grid)
   CustomMSprite.Erase(1,1)
   UserM1Sprite.Display(1,1)
   #unicorn.show()
   #SendBufferPacket(RemoteDisplay,HatHeight,HatWidth)
-  
+
   #Get second hour digit
   Key = -1
   while (Key == -1):
     Key = PollKeyboardInt()
     time.sleep(0.15)
   M2 = Key
- 
+
   #Convert user input M2 to a sprite
   UserM2Sprite = Sprite(3,5,SDLowGreenR,SDLowGreenG,SDLowGreenB,DigitSpriteList[M2].grid)
   CustomMSprite.Erase(5,1)
   UserM2Sprite.Display(5,1)
   #unicorn.show()
   #SendBufferPacket(RemoteDisplay,HatHeight,HatWidth)
-    
+
   #print ("MM: ",M1,M2)
-  
+
   time.sleep(1)
   TheMatrix.Clear()
 
@@ -9204,7 +9004,7 @@ def SetTimeHHMM():
   AMPMSprite.Display(1,1)
   #unicorn.show()
   #SendBufferPacket(RemoteDisplay,HatHeight,HatWidth)
-  
+
   QuestionMarkSprite.Erase(1,1)
 
   AMPM = ''
@@ -9213,75 +9013,54 @@ def SetTimeHHMM():
     #unicorn.show()
     #SendBufferPacket(RemoteDisplay,HatHeight,HatWidth)
     AMPM  = 'am'
-    
+
   elif (KeyChar == 'p' or KeyChar == 'P'):
     PMSprite.Display(0,1)
     #unicorn.show()
     #SendBufferPacket(RemoteDisplay,HatHeight,HatWidth)
     AMPM = 'pm'
-    
-  
-  #print ("KeyChar ampm:",KeyChar, AMPM)    
+
+
+  #print ("KeyChar ampm:",KeyChar, AMPM)
   time.sleep(1)
- 
-  
-  
-  
+
+
+
+
   #set system time
   NewTime = str(H1) + str(H2) + ":" + str(M1) + str(M2) + AMPM
   CMD = "sudo date --set " + NewTime
   os.system(CMD)
-  
+
   TheMatrix.Clear()
-  ScrollScreenShowClock('down',ScrollSleep)         
-  
-
-
-
-
-
-
-
+  ScrollScreenShowClock('down',ScrollSleep)
 
 def ShowScrollingBanner(TheMessage,r,g,b,ScrollSpeed):
   TheMessage = TheMessage.upper()
   TheBanner = CreateBannerSprite(TheMessage)
-  TheBanner.r = r 
-  TheBanner.g = g 
-  TheBanner.b = b 
+  TheBanner.r = r
+  TheBanner.g = g
+  TheBanner.b = b
   TheBanner.ScrollAcrossScreen(HatWidth-1,4,"left",ScrollSpeed)
-
 
 def ShowScrollingBanner2(TheMessage,rgb,ScrollSpeed,v=5):
   r,g,b = rgb
   TheMessage = TheMessage.upper()
   TheBanner = CreateBannerSprite(TheMessage)
-  TheBanner.r = r 
-  TheBanner.g = g 
-  TheBanner.b = b 
+  TheBanner.r = r
+  TheBanner.g = g
+  TheBanner.b = b
   TheBanner.ScrollAcrossScreen(HatWidth-1,v,"left",ScrollSpeed)
 
 def ShowFloatingBanner(TheMessage,rgb,ScrollSpeed,v=5):
   r,g,b = rgb
   TheMessage = TheMessage.upper()
   TheBanner = CreateBannerSprite(TheMessage)
-  TheBanner.r = r 
-  TheBanner.g = g 
-  TheBanner.b = b 
+  TheBanner.r = r
+  TheBanner.g = g
+  TheBanner.b = b
   TheBanner.FloatAcrossScreen(HatWidth-1,v,"left",ScrollSpeed)
 
-
-
-
-
-
-
-
-
-
-
-
-  
 def FlashDot(h,v,FlashSleep):
   r,g,b = getpixel(h,v)
   TheMatrix.SetPixel(h,v,0,0,255)
@@ -9310,33 +9089,31 @@ def FlashDot2(h,v,FlashSleep):
 
   return;
 
-
-  
 def FlashDot3(h,v,r,g,b,FlashSleep):
- 
-    
+
+
   LowR = int(r * 0.75)
   LowG = int(g * 0.75)
   LowB = int(b * 0.75)
   HighR = int(r * 1.5)
   HighG = int(g * 1.5)
   HighB = int(b * 1.5)
-  
+
   if (LowR < 0 ):
     LowR = 0
   if (LowG < 0 ):
     LowG = 0
   if (LowB < 0 ):
     LowBB = 0
-  
-  
+
+
   if (HighR > 255):
     HighR = 255
   if (HighG > 255):
     HighG = 255
   if (HighB > 255):
     HighB = 255
-    
+
   TheMatrix.SetPixel(h,v,HighR,HighG,HighB)
   #unicorn.show()
   #SendBufferPacket(RemoteDisplay,HatHeight,HatWidth)
@@ -9357,8 +9134,7 @@ def FlashDot3(h,v,r,g,b,FlashSleep):
   time.sleep(FlashSleep)
   #unicorn.show()
   #SendBufferPacket(RemoteDisplay,HatHeight,HatWidth)
-  
-  
+
 def FlashDot4(h,v,FlashSleep):
   r,g,b = getpixel(h,v)
   #TheMatrix.SetPixel(h,v,0,0,100)
@@ -9381,11 +9157,10 @@ def FlashDot4(h,v,FlashSleep):
   #unicorn.show()
   time.sleep(FlashSleep)
   return;
-  
 
 def FlashDot5(h,v,TimeSleep):
   #r,g,b = getpixel(h,v)
-  
+
   #There is not get pixel function in rpi-rgb-led
   r,g,b = (255,255,255)
 
@@ -9394,10 +9169,9 @@ def FlashDot5(h,v,TimeSleep):
   #SendBufferPacket(RemoteDisplay,HatHeight,HatWidth)
   time.sleep(TimeSleep)
   setpixel(h,v,r,g,b)
-  
-  
-  return;
 
+
+  return;
 
 def FlashDot6(h,v):
   r,g,b = getpixel(h,v)
@@ -9406,38 +9180,29 @@ def FlashDot6(h,v):
   #TheMatrix.SetPixel(h,v,r,g,b)
   return;
 
-
 def FlashDot7(h,v):
   TheMatrix.SetPixel(h,v,255,150,0)
   #unicorn.show()
   TheMatrix.SetPixel(h,v,0,0,0)
   return;
 
-
-
-  
-
-  
-
-
-
-def CreateClockSprite(format=24,hhmmss=''):   
+def CreateClockSprite(format=24,hhmmss=''):
   #print ("CreateClockSprite")
   #Create the time as HHMMSS
-  
+
   if(hhmmss == ''):
-    if (format == 12 or format == 2):  
+    if (format == 12 or format == 2):
       hhmmss = datetime.now().strftime('%I:%M:%S')
-    
-    if format == 24:  
+
+    if format == 24:
       hhmmss = datetime.now().strftime('%H:%M:%S')
 
   hh,mm,ss = hhmmss.split(':')
-    
+
   #print ("hhmmss:",hhmmss,hh,mm,ss)
 
 
-  
+
   #get hour digits
   h1 = int(hh[0])
   h2 = int(hh[1])
@@ -9447,31 +9212,31 @@ def CreateClockSprite(format=24,hhmmss=''):
 
   #print ("h1h2 m1m2",h1,h2,m1,m2)
 
-  #For 12 hour format, we don't want to display leading zero 
+  #For 12 hour format, we don't want to display leading zero
   #for tiny clock (2) format we only get hours
   if ((format == 12 or format == 2) and h1 == 0):
     ClockSprite = DigitSpriteList[h2]
   else:
     ClockSprite = JoinSprite(DigitSpriteList[h1], DigitSpriteList[h2], 1)
-  
+
   if (format == 12 or format == 24):
     ClockSprite = JoinSprite(ClockSprite, ColonSprite, 0)
     ClockSprite = JoinSprite(ClockSprite, DigitSpriteList[m1], 0)
     ClockSprite = JoinSprite(ClockSprite, DigitSpriteList[m2], 1)
-    
+
 
   ClockSprite.r = SDMedRedR
   ClockSprite.g = SDMedRedG
   ClockSprite.b = SDMedRedB
-  
-  
+
+
   #add variables to the object (python allows this, very cool!)
   ClockSprite.h = (HatWidth - ClockSprite.width) // 2
   ClockSprite.v = -4
   ClockSprite.rgb = (SDMedGreenR,SDMedGreenG,SDMedGreenB)
   ClockSprite.hhmm = datetime.now().strftime('%H:%M')
-  
-  
+
+
   #used for displaying clock
   ClockSprite.StartTime = time.time()
 
@@ -9482,23 +9247,19 @@ def CreateClockSprite(format=24,hhmmss=''):
   ClockSprite.PausePositionV  = 1
   ClockSprite.PauseTimerOn    = 0
 
-  
+
   ClockSprite.on = 1
   ClockSprite.DirectionIncrement = 1
 
   ClockSprite.name = 'Clock'
-  
-  return ClockSprite 
 
+  return ClockSprite
 
-
-
-
-def CreateTimerSprite(hhmmss='00:00:00',ShowSeconds=False):   
+def CreateTimerSprite(hhmmss='00:00:00',ShowSeconds=False):
   #HH:MM:SS
   print("CreateTimerSprite: ",hhmmss)
   hh,mm,ss = hhmmss.split(':')
-    
+
   #get ints
   h1 = int(hh[0])
   h2 = int(hh[1])
@@ -9518,57 +9279,43 @@ def CreateTimerSprite(hhmmss='00:00:00',ShowSeconds=False):
     TimerSprite = JoinSprite(TimerSprite, DigitSpriteList[s1], 0)
     TimerSprite = JoinSprite(TimerSprite, DigitSpriteList[s2], 1)
 
-  TimerSprite.HHMMSS = hhmmss    
+  TimerSprite.HHMMSS = hhmmss
   TimerSprite.HHMM   = hhmmss[0:5]
- 
+
   print('CreateTimerSprite: ',hhmmss, h1,h2,m1,m2,s1,s2)
   print("TimerSprite.HHMMSS:",TimerSprite.HHMMSS)
   print("TimerSprite.HHMM:  ",TimerSprite.HHMM)
 
-  return TimerSprite 
+  return TimerSprite
 
+def CreateSecondsSprite():
 
-
-
-
-
-
-
-
-
-
-
-
-def CreateSecondsSprite():   
-  
   hhmmss = datetime.now().strftime('%I:%M:%S')
   hh,mm,ss = hhmmss.split(':')
- 
+
   #get seconds digits
   s1 = int(ss[0])
   s2 = int(ss[1])
 
   SecondsSprite = JoinSprite(DigitSpriteList[s1], DigitSpriteList[s2], 1)
-  
+
   SecondsSprite.r = SDDarkOrangeR
   SecondsSprite.g = SDDarkOrangeG
   SecondsSprite.b = SDDarkOrangeB
-  
-  
+
+
   #add variables to the object (python allows this, very cool!)
   SecondsSprite.h = (HatWidth - SecondsSprite.width) // 2
   SecondsSprite.v = 5
   SecondsSprite.rgb = (SDMedGreenR,SDMedGreenG,SDMedGreenB)
-  
-  return SecondsSprite 
 
+  return SecondsSprite
 
+def CreateDayOfWeekSprite():
 
-def CreateDayOfWeekSprite():   
-  
   weekdaynum = datetime.today().weekday()
   dow        = ""
- 
+
   if (weekdaynum   == 0 ):
     dow = "MON"
   elif (weekdaynum == 1 ):
@@ -9585,67 +9332,59 @@ def CreateDayOfWeekSprite():
     dow = "SUN"
 
 
-  DowSprite = LeftTrimSprite(CreateBannerSprite(dow),1)  
-  
+  DowSprite = LeftTrimSprite(CreateBannerSprite(dow),1)
+
   DowSprite.r = SDMedOrangeR
   DowSprite.g = SDMedOrangeG
   DowSprite.b = SDMedOrangeB
-  
-  
+
+
   #add variables to the object (python allows this, very cool!)
   DowSprite.h = ((HatWidth - DowSprite.width) // 2) -1
   DowSprite.v = 5
   DowSprite.rgb = (SDMedGreenR,SDMedGreenG,SDMedGreenB)
-  
+
   return DowSprite
 
+def CreateMonthSprite():
 
-
-def CreateMonthSprite():   
-  
   ShortMonth = (datetime.now()).strftime('%b').upper()
   #print ("Month:",ShortMonth)
-  
+
 
   MonthSprite = LeftTrimSprite(CreateBannerSprite(ShortMonth),1)
-  
+
   MonthSprite.r = SDMedBlueR
   MonthSprite.g = SDMedBlueG
   MonthSprite.b = SDMedBlueB
-  
-  
+
+
   #add variables to the object (python allows this, very cool!)
   MonthSprite.h = ((HatWidth - MonthSprite.width) // 2) -1
   MonthSprite.v = 5
   MonthSprite.rgb = (SDMedGreenR,SDMedGreenG,SDMedGreenB)
-  
+
   return MonthSprite
 
+def CreateDayOfMonthSprite():
 
-
-def CreateDayOfMonthSprite():   
-  
   DayOfMonth = str((datetime.now()).day)
   #print ("Month:",DayOfMonth)
-  
+
 
   DayOfMonthSprite = LeftTrimSprite(CreateBannerSprite(DayOfMonth),1)
-  
+
   DayOfMonthSprite.r = SDMedBlueR
   DayOfMonthSprite.g = SDMedBlueG
   DayOfMonthSprite.b = SDMedBlueB
-  
-  
+
+
   #add variables to the object (python allows this, very cool!)
   DayOfMonthSprite.h = ((HatWidth - DayOfMonthSprite.width) // 2) -1
   DayOfMonthSprite.v = 5
   DayOfMonthSprite.rgb = (SDMedGreenR,SDMedGreenG,SDMedGreenB)
-  
+
   return DayOfMonthSprite
-
-
-
-
 
 def CreateShortMessageSprite(ShortMessage):
   if (ShortMessage == "you win"):
@@ -9662,10 +9401,10 @@ def CreateShortMessageSprite(ShortMessage):
        0,0,1,0,0,0,1,1,0,0,0,1,1,0,0,0,
        0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
        0,1,0,0,0,1,0,1,1,1,0,1,0,0,1,0,
-       0,1,0,1,0,1,0,0,1,0,0,1,1,0,1,0,  
+       0,1,0,1,0,1,0,0,1,0,0,1,1,0,1,0,
        0,1,1,0,1,1,0,0,1,0,0,1,0,1,1,0,
        0,0,1,0,1,0,0,1,1,1,0,1,0,0,1,0,
-       0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,  
+       0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
        ]
     )
   elif (ShortMessage == "you die"):
@@ -9682,10 +9421,10 @@ def CreateShortMessageSprite(ShortMessage):
        0,0,1,0,0,0,1,1,0,0,0,1,1,0,0,0,
        0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
        0,1,1,0,0,1,1,1,0,1,1,1,0,0,1,0,
-       0,1,0,1,0,0,1,0,0,1,0,0,0,0,1,0,  
+       0,1,0,1,0,0,1,0,0,1,0,0,0,0,1,0,
        0,1,0,1,0,0,1,0,0,1,1,1,0,0,1,0,
        0,1,0,1,0,0,1,0,0,1,0,0,0,0,0,0,
-       0,1,1,0,0,1,1,1,0,1,1,1,0,0,1,0,  
+       0,1,1,0,0,1,1,1,0,1,1,1,0,0,1,0,
        ]
     )
   elif (ShortMessage == "smile"):
@@ -9702,7 +9441,7 @@ def CreateShortMessageSprite(ShortMessage):
        0,1,0,0,0,0,0,0,0,0,1,0,
        0,1,0,1,0,0,0,0,1,0,1,0,
        0,1,0,0,1,1,1,1,0,0,1,0,
-       0,0,1,0,0,0,0,0,0,1,0,0,  
+       0,0,1,0,0,0,0,0,0,1,0,0,
        0,0,0,1,0,0,0,0,1,0,0,0,
        0,0,0,0,1,1,1,1,0,0,0,0,
        ]
@@ -9721,46 +9460,43 @@ def CreateShortMessageSprite(ShortMessage):
        0,1,0,0,0,0,0,0,0,0,1,0,
        0,1,0,0,0,1,1,0,0,0,1,0,
        0,1,0,0,1,0,0,1,0,0,1,0,
-       0,0,1,0,0,0,0,0,0,1,0,0,  
+       0,0,1,0,0,0,0,0,0,1,0,0,
        0,0,0,1,0,0,0,0,1,0,0,0,
        0,0,0,0,1,1,1,1,0,0,0,0,
        ]
     )
-    
-  
+
+
   #add variables to the object (python allows this, very cool!)
   ShortMessageSprite.h = (HatWidth - ShortMessageSprite.width) // 2
   ShortMessageSprite.v = 0 - ShortMessageSprite.height
   ShortMessageSprite.rgb = (ShortMessageSprite.r,ShortMessageSprite.g,ShortMessageSprite.b)
   ShortMessageSprite.StartTime = time.time()
-  
+
   #used for scrolling clock
   ShortMessageSprite.PauseStartTime = time.time()
   ShortMessageSprite.IsScrolling     = 0
   ShortMessageSprite.Delay           = 1
   ShortMessageSprite.PausePositionV  = 2
   ShortMessageSprite.PauseTimerOn    = 0
-  
+
   ShortMessageSprite.on = 0
   ShortMessageSprite.DirectionIncrement = 1
 
-  
+
   return ShortMessageSprite
 
-
-  
-  
-def CreateShortWordSprite(ShortWord):   
+def CreateShortWordSprite(ShortWord):
 
   ShortWord = ShortWord.upper()
   TheBanner = CreateBannerSprite(ShortWord)
-      
+
 
   TheBanner.r = SDMedRedR
   TheBanner.g = SDMedRedG
   TheBanner.b = SDMedRedB
-  
-  
+
+
   #add variables to the object (python allows this, very cool!)
   TheBanner.h = (HatWidth - TheBanner.width) // 2
   TheBanner.v = -4
@@ -9775,33 +9511,24 @@ def CreateShortWordSprite(ShortWord):
   TheBanner.Delay           = 2
   TheBanner.PausePositionV  = 1
   TheBanner.PauseTimerOn    = 0
-  
+
   TheBanner.on = 1
   TheBanner.DirectionIncrement = 1
 
-  
-  return TheBanner 
 
-  
-  
+  return TheBanner
 
-
-  
-
-  
- 
-  
 def CreateBannerSprite(TheMessage):
   #We need to dissect the message and build our banner sprite one letter at a time
   #We need to initialize the banner sprite object first, so we pick the first letter
   x = -1
   TheMessage = TheMessage.upper()
-  
+
   if (len(TheMessage) == 1):
     BannerSprite = Sprite(0,5,0,0,0,[0,0,0,0,0])
-  else:  
+  else:
     BannerSprite = Sprite(1,5,0,0,0,[0,0,0,0,0])
-  
+
   #Iterate through the message, decoding each characater
   for i,c, in enumerate(TheMessage):
     x = ord(c) -65
@@ -9867,7 +9594,7 @@ def CreateBannerSprite(TheMessage):
     elif (ord(c) >= 48 and ord(c)<= 57):
       BannerSprite = JoinSprite(BannerSprite, DigitSpriteList[int(c)],1)
     else:
-      
+
       try:
         BannerSprite = JoinSprite(BannerSprite, TrimSprite(AlphaSpriteList[x]),1)
       except:
@@ -9876,33 +9603,27 @@ def CreateBannerSprite(TheMessage):
 
   return BannerSprite
 
-  
-    
-
-  
-  
-
 def ShowLevelCount(LevelCount):
   global MainSleep
   TheMatrix.Clear()
-      
-  SDColor = (random.randint (0,6) *4 + 1) 
+
+  SDColor = (random.randint (0,6) *4 + 1)
   print ("LevelCountColor:",SDColor)
-  
-  r,g,b =  ColorList[SDColor]  
+
+  r,g,b =  ColorList[SDColor]
   max   = 50
   #sleep = 0.06 * MainSleep
-  
+
   #print ("sleep: ",sleep," MainSleep: ",MainSleep)
-  
+
   LevelSprite = Sprite(1,5,r,g,b,[0,0,0,0,0])
-  
+
   if (LevelCount > 9):
     LevelString = str(LevelCount)
     LevelSprite1 = DigitSpriteList[int(LevelString[0])]
     LevelSprite2 = DigitSpriteList[int(LevelString[1])]
-   
-    
+
+
     for x in range(0,max,1):
       LevelSprite1.r = r + x*5
       LevelSprite1.g = g + x*5
@@ -9925,12 +9646,12 @@ def ShowLevelCount(LevelCount):
         LevelSprite2.b = 255
 
       LevelSprite.Display((HatWidth-6) // 2 ,(HatHeight -5)//2)
-      LevelSprite.Display((HatWidth-10) // 2 ,(HatHeight -5)//2)      
+      LevelSprite.Display((HatWidth-10) // 2 ,(HatHeight -5)//2)
       #unicorn.show()
       #SendBufferPacket(RemoteDisplay,HatHeight,HatWidth)
       #time.sleep(sleep)
 
-    
+
     for x in range(0,max,1):
       LevelSprite1.r = r + max -x*3
       LevelSprite1.g = g + max -x*3
@@ -9957,10 +9678,10 @@ def ShowLevelCount(LevelCount):
       #unicorn.show()
       #SendBufferPacket(RemoteDisplay,HatHeight,HatWidth)
 
-      #time.sleep(sleep) 
-     
-      
-  else:    
+      #time.sleep(sleep)
+
+
+  else:
     LevelSprite = DigitSpriteList[LevelCount]
 
     for x in range(0,max,1):
@@ -9978,8 +9699,8 @@ def ShowLevelCount(LevelCount):
       LevelSprite.Display((HatWidth-3) // 2 ,(HatHeight -5)//2)
       #unicorn.show()
       #SendBufferPacket(RemoteDisplay,HatHeight,HatWidth)
-      #time.sleep(sleep) 
-      
+      #time.sleep(sleep)
+
     for x in range(0,max,1):
       LevelSprite.r = r + max -x*3
       LevelSprite.g = g + max -x*3
@@ -9995,25 +9716,12 @@ def ShowLevelCount(LevelCount):
       #unicorn.show()
       #SendBufferPacket(RemoteDisplay,HatHeight,HatWidth)
       #time.sleep(sleep)
-      
 
-  
+
+
   TheMatrix.Clear()
   return
-  
 
-
-
-
-
-
-
-  
-
-  
-
-
-  
 def ScreenWipe(Wipe, Speed):
   if Wipe == "RedCurtain":
     for x in range (HatWidth):
@@ -10022,20 +9730,12 @@ def ScreenWipe(Wipe, Speed):
         #unicorn.show()
         #SendBufferPacket(RemoteDisplay,HatHeight,HatWidth)
         time.sleep(Speed)
-    
+
 #Primitive, single color
 
-
-
-  
-
-
-
-  
-  
 def MoveBigSprite(sprite,FlashSleep):
   for i in range (0,80):
-    
+
     y,x = divmod(i,16)
     #print ("x,y,i",x,y,i)
     if (x >= 0 and x<= 2):
@@ -10049,9 +9749,7 @@ def MoveBigSprite(sprite,FlashSleep):
     #"looping"
   BigSprite.Scroll(-16,0,"right",24,FlashSleep)
   BigSprite.Scroll(9,0,"left",24,FlashSleep)
-    
 
-  
 def JoinSprite(Sprite1, Sprite2, Buffer):
   #This function takes two sprites, and joins them together horizontally
   #The color of the second sprite is used for the new sprite
@@ -10060,8 +9758,8 @@ def JoinSprite(Sprite1, Sprite2, Buffer):
   elements = height * width
   x = 0
   y = 0
-  
- 
+
+
   TempSprite = Sprite(
   width,
   height,
@@ -10072,17 +9770,16 @@ def JoinSprite(Sprite1, Sprite2, Buffer):
   )
   for i in range (0,elements):
     y,x = divmod(i,width)
-    
+
     #copy elements of first sprite
     if (x >= 0 and x< Sprite1.width):
       TempSprite.grid[i] = Sprite1.grid[x + (y * Sprite1.width)]
-    
+
     if (x >= (Sprite1.width + Buffer) and x< (Sprite1.width + Buffer + Sprite2.width)):
       TempSprite.grid[i] = Sprite2.grid[(x - (Sprite1.width + Buffer)) + (y * Sprite2.width)]
 
-  
-  return TempSprite    
 
+  return TempSprite
 
 def TrimSprite(Sprite1):
   height       = Sprite1.height
@@ -10095,32 +9792,32 @@ def TrimSprite(Sprite1):
   EmptyCount   = 0
   BufferX      = 0
   BufferColumn = [(0) for i in range(height)]
-  
+
   i = 0
   x = 0
   y = 0
 
-  
+
   for x in range (0,width):
-    
+
     #Find empty columns, add them to a list
-    Empty = 1  
+    Empty = 1
     for y in range (0,height):
       i = x + (y * width)
-      
+
       BufferColumn[y] = Sprite1.grid[i]
       if (Sprite1.grid[i] != 0):
         Empty = 0
-    
+
     if (Empty == 0):
       newwidth =  newwidth + 1
-    
+
     elif (Empty == 1):
       #print ("Found empty column: ",x)
       EmptyColumns.append(x)
       EmptyCount = EmptyCount +1
 
-      
+
   BufferSprite = Sprite(
     newwidth,
     height,
@@ -10129,11 +9826,11 @@ def TrimSprite(Sprite1):
     Sprite1.b,
     [0]*(newwidth*height)
     )
-      
+
   #Now that we identified the empty columns, copy data and skip those columns
   for x in range (0,width):
     Skipped = 0
-    
+
     for y in range (0,height):
       i = x + (y * width)
       b = BufferX + (y * newwidth)
@@ -10141,22 +9838,20 @@ def TrimSprite(Sprite1):
         Skipped = 1
       else:
         BufferSprite.grid[b] = Sprite1.grid[i]
-    
-    
+
+
     #advance our Buffer column counter only if we skipped a column
     if (Skipped == 0):
       BufferX = BufferX + 1
-    
-    
-  
+
+
+
   BufferSprite.width = newwidth
-  
-  
-  
+
+
+
   #print (BufferSprite.grid)
   return BufferSprite
-
-
 
 def LeftTrimSprite(Sprite1,Columns):
   height       = Sprite1.height
@@ -10169,32 +9864,32 @@ def LeftTrimSprite(Sprite1,Columns):
   EmptyCount   = 0
   BufferX      = 0
   BufferColumn = [(0) for i in range(height)]
-  
+
   i = 0
   x = 0
   y = 0
 
-  
+
   for x in range (0,width):
-    
+
     #Find empty columns, add them to a list
-    Empty = 1  
+    Empty = 1
     for y in range (0,height):
       i = x + (y * width)
-      
+
       BufferColumn[y] = Sprite1.grid[i]
       if (Sprite1.grid[i] != 0):
         Empty = 0
-    
+
     if (Empty == 0 or EmptyCount > Columns):
       newwidth =  newwidth + 1
-    
+
     elif (Empty == 1):
       #print ("Found empty column: ",x)
       EmptyColumns.append(x)
       EmptyCount = EmptyCount +1
 
-      
+
   BufferSprite = Sprite(
     newwidth,
     height,
@@ -10203,11 +9898,11 @@ def LeftTrimSprite(Sprite1,Columns):
     Sprite1.b,
     [0]*(newwidth*height)
     )
-      
+
   #Now that we identified the empty columns, copy data and skip those columns
   for x in range (0,width):
     Skipped = 0
-    
+
     for y in range (0,height):
       i = x + (y * width)
       b = BufferX + (y * newwidth)
@@ -10215,34 +9910,24 @@ def LeftTrimSprite(Sprite1,Columns):
         Skipped = 1
       else:
         BufferSprite.grid[b] = Sprite1.grid[i]
-    
-    
+
+
     #advance our Buffer column counter only if we skipped a column
     if (Skipped == 0):
       BufferX = BufferX + 1
-    
-    
-  
+
+
+
   BufferSprite.width = newwidth
-  
-  
-  
+
+
+
   #print (BufferSprite.grid)
   return BufferSprite
-    
-  
- 
-  
-
-
-
 
 #------------------------------------------------------------------------------
 # Keyboard Functions                                                         --
 #------------------------------------------------------------------------------
-
-
-
 
 def ProcessKeypress(Key):
 
@@ -10262,7 +9947,7 @@ def ProcessKeypress(Key):
   # 8 = ShowDotZerkRobotTime
   # 0 = ?
   # m = Debug Playfield/Map
-    
+
   if (Key == "p" or Key == " "):
     time.sleep(5)
   elif (Key == "q"):
@@ -10297,20 +9982,13 @@ def ProcessKeypress(Key):
     #print("Game slowing down ")
     #print("MainSleep: ",MainSleep, " ScrollSleep: ",ScrollSleep)
 
-
-
-    
-    
-    
-
-
 def GetKey(stdscr):
   ReturnChar = ""
   stdscr.nodelay(1) # doesn't keep waiting for a key press
-  c = stdscr.getch()  
-  
+  c = stdscr.getch()
+
   #Look for specific characters
-  if  (c == ord(" ") 
+  if  (c == ord(" ")
     or c == ord("+")
     or c == ord("-")
     or c == ord("a")
@@ -10325,18 +10003,14 @@ def GetKey(stdscr):
     or c == ord("t")
     or c == ord("n")
     or c == ord("m") ):
-    ReturnChar = chr(c)       
+    ReturnChar = chr(c)
 
   #Look for digits (ascii 48-57 == digits 0-9)
   elif (c >= 48 and c <= 57):
     print ("Digit detected")
-    ReturnChar = chr(c)    
+    ReturnChar = chr(c)
 
   return ReturnChar
- 
-
-  
-  
 
 def PollKeyboard():
   Key = ""
@@ -10350,29 +10024,25 @@ def PollKeyboard():
     print ("----------------")
     #ProcessKeypress(Key)
     #SaveConfigData()
-    
-  
+
+
   return Key
 
-
-  
 def GetKeyInt(stdscr):
   ReturnInt = -1
   stdscr.nodelay(1) # doesn't keep waiting for a key press
-  
-  #gets ascii value
-  c = stdscr.getch()  
 
-  
+  #gets ascii value
+  c = stdscr.getch()
+
+
   #Look for digits (ascii 48-57 == digits 0-9)
   if (c >= 48 and c <= 57):
     print ("Digit detected")
-    ReturnInt = c - 48   
+    ReturnInt = c - 48
 
   return ReturnInt
 
-  
-  
 def PollKeyboardInt():
   Key = -1
   stdscr = curses.initscr()
@@ -10383,27 +10053,22 @@ def PollKeyboardInt():
     print ("Key Pressed: ",Key)
     print ("----------------")
     ProcessKeypress(Key)
-  
+
   return Key
 
-
-  
-
-  
-  
 # This section deals with getting specific input from a question and does not
-# trigger events  
-  
+# trigger events
+
 def GetKeyRegular(stdscr):
   ReturnChar = ""
   stdscr.nodelay(1) # doesn't keep waiting for a key press
-  c = stdscr.getch()  
+  c = stdscr.getch()
 
   if (c >= 48 and c <= 150):
-    ReturnChar = chr(c)    
+    ReturnChar = chr(c)
 
   return ReturnChar
-  
+
 def PollKeyboardRegular():
   Key = ""
   stdscr = curses.initscr()
@@ -10413,15 +10078,13 @@ def PollKeyboardRegular():
     print ("----------------")
     print ("Key Pressed: ",Key)
     print ("----------------")
-  
-  return Key
-  
 
+  return Key
 
 def GetClockDot(time):
   #this is a list of hv coordinates around the outside of the unicorn hat
   #pass in a number from 1-60 to get the correct dot to display
-  
+
   DotList = []
   DotList.append ([4,0]) #0 same as 60
   DotList.append ([4,0])
@@ -10452,14 +10115,8 @@ def GetClockDot(time):
   DotList.append ([1,0])
   DotList.append ([2,0])
   DotList.append ([3,0])
-  
+
   return DotList[time]
-
-
-
-
-
-
 
 def DrawTinyClock(Minutes):
   print ("--DrawTinyClock--")
@@ -10469,7 +10126,7 @@ def DrawTinyClock(Minutes):
   MaxDate = datetime.now() + timedelta(minutes=Minutes)
   now     = datetime.now()
   Quit    = 0
-  
+
 
   while (now >= MinDate and now <= MaxDate and Quit == 0):
     print ("--DrawTinyClock--")
@@ -10496,72 +10153,69 @@ def DrawTinyClock(Minutes):
     now = datetime.now()
 
   TheMatrix.Clear()
-    
+
 def DrawClockMinutes():
 
   #break apart the time
   now = datetime.now()
   mm  = now.minute
-  print ("DrawClockMinutes minutes:",mm)  
-  
+  print ("DrawClockMinutes minutes:",mm)
+
   dots = int(28.0 // 60.0 * mm)
 
-#  #Erase  
+#  #Erase
   for i in range(1,28):
     h,v = GetClockDot(i)
   TheMatrix.SetPixel(h,v,0,0,0)
   #unicorn.show()
   #SendBufferPacket(RemoteDisplay,HatHeight,HatWidth)
 
-  
+
   for i in range(1,dots+1):
     print ("Setting minute dot:",i)
     h,v = GetClockDot(i)
     TheMatrix.SetPixel(h,v,SDDarkBlueR,SDDarkBlueG,SDDarkBlueB)
     #unicorn.show()
     #SendBufferPacket(RemoteDisplay,HatHeight,HatWidth)
-  
-  
-  
-  
+
 def DrawClockSeconds():
   #break apart the time
   now = datetime.now()
   ss  = now.second
-  
-  print ("--DrawClockSeconds seconds:",ss,"--")  
+
+  print ("--DrawClockSeconds seconds:",ss,"--")
 
   r = 0
   g = 0
   b = 0
-  
-   
+
+
   h = 0
   v = 0
   x = -1
   y = -1
-  
-  
+
+
   TheMatrix.SetPixel(3,0,0,0,0)
 
 
   for i in range(ss,61):
-    
+
     #Erase dot 0/60
     DisplayDot =  int(28.0 // 60.0 * i)
     h,v = GetClockDot(DisplayDot)
-    
-    
+
+
     print ("Setting second dot:",i)
     #print ("xy hv:",x,y,h,v)
     if (x >= 0):
       #print ("writing old pixel")
       TheMatrix.SetPixel(x,y,r,g,b)
 
-    
+
     #capture previous pixel
     x,y = h,v
-    
+
     r,g,b = getpixel(h,v)
     TheMatrix.SetPixel(h,v,SDLowWhiteR,SDLowWhiteG,SDLowWhiteB)
     #unicorn.show()
@@ -10571,43 +10225,39 @@ def DrawClockSeconds():
     TheMatrix.SetPixel(h,v,SDDarkPurpleR,SDDarkPurpleG,SDDarkPurpleB)
     #unicorn.show()
     #SendBufferPacket(RemoteDisplay,HatHeight,HatWidth)
-    
+
     #Check for keyboard input
     Key = PollKeyboard()
     if (Key == 'q'):
       return 1
-    
 
-    
+
+
     time.sleep(0.995)
-    
+
   print ("--end seconds--")
   return 0
-  
-
 
 #--------------------------------------
 #  Transitions and Sequences         --
 #--------------------------------------
 
-
-
-def ScrollBigClock(direction,speed,ZoomFactor):    
+def ScrollBigClock(direction,speed,ZoomFactor):
   #Screen capture is a copy of the unicorn display Buffer, which in HD is a numby array
   #Capture the screen, then pass that to this function
   #this function will make a copy, chop up that copy and display the slices in the order to make
   #it look like the screen is scrolling up or down, left or right
-  
+
   #For now, we scroll, replacing with empty screen.  Also, reverse.
- 
+
   RGB, ShadowRGB = GetBrightAndShadowRGB()
 
   #Canvas.Clear()
-  
+
   #ClockScreen
   ClockScreen  = [[]]
   ClockScreen  = [[ (0,0,0) for i in range(HatWidth)] for i in range(HatHeight)]
-  
+
 
   ScreenCopy = copy.deepcopy(ScreenArray)
   ScreenCopy2 = copy.deepcopy(ScreenArray)
@@ -10617,7 +10267,7 @@ def ScrollBigClock(direction,speed,ZoomFactor):
   TheTime = CreateClockSprite(12)
   TheTime.h = (HatWidth  //2) - (TheTime.width  * ZoomFactor // 2) - ZoomFactor
   TheTime.v = (HatHeight //2) - (TheTime.height * ZoomFactor // 2) - ZoomFactor
-  
+
 
   print ("create clock scren")
   #this will copy the clock sprite to the regular screen buffer ScreenBuffer
@@ -10626,18 +10276,18 @@ def ScrollBigClock(direction,speed,ZoomFactor):
   ClockScreen = CopySpriteToScreenArrayZoom(TheBuffer=ClockScreen, TheSprite=TheTime,h=TheTime.h-1,v=TheTime.v+1, ColorTuple=ShadowRGB,FillerTuple=(-1,-1,-1),ZoomFactor = ZoomFactor,Fill=False)
   ClockScreen = CopySpriteToScreenArrayZoom(TheBuffer=ClockScreen, TheSprite=TheTime,h=TheTime.h,v=TheTime.v, ColorTuple=RGB,FillerTuple=(-1,-1,-1),ZoomFactor = ZoomFactor,Fill=False)
   print ("clock screen created")
-  
+
   print ("about to start scrolling")
-  
-    
+
+
 
   #Scroll up
   #Delete top row, insert blank on bottom, pushing remaining to the top
   if (direction == 'up'):
-    
-  
+
+
     for x in range (0,HatHeight):
-      #Take a line from the clock sprite 
+      #Take a line from the clock sprite
       InsertLine = ClockScreen[x]
       ScreenCopy = numpy.delete(ScreenCopy,(0),axis=0)
       ScreenCopy  = numpy.insert(ScreenCopy,HatHeight-1,InsertLine,axis=0)
@@ -10646,24 +10296,24 @@ def ScrollBigClock(direction,speed,ZoomFactor):
       #SendBufferPacket(RemoteDisplay,HatHeight,HatWidth)
       time.sleep(speed)
 
-    
-    
+
+
 
   Oldmm = 0
   done  = 0
   ShownOnce = 0
-  
+
 
   print("going into a loop")
 
   while (1 == 1):
- 
+
     #If the time has changed, draw a new time
     mm = datetime.now().strftime('%M')
     if (mm != Oldmm):
       #Erase old time
       Oldmm = mm
-      
+
 
       TheTime = CreateClockSprite(12)
       TheTime.h = (HatWidth //2 )  - (TheTime.width * ZoomFactor // 2)  - ZoomFactor
@@ -10678,7 +10328,7 @@ def ScrollBigClock(direction,speed,ZoomFactor):
       ClockScreen = CopySpriteToScreenArrayZoom(TheBuffer=ClockScreen, TheSprite=TheTime,h=TheTime.h,v=TheTime.v, ColorTuple=RGB,FillerTuple=(-1,-1,-1),ZoomFactor = ZoomFactor,Fill=False)
       setpixelsLED(ClockScreen)
 
-      
+
 
 
     Key = PollKeyboard()
@@ -10696,27 +10346,20 @@ def ScrollBigClock(direction,speed,ZoomFactor):
     print("sleeping")
     time.sleep(1)
 
-
-
-
-
-
-
-
-def ScrollScreen(direction,ScreenCap,speed):    
+def ScrollScreen(direction,ScreenCap,speed):
   #Screen capture is a copy of the unicorn display Buffer, which in HD is a numby array
   #Capture the screen, then pass that to this function
   #this function will make a copy, chop up that copy and display the slices in the order to make
   #it look like the screen is scrolling up or down, left or right
-  
+
   #For now, we scroll, replacing with empty screen.  Also, reverse.
- 
- 
+
+
   EmptyCap   = [[(0,0,0) for i in range (0,HatWidth)]]
   InsertLine = copy.deepcopy(EmptyCap)
   Buffer     = copy.deepcopy(EmptyCap)
 
-  
+
   #Scroll up
   #Delete top row, insert blank on bottom, pushing remaining to the top
   if (direction == 'up'):
@@ -10724,7 +10367,7 @@ def ScrollScreen(direction,ScreenCap,speed):
     #print ("Buffer",Buffer)
 
     for x in range (0,HatHeight):
-      
+
       Buffer = numpy.delete(Buffer,(0),axis=1)
       Buffer = numpy.insert(Buffer,HatHeight-1,InsertLine,axis=1)
       setpixelsLED(Buffer)
@@ -10756,25 +10399,25 @@ def ScrollScreen(direction,ScreenCap,speed):
       time.sleep(speed)
 
 
-      
-      
+
+
 
   #Scroll to RIGHT
   #Delete right row, insert blank on left, pushing remaining to the right
   if (direction == 'right'):
     Buffer = copy.deepcopy(ScreenCap)
     for x in range (0,HatWidth):
-      
+
       Buffer = numpy.delete(Buffer,(0),axis=0)
       Buffer = numpy.append(Buffer,EmptyCap,axis=0)
       setpixelsLED(Buffer)
       #unicorn.show()
       #SendBufferPacket(RemoteDisplay,HatHeight,HatWidth)
       #time.sleep(speed)
-  
-  
-  
-  
+
+
+
+
   #Scroll to LEFT
   #Delete left row, insert blank on right, pushing remaining to the left
   if (direction == 'left'):
@@ -10784,33 +10427,26 @@ def ScrollScreen(direction,ScreenCap,speed):
 
     for x in range (0,HatWidth):
       Buffer = numpy.delete(Buffer,(-1),axis=0)
-      
+
       #Copy each tuple to the line to be inserted (gotta be a better way!)
       for j in range (HatWidth):
         InsertLine[0][j] = ScreenCap[abs(HatWidth-x)][j]
-      
+
       Buffer = numpy.insert(Buffer,0,InsertLine,axis=0)
-      
+
       setpixelsLED(Buffer)
       #unicorn.show()
       #SendBufferPacket(RemoteDisplay,HatHeight,HatWidth)
       time.sleep(speed)
 
-
-      
-
-
-
-
 # Try looping the number of zooms, but re-capture the screen at the zoomed in level and pass that back into
 # the DisplayScreenCap function
 
-
-def ZoomScreen(ScreenArray,ZoomStart,ZoomStop,ZoomSleep,Fade=False):    
+def ZoomScreen(ScreenArray,ZoomStart,ZoomStop,ZoomSleep,Fade=False):
   #Capture the screen, then pass that to this function
   #Loop through the zoom levels specified, calling the DisplayScreenCap function
 
- 
+
   ZoomFactor    = 0
   DimIncrement  = max(round(100 / abs(ZoomStart - ZoomStop)),1)
   OldBrightness = TheMatrix.brightness
@@ -10823,11 +10459,11 @@ def ZoomScreen(ScreenArray,ZoomStart,ZoomStop,ZoomSleep,Fade=False):
         if (Brightness >= 0):
           TheMatrix.brightness = Brightness
           #print("Brightness:",Brightness)
-      TheMatrix.Clear()        
+      TheMatrix.Clear()
       DisplayScreenCap(ScreenArray,ZoomFactor)
       if (ZoomSleep > 0):
         time.sleep(ZoomSleep)
-        
+
   else:
     for ZoomFactor in reversed(range(ZoomStop, ZoomStart)):
       #clear the screen as we zoom to remove leftovers
@@ -10836,7 +10472,7 @@ def ZoomScreen(ScreenArray,ZoomStart,ZoomStop,ZoomSleep,Fade=False):
         if (Brightness >= 0):
           TheMatrix.brightness = Brightness
           #print("Brightness:",Brightness)
-      TheMatrix.Clear()        
+      TheMatrix.Clear()
       DisplayScreenCap(ScreenArray,ZoomFactor)
       if (ZoomSleep > 0):
         time.sleep(ZoomSleep)
@@ -10850,13 +10486,9 @@ def ZoomScreen(ScreenArray,ZoomStart,ZoomStop,ZoomSleep,Fade=False):
       # r,g,b = ScreenCap[abs(15-x)][y]
       # TheMatrix.SetPixel(x,y,r,g,b)
 
-
-
-
-
 def DisplayScreenCap(ScreenCap,ZoomFactor = 0):
   #This function writes a Screen capture to the buffer using the specified zoom factor
-  #ZoomFactor is based on Vertical height.  
+  #ZoomFactor is based on Vertical height.
   #  Matrix = 32, Zoom 16 = shrink screen to 1/2 size
   #  Matrix = 32, Zoom 64 = show 1/2 of screen capture, doubled so it fits on whole screen
   r = 0
@@ -10867,16 +10499,16 @@ def DisplayScreenCap(ScreenCap,ZoomFactor = 0):
   V_modifier = 0
   H = 0
   V = 0
-  HIndentFactor = 0    
-  VIndentFactor = 0    
-  
- 
+  HIndentFactor = 0
+  VIndentFactor = 0
+
+
 
   #NewScreenCap = deepcopy.copy(ScreenCap)
 
 
   if (ZoomFactor > 1):
-    H_modifier = (1 / HatWidth ) * ZoomFactor * 2  #BigLED is 2 times wider than tall. Hardcoding now, will fix later. 
+    H_modifier = (1 / HatWidth ) * ZoomFactor * 2  #BigLED is 2 times wider than tall. Hardcoding now, will fix later.
     V_modifier = (1 / HatHeight ) * ZoomFactor
 
     #calculate the newsize of the zoomed screen cap
@@ -10895,30 +10527,25 @@ def DisplayScreenCap(ScreenCap,ZoomFactor = 0):
   for V in range(0,HatHeight):
     for H in range (0,HatWidth):
       if (CheckBoundary((H * H_modifier) + HIndentFactor ,(V * V_modifier) + VIndentFactor) == 0):
-      
+
         r,g,b = ScreenCap[V][H]
         if (ZoomFactor > 0):
           Canvas.SetPixel((H * H_modifier) + HIndentFactor ,(V * V_modifier) + VIndentFactor,r,g,b)
-        
+
         else:
           Canvas.SetPixel(H,V,r,g,b)
 
   TheMatrix.SwapOnVSync(Canvas)
-        
-  
+
+
   #unicorn.show()
 
-
-
-
-  
-    
 def ScrollScreenScrollBanner(message,r,g,b,direction,speed):
 
-  # this has been converted from an older way of scrolling.  
+  # this has been converted from an older way of scrolling.
   # we might need to input multiple directions to give more flexibility
-  
-  
+
+
   ScreenCap  = copy.deepcopy(unicorn.get_pixels())
   ScrollScreen('up',ScreenCap,speed)
 
@@ -10927,21 +10554,9 @@ def ScrollScreenScrollBanner(message,r,g,b,direction,speed):
   TheTime.ScrollAcrossScreen(0,1,"right",speed)
   ScrollScreen('down',ScreenCap,speed)
 
-
-
-
-
-
-
-
-
-
-
-
-
 def ShowIPAddress(Wait=5):
   message = str(subprocess.check_output("hostname -I", shell=True)[:-1]);
-  
+
   IPAddress = message[2:17]
 
   #cut off at trailing space, if it exists
@@ -10950,11 +10565,11 @@ def ShowIPAddress(Wait=5):
   if(i >1):
     IPAddress = IPAddress[0:i-1]
 
-  print ("-->",IPAddress,"<--") 
+  print ("-->",IPAddress,"<--")
 
   CursorH = 0
   CursorV = 0
-  
+
   #not really used here
   ScreenArray  = ([[]])
   ScreenArray  = [[ (0,0,0) for i in range(HatWidth)] for i in range(HatHeight)]
@@ -10964,32 +10579,18 @@ def ShowIPAddress(Wait=5):
 
   #print dots on the same line
   V = CursorV
-  
+
   #duplicate this underscore WAIT number of times
   #message = '_' * Wait
   #One second between each letter
   #print(message)
   #ScreenArray,CursorH,CursorV = TerminalScroll(ScreenArray,message,CursorH=CursorH,CursorV=V,MessageRGB=(0,200,0),CursorRGB=(0,255,0),CursorDarkRGB=(0,50,0),StartingLineFeed=1,TypeSpeed=1,ScrollSpeed=ScrollSleep)
-  
+
   BlinkCursor(CursorH= CursorH,CursorV=CursorV,CursorRGB=(0,255,0),CursorDarkRGB=(0,50,0),BlinkSpeed=0.5,BlinkCount=Wait)
 
 
 
   return IPAddress
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 def ShowGlowingText(
     h          = -1,            #horizontal placement of upper left corner of text banner
@@ -11009,13 +10610,13 @@ def ShowGlowingText(
 
   global ScreenArray
 
-  r,g,b = RGB 
+  r,g,b = RGB
   r2 = 0
   g2 = 0
   b2 = 0
   Text      = Text.upper()
   TheBanner = CreateBannerSprite(Text)
-  
+
 
   #Center if HV not specified
   if (CenterHoriz == True):
@@ -11026,7 +10627,7 @@ def ShowGlowingText(
   if(DropShadow == True):
     CopySpriteToPixelsZoom(TheBanner,h-1,v+1,ShadowRGB,(0,0,0),ZoomFactor,Fill=False)
 
-                                    
+
   if (GlowLevels > 0):
     for i in range (1,GlowLevels):
       r2 = math.ceil((r / GlowLevels) * i)
@@ -11054,10 +10655,7 @@ def ShowGlowingText(
     CopySpriteToPixelsZoom(TheBanner,h-1,v+1,(0,0,0),(0,0,0),ZoomFactor,Fill=False)
 
 
-  return   
-
-
-
+  return
 
 def ShowGlowingSprite(
     h          = -1,                #horizontal placement of upper left corner of text banner
@@ -11082,7 +10680,7 @@ def ShowGlowingSprite(
   r2 = 0
   g2 = 0
   b2 = 0
-    
+
 
   #Center if HV not specified
   if (CenterHoriz == True):
@@ -11093,7 +10691,7 @@ def ShowGlowingSprite(
   if(DropShadow == True):
     CopySpriteToPixelsZoom(TheSprite,h-1,v+1,ShadowRGB,(0,0,0),ZoomFactor,Fill=False)
 
-                                    
+
   if (GlowLevels > 0):
     for i in range (1,GlowLevels):
       r2 = math.ceil((r / GlowLevels) * i)
@@ -11120,31 +10718,27 @@ def ShowGlowingSprite(
     CopySpriteToPixelsZoom(TheSprite,h,v,(0,0,0),(0,0,0),ZoomFactor,Fill=False)
     CopySpriteToPixelsZoom(TheSprite,h-1,v+1,(0,0,0),(0,0,0),ZoomFactor,Fill=False)
 
- 
-  return   
 
-
-
-
+  return
 
 def CopySpriteToPixelsZoom(TheSprite,h,v, ColorTuple=(-1,-1,-1),FillerTuple=(-1,-1,-1),ZoomFactor = 1,Fill=True):
-  #Copy a regular sprite to the LED 
+  #Copy a regular sprite to the LED
   #Apply a ZoomFactor i.e  1 = normal / 2 = double in size / 3 = 3 times the size
   #print ("Copying sprite to playfield:",TheSprite.name, ObjectType, Filler)
   #if Fill = False, don't write anything for filler, that way we can leave existing lights on LED
 
-  width   = TheSprite.width 
+  width   = TheSprite.width
   height  = TheSprite.height
 
-  global ScreenArray  
-  
+  global ScreenArray
+
   if (ColorTuple == (-1,-1,-1)):
     r = TheSprite.r
     g = TheSprite.g
     b = TheSprite.b
   else:
     r,g,b   = ColorTuple
-  
+
   if (FillerTuple == (-1,-1,-1)):
     fr = 0
     fg = 0
@@ -11166,7 +10760,7 @@ def CopySpriteToPixelsZoom(TheSprite,h,v, ColorTuple=(-1,-1,-1),FillerTuple=(-1,
         for zh in range (0,ZoomFactor):
           H = x+h+zh
           V = y+v+zv
-         
+
           if(CheckBoundary(H,V) == 0):
 
             #draw the sprite portion
@@ -11185,10 +10779,9 @@ def CopySpriteToPixelsZoom(TheSprite,h,v, ColorTuple=(-1,-1,-1),FillerTuple=(-1,
 
   #draw the contents of the buffer to the LED matrix
   #TheMatrix.SwapOnVSync(Canvas)
- 
+
 
   return;
-
 
 def CopySpriteToScreenArrayZoom(TheSprite,h,v, ColorTuple=(-1,-1,-1),FillerTuple=(-1,-1,-1),ZoomFactor = 1,Fill=True,InputScreenArray=None):
   #Copy a regular sprite to the ScreenArray buffer
@@ -11196,7 +10789,7 @@ def CopySpriteToScreenArrayZoom(TheSprite,h,v, ColorTuple=(-1,-1,-1),FillerTuple
   #print ("Copying sprite to playfield:",TheSprite.name, ObjectType, Filler)
   #if Fill = False, don't write anything for filler, that way we can leave existing lights on LED
 
-  width   = TheSprite.width 
+  width   = TheSprite.width
   height  = TheSprite.height
 
   if InputScreenArray is None:
@@ -11206,14 +10799,14 @@ def CopySpriteToScreenArrayZoom(TheSprite,h,v, ColorTuple=(-1,-1,-1),FillerTuple
   else:
     #print("Applying new sprite to existing ScreenArray")
     ScreenArray = InputScreenArray
-  
+
   if (ColorTuple == (-1,-1,-1)):
     r = TheSprite.r
     g = TheSprite.g
     b = TheSprite.b
   else:
     r,g,b   = ColorTuple
-  
+
   if (FillerTuple == (-1,-1,-1)):
     fr = 0
     fg = 0
@@ -11235,7 +10828,7 @@ def CopySpriteToScreenArrayZoom(TheSprite,h,v, ColorTuple=(-1,-1,-1),FillerTuple
         for zh in range (0,ZoomFactor):
           H = x+h+zh
           V = y+v+zv
-          
+
           if(CheckBoundary(H,V) == 0):
 
             #draw the sprite portion
@@ -11249,21 +10842,16 @@ def CopySpriteToScreenArrayZoom(TheSprite,h,v, ColorTuple=(-1,-1,-1),FillerTuple
             #    setpixel(H,V,0,0,0)
 
   return ScreenArray
- 
-
-
-
-
 
 def CopyAnimatedSpriteToPixelsZoom(TheSprite,h,v, ZoomFactor = 1):
   #Copy a color animated sprite to the LED and the ScreenArray buffer
   #Apply a ZoomFactor i.e  1 = normal / 2 = double in size / 3 = 3 times the size
 
-  width   = TheSprite.width 
+  width   = TheSprite.width
   height  = TheSprite.height
 
-  #global ScreenArray  
-  
+  #global ScreenArray
+
   TheFrame = TheSprite.currentframe
   #Copy sprite to LED pixels
   for count in range (0,(TheSprite.width * TheSprite.height)):
@@ -11283,19 +10871,19 @@ def CopyAnimatedSpriteToPixelsZoom(TheSprite,h,v, ZoomFactor = 1):
           if(CheckBoundary(H,V) == 0):
             r,g,b =  ColorList[TheSprite.grid[TheFrame][count]]
 
-            #Experimental method to only draw if the sprite is non black, and to fill in the spot with the 
+            #Experimental method to only draw if the sprite is non black, and to fill in the spot with the
             #the screenArray (our manual copy of the screen) if it is black which prevents the background from getting erased
             if (r >0 or g > 0 or b > 0):
               setpixel(H,V,r,g,b)
-              
+
 
             else:
               r2,g2,b2 = TheSprite.ScreenArray[V][H]
               setpixel(H,V,r2,g2,b2)
-              
 
 
-  
+
+
 
   # We used to auto-increment but t his causes problems
   #TheFrame = TheFrame + 1
@@ -11306,18 +10894,15 @@ def CopyAnimatedSpriteToPixelsZoom(TheSprite,h,v, ZoomFactor = 1):
 
   return;
 
-
-
-
 def CopyAnimatedSpriteToPixelsZoomLEDOnly(TheSprite,h,v, ZoomFactor = 1):
   #Copy a color animated sprite to the LED ONLY
   #Apply a ZoomFactor i.e  1 = normal / 2 = double in size / 3 = 3 times the size
 
-  width   = TheSprite.width 
+  width   = TheSprite.width
   height  = TheSprite.height
 
-  #global ScreenArray  
-  
+  #global ScreenArray
+
   TheFrame = TheSprite.currentframe
   #Copy sprite to LED pixels
   for count in range (0,(TheSprite.width * TheSprite.height)):
@@ -11337,7 +10922,7 @@ def CopyAnimatedSpriteToPixelsZoomLEDOnly(TheSprite,h,v, ZoomFactor = 1):
           if(CheckBoundary(H,V) == 0):
             r,g,b =  ColorList[TheSprite.grid[TheFrame][count]]
 
-            #Experimental method to only draw if the sprite is non black, and to fill in the spot with the 
+            #Experimental method to only draw if the sprite is non black, and to fill in the spot with the
             #the screenArray (our manual copy of the screen) if it is black which prevents the background from getting erased
             if (r >0 or g > 0 or b > 0):
               setpixelLEDOnly(H,V,r,g,b)
@@ -11347,7 +10932,7 @@ def CopyAnimatedSpriteToPixelsZoomLEDOnly(TheSprite,h,v, ZoomFactor = 1):
               setpixelLEDOnly(H,V,r2,g2,b2)
 
 
-  
+
 
   # We used to auto-increment but t his causes problems
   #TheFrame = TheFrame + 1
@@ -11358,18 +10943,15 @@ def CopyAnimatedSpriteToPixelsZoomLEDOnly(TheSprite,h,v, ZoomFactor = 1):
 
   return;
 
-
-
-
 def CopyAnimatedSpriteToScreenArrayZoom(TheSprite,h,v, ZoomFactor = 1,TheScreenArray = [[]]):
   #Copy a color animated sprite to the LED and the ScreenArray buffer
   #Apply a ZoomFactor i.e  1 = normal / 2 = double in size / 3 = 3 times the size
 
-  width   = TheSprite.width 
+  width   = TheSprite.width
   height  = TheSprite.height
 
-  #global ScreenArray  
-  
+  #global ScreenArray
+
   TheFrame = TheSprite.currentframe
   #Copy sprite ScreenArray
   for count in range (0,(TheSprite.width * TheSprite.height)):
@@ -11389,28 +10971,12 @@ def CopyAnimatedSpriteToScreenArrayZoom(TheSprite,h,v, ZoomFactor = 1,TheScreenA
           if(CheckBoundary(H,V) == 0):
             r,g,b =  ColorList[TheSprite.grid[TheFrame][count]]
 
-            #Experimental method to only draw if the sprite is non black, and to fill in the spot with the 
+            #Experimental method to only draw if the sprite is non black, and to fill in the spot with the
             #the screenArray (our manual copy of the screen) if it is black which prevents the background from getting erased
             if (r >0 or g > 0 or b > 0):
               TheScreenArray[V][H] = r,g,b
 
   return TheScreenArray
-
-
-  
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 def DisplayScore(score,rgb):
 
@@ -11424,8 +10990,6 @@ def DisplayScore(score,rgb):
   ScoreSprite.b = b
   ScoreSprite.DisplayIncludeBlack(ScoreH,ScoreV)
 
-
-
 def DisplayScoreMessage(h=0,v=0,Message='TEST',RGB=(100,100,100),FillerRGB=(0,0,0)):
 
   r,g,b    = RGB
@@ -11437,7 +11001,7 @@ def DisplayScoreMessage(h=0,v=0,Message='TEST',RGB=(100,100,100),FillerRGB=(0,0,
 
   #Display a message where the scoreboard is (lower right corner)
   ScoreMessage = CreateBannerSprite(str(Message.upper()))
-  
+
   if (ScoreH == 0):
     ScoreH      = (HatWidth  - ScoreMessage.width) // 2
   if (ScoreV == 0):
@@ -11447,9 +11011,6 @@ def DisplayScoreMessage(h=0,v=0,Message='TEST',RGB=(100,100,100),FillerRGB=(0,0,
   ScoreMessage.b = b
   #ScoreMessage.DisplayIncludeBlack(ScoreH,ScoreV)
   CopySpriteToPixelsZoom(ScoreMessage,ScoreH,ScoreV, ColorTuple=(RGB),FillerTuple=(FillerRGB),ZoomFactor = 1,Fill=True)
-
-
-
 
 def DisplayLevel(level,rgb):
 
@@ -11463,24 +11024,18 @@ def DisplayLevel(level,rgb):
   ScoreSprite.b = b
   ScoreSprite.DisplayIncludeBlack(ScoreH,ScoreV)
 
-
-
-
 def GetElapsedSeconds(starttime):
   elapsed_time = time.time() - starttime
   elapsed_hours   = elapsed_time / 3600
   elapsed_minutes = elapsed_time / 60
-  elapsed_seconds = elapsed_time 
+  elapsed_seconds = elapsed_time
   #print ("StartTime:",starttime,"Seconds:",seconds)
   #print("Clock Timer: {:0>2}:{:0>2}:{:05.2f}".format(int(elapsed_hours),int(elapsed_minutes),elapsed_seconds),"Elapsed seconds:",elapsed_seconds, "Check seconds:",seconds)
-  
+
   return elapsed_time
 
-
-
-
 def TronGetRandomMessage(MessageType = 'TAUNT'):
-  
+
 
   if (MessageType == 'TAUNT'):
     MessageList = ('NICE TRY',
@@ -11518,7 +11073,7 @@ def TronGetRandomMessage(MessageType = 'TAUNT'):
                    'MISSED IT BY THAT MUCH!',
                    'YOUR LACK OF SKILL DISTURBS ME'
 
-                   
+
       )
   elif (MessageType == 'CHALLENGE'):
     MessageList = ('DO YOU FIGHT FOR THE PLAYER?',
@@ -11558,9 +11113,9 @@ def TronGetRandomMessage(MessageType = 'TAUNT'):
                    'MISSED IT BY THAT MUCH!',
                    'CAN YOU DIG IT?',
                    'IM BACK BABY'
-                   
+
       )
-                   
+
   elif (MessageType == 'SHORTGAME'):
     #12 characters
     MessageList = ('A DOT GAME',
@@ -11587,8 +11142,8 @@ def TronGetRandomMessage(MessageType = 'TAUNT'):
                    'GO!'
 
       )
-  
-  
+
+
   ListCount = len(MessageList)
   print(ListCount)
   print("ListCount:",ListCount)
@@ -11599,15 +11154,10 @@ def TronGetRandomMessage(MessageType = 'TAUNT'):
   print("Message:",Message)
   return Message
 
-
-
-
 def EraseMessageArea(LinesFromBottom = 5):
   for x in range (0,HatWidth):
     for y in range (HatHeight-LinesFromBottom,HatHeight):
       setpixel(x,y,0,0,0)
-
-
 
 def IsSpotEmpty(h,v):
   r,g,b = getpixel(h,v)
@@ -11616,8 +11166,6 @@ def IsSpotEmpty(h,v):
   else:
     return True
 
-
-  
 def GetBrightAndShadowRGB():
   #get a bright color and find a shadow that is one 20th the brightness
   i = random.randint(1,7)
@@ -11626,11 +11174,6 @@ def GetBrightAndShadowRGB():
 
   return BrightRGB, ShadowRGB
 
-
-
-
-
-
 def ShowTitleScreen(
   BigText          = 'BIGTEXT',
   BigTextRGB       = HighBlue,
@@ -11638,8 +11181,8 @@ def ShowTitleScreen(
 
   LittleText          = 'LITTLE TEXT',
   LittleTextRGB       = HighRed,
-  LittleTextShadowRGB = ShadowRed, 
-  
+  LittleTextShadowRGB = ShadowRed,
+
   ScrollText     = 'SCROLLING TEXT',
   ScrollTextRGB  = HighYellow,
   ScrollSleep    = 0.05,    #how long to wait between each frame of scrolling
@@ -11649,7 +11192,7 @@ def ShowTitleScreen(
   ):
 
 
-  global ScreenArray  
+  global ScreenArray
   #Draw the Big text
   #Clear only the LED matrix
   #Draw the next size down
@@ -11672,7 +11215,7 @@ def ShowTitleScreen(
 
   TheMatrix.Clear()
   ClearBuffers()
-  
+
 
 
   #Big Text
@@ -11691,7 +11234,7 @@ def ShowTitleScreen(
   TheMatrix.Clear()
   ClearBuffers() #We do this to erase our ScreenArray (which we draw to manually because we cannot read the matrix as a whole)
   ShowGlowingText(CenterHoriz=True,CenterVert=False,h=0,v=1,Text=BigText,RGB=BigTextRGB,ShadowRGB=BigTextShadowRGB,ZoomFactor= 2,GlowLevels=0,DropShadow=True)
-  
+
 
   time.sleep(0.5)
 
@@ -11699,7 +11242,7 @@ def ShowTitleScreen(
   #BrightRGB, ShadowRGB = GetBrightAndShadowRGB()
   ShowGlowingText(CenterHoriz=True,h=0,v=14,Text=LittleText,RGB=LittleTextRGB,ShadowRGB=LittleTextShadowRGB,ZoomFactor= LittleTextZoom,GlowLevels=100,DropShadow=True)
 
-  
+
 
   #Scrolling Message
   EraseMessageArea(LinesFromBottom=6)
@@ -11711,7 +11254,7 @@ def ShowTitleScreen(
   time.sleep(DisplayTime)
 
   #Pick a random special affect
- 
+
   if(ExitEffect == -1):
     #print("No effect")
     pass
@@ -11778,10 +11321,6 @@ def ShowTitleScreen(
       ScreenArray2  = [[ (0,0,0) for i in range(HatWidth)] for i in range(HatHeight)]
       TransitionBetweenScreenArrays(ScreenArray,ScreenArray2,TransitionType=2)
 
-      
-    
-  
-
 def MoveSpriteAcrossScreen(sprite,Position='bottom',v=0,direction="right",ZoomFactor=1,sleep=0.1):
   #this function is for moving old single color sprites (such as text)
   #note: untested as of OCt 28, 2021
@@ -11815,10 +11354,6 @@ def MoveSpriteAcrossScreen(sprite,Position='bottom',v=0,direction="right",ZoomFa
       CopySpriteToPixelsZoom(TheBanner,h-1,v+1,(r,g,b),(0,0,0),ZoomFactor,Fill=False)
       time.sleep(sleep)
       h = h - 1
-
-
-
-
 
 def MoveAnimatedSpriteAcrossScreen(TheSprite,Position='bottom',v=0,direction="right",steps=1,ZoomFactor=1,sleep=0.1):
   #Currently steps controls how many H to move after going through all the frames.
@@ -11870,9 +11405,6 @@ def MoveAnimatedSpriteAcrossScreen(TheSprite,Position='bottom',v=0,direction="ri
           time.sleep(sleep)
       h = h - steps
 
-
-
-
 def MoveAnimatedSpriteAcrossScreenFramesPerStep(TheSprite,Position='bottom',v=0,direction="right",FramesPerStep=2,ZoomFactor=1,sleep=0.1):
   #Show x frames per horizontal step
   #current frame count is incremented in CopyANimatedSpriteToPixelsZoom
@@ -11904,7 +11436,7 @@ def MoveAnimatedSpriteAcrossScreenFramesPerStep(TheSprite,Position='bottom',v=0,
         CopyAnimatedSpriteToPixelsZoomLEDOnly(TheSprite,h=h,v=v, ZoomFactor=ZoomFactor)
         if(sleep > 0):
           time.sleep(sleep)
-  
+
         tick = tick + 1
         m,r = divmod(tick,FramesPerStep)
         #print("m,r, FramesPerStep, tick",m,r,FramesPerStep,tick)
@@ -11924,14 +11456,12 @@ def MoveAnimatedSpriteAcrossScreenFramesPerStep(TheSprite,Position='bottom',v=0,
         CopyAnimatedSpriteToPixelsZoomLEDOnly(TheSprite,h=h,v=v, ZoomFactor=ZoomFactor)
         if(sleep > 0):
           time.sleep(sleep)
-  
+
         tick = tick + 1
         m,r = divmod(tick,FramesPerStep)
         if (r==0):
           TheSprite.EraseFrontBackZoom(h,v,Front=True,ZoomFactor=ZoomFactor)
           h = h - 1
-
-
 
 def MoveAnimatedSpriteAcrossScreenStepsPerFrame(TheSprite,Position='bottom',Vadjust=0,direction="right",StepsPerFrame=1,ZoomFactor=1,sleep=0.1):
   #Show x frames per horizontal step
@@ -11997,14 +11527,12 @@ def MoveAnimatedSpriteAcrossScreenStepsPerFrame(TheSprite,Position='bottom',Vadj
         oldV = v
         h = h - 1
 
-
-
 def CalculateDotMovement8Way(h,v,Direction):
   #1N 2NE 3E 4SE 5S 6SW 7W 8NW
   # 8 1 2
   # 7 x 3
   # 6 5 4
-  
+
   if (Direction == 1):
     v = v -1
   if (Direction == 2):
@@ -12027,8 +11555,6 @@ def CalculateDotMovement8Way(h,v,Direction):
     v = v - 1
   return h,v;
 
-
-
 def TurnRight8Way(direction):
   if direction == 1:
     direction = 2
@@ -12048,7 +11574,6 @@ def TurnRight8Way(direction):
     direction = 1
   #print "  new: ",direction
   return direction;
-    
 
 def TurnLeft8Way(direction):
   #print "ChangeDirection!"
@@ -12072,8 +11597,6 @@ def TurnLeft8Way(direction):
   #print ("  new: ",direction)
   return direction;
 
-
-
 def ChanceOfTurning8Way(Direction,Chance):
   #print ("Chance of turning: ",Chance)
   if Chance > randint(1,100):
@@ -12082,11 +11605,6 @@ def ChanceOfTurning8Way(Direction,Chance):
     else:
       Direction = TurnRight8Way(Direction)
   return Direction;
-
-
-
-
-
 
 GRAVITY  = 0.0098
 FRICTION = 0.75
@@ -12110,10 +11628,10 @@ def MoveSpriteWithGravity(sprite):
   # intiial velocities
   velocityX = sprite.velocityH
   velocityY = sprite.velocityV
-  
 
-  
-  # calculate new position based on velocity  
+
+
+  # calculate new position based on velocity
   next_y = y + velocityY
   next_x = x + velocityX
 
@@ -12126,7 +11644,7 @@ def MoveSpriteWithGravity(sprite):
   # Bounce of ceiling
   if (next_y <= CEILING):
     velocityY = -velocityY * FRICTION
-    next_y = CEILING    
+    next_y = CEILING
 
   # Bounce of side walls
   if (next_x  > (EASTWALL - sprite.width)):
@@ -12155,19 +11673,10 @@ def MoveSpriteWithGravity(sprite):
 
   CopyAnimatedSpriteToPixelsZoom(sprite,h=round(next_x),v=round(next_y), ZoomFactor=1)
 
-
-
-
 # Experimental functions for bouncing
-
-
 
 # drawing functions compute pixel locations based
 # on locations in meters
-
-
-
-
 
 def ReverseDirection8Way(direction):
   if direction == 1:
@@ -12187,19 +11696,6 @@ def ReverseDirection8Way(direction):
   elif direction == 8:
     direction = 4
   return direction;
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 def ErrorHandler(ErrorMessage,TraceMessage,AdditionalInfo):
   CallingFunction =  inspect.stack()[1][3]
@@ -12222,50 +11718,31 @@ def ErrorHandler(ErrorMessage,TraceMessage,AdditionalInfo):
   print("--------------------------------------------------------------")
   print("")
   print("")
-  
-
-
-
-
-
-
-
-
-
-
 
 def MoveWithInertia(sprite):
-  
 
-    
+
+
   if(sprite.h > HatWidth - sprite.width) or (sprite.h <= 0):
     sprite.directionH = sprite.directionH * -1
-    
+
     #sprite.speed = sprite.speed * 0.95
   if(sprite.v > HatHeight - sprite.height ) or (sprite.v <= 0):
     sprite.directionV = sprite.directionV * -1
-    
+
     #sprite.speed = sprite.speed * 0.95
 
   sprite.h = sprite.h + (sprite.speed * sprite.directionH)
   sprite.v = sprite.v + (sprite.speed * sprite.directionV)
 
-  
-
-
-
 def RandomMove(h,v,sprite):
-  sprite.direction = ChanceOfTurning8Way(sprite.direction,30) 
+  sprite.direction = ChanceOfTurning8Way(sprite.direction,30)
   newh,newv = CalculateDotMovement8Way(h,v,sprite.direction)
   if(CheckBoundary(newh,newv) == 0) and (CheckBoundary((newh + sprite.width),(newv + sprite.height))== 0):
     return newh,newv
   else:
     sprite.direction = ReverseDirection8Way(sprite.direction)
     return h,v
-
-
-
-
 
 def BounceFromCollision(sprite1,sprite2):
 
@@ -12280,8 +11757,8 @@ def BounceFromCollision(sprite1,sprite2):
   y1 = sprite2.v
   x2 = x1 + sprite2.width
   y2 = y1 + sprite2.height
-  
-  
+
+
   if (((h1 >= x1 and h1 <= x2) and (v1 >= y1 and v1 <= y2)) or
      ((h2 >= x1 and h2 <= x2) and (v2 >= y1 and v2 <= y2))):
 
@@ -12290,13 +11767,10 @@ def BounceFromCollision(sprite1,sprite2):
 
     if (v1 <= y1) or (v2 >= y2):
       sprite1.velocityV = sprite1.velocityV * -1
-  
+
     return 1
   else:
     return 0
-
-
-
 
 def RandomBounceFromFloor(sprite):
 
@@ -12305,10 +11779,6 @@ def RandomBounceFromFloor(sprite):
 
   if (abs(sprite.velocityH) < 0.001):
     sprite.velocityH = 2 * random.random()
-
-
-
-
 
 def CheckForCollision(Sprite1,Sprite2):
 
@@ -12329,14 +11799,8 @@ def CheckForCollision(Sprite1,Sprite2):
   if (((h1 >= x1 and h1 <= x2) and (v1 >= y1 and v1 <= y2)) or
      ((h2 >= x1 and h2 <= x2) and (v2 >= y1 and v2 <= y2))):
     return 1
-  
+
   return 0
-
-
-
-
-
-
 
 def DisplayExplosionIfExploding(Explosion,h,v):
   if (Explosion.exploding == 1 ):
@@ -12353,7 +11817,6 @@ def DisplayExplosionIfExploding(Explosion,h,v):
       Explosion.alive        = 0
       Explosion.h = -1
       Explosion.v = -1
-
 
 def ChangeRGBBrightness(r,g,b,increment):
   r = r + increment
@@ -12378,37 +11841,18 @@ def ChangeRGBBrightness(r,g,b,increment):
 
   return r,g,b
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 def TransitionBetweenScreenArrays(OldArray,NewArray,TransitionType=1):
 
   #NewArray NEW pixels need to glow into existence
   #OldArray pixels not in new need to fade
 
   global ScreenArray
-  
+
   #Buffer will be our custom "off screen canvas"
   Buffer  = ([[]])
   Buffer  = [[ (0,0,0) for i in range(HatWidth)] for i in range(HatHeight)]
-  
-  
+
+
 
   # 1 = Fade and Glow
   if(TransitionType == 1):
@@ -12421,7 +11865,7 @@ def TransitionBetweenScreenArrays(OldArray,NewArray,TransitionType=1):
       for x in range (0,HatWidth):
         OldR, OldG, OldB = OldRGB = OldArray[y][x]
         NewR, NewG, NewB = NewRGB = NewArray[y][x]
-        
+
         #OldPixel set NewPixel empty
         #if OldRGB != (0,0,0) and NewRGB == (0,0,0):
         if ((OldR > 0 or OldG > 0 or OldB > 0) and
@@ -12444,7 +11888,7 @@ def TransitionBetweenScreenArrays(OldArray,NewArray,TransitionType=1):
     #print ("FadeCount:",FadeCount," GlowCount:",GlowCount)
     #j is used to control brightness levels.  j +- 10
     for j in range (1,26):
-      
+
       if (FadeCount > 1):
         for f in range (0,FadeCount):
           x,y,r,g,b = PixelsToFade[f]
@@ -12453,7 +11897,7 @@ def TransitionBetweenScreenArrays(OldArray,NewArray,TransitionType=1):
           PixelsToFade[f] = (x,y,r,g,b)
           TheMatrix.SetPixel(x,y,r,g,b)
 
-      if (GlowCount > 1):        
+      if (GlowCount > 1):
         for i in range (0,GlowCount):
           x,y,r,g,b = PixelsToGlow[i]
           r,g,b = ChangeRGBBrightness(r,g,b,10)
@@ -12473,7 +11917,7 @@ def TransitionBetweenScreenArrays(OldArray,NewArray,TransitionType=1):
           TheMatrix.SetPixel(x,y,r,g,b)
       time.sleep(0.05)
     setpixels(NewArray)
-    
+
 
   #----------------------------
   # Falling particles
@@ -12483,8 +11927,8 @@ def TransitionBetweenScreenArrays(OldArray,NewArray,TransitionType=1):
     SpriteArray = CreateSpriteArray(OldArray,NewArray)
     CopyScreenArrayToCanvasVSync(OldArray)
     #Canvas.Clear()
-    
-    
+
+
     #Count particles to process
 
     ParticleCount = 0
@@ -12497,8 +11941,8 @@ def TransitionBetweenScreenArrays(OldArray,NewArray,TransitionType=1):
 
     Processed = 0
 
-   
-    
+
+
     while (Processed < ParticleCount):
       #Draw empty pixels first
 
@@ -12518,7 +11962,7 @@ def TransitionBetweenScreenArrays(OldArray,NewArray,TransitionType=1):
             #Canvas.SetPixel(x,y,0,0,0)
             Buffer = SetBufferPixel(Buffer, x, y, 0,0,0)
 
-      #Canvas = TheMatrix.SwapOnVSync(Canvas)  
+      #Canvas = TheMatrix.SwapOnVSync(Canvas)
       #CopyScreenArrayToCanvasVSync(Buffer)
 
       #Draw the falling pixels
@@ -12567,16 +12011,16 @@ def TransitionBetweenScreenArrays(OldArray,NewArray,TransitionType=1):
               SpriteArray[2][y][x].r    = NewR
               SpriteArray[2][y][x].g    = NewG
               SpriteArray[2][y][x].b    = NewB
-              Buffer = SetBufferPixel(Buffer, x, y, NewR, NewG, NewB )          
-  
+              Buffer = SetBufferPixel(Buffer, x, y, NewR, NewG, NewB )
+
             #Canvas.SetPixel(NewH,New_next_v,NewR,NewG,NewB)
             #Buffer[round(New_next_v)][round(NewH)] = 50,50,0
             Buffer = SetBufferPixel(Buffer, NewH, NewV, NewR, NewG, NewB)
 
             SpriteArray[1][y][x].velocityV = New_velocityV + random.random() / 2
             SpriteArray[1][y][x].v = New_next_v
-            
-            
+
+
 
 
           if(OldName == 'fall'):
@@ -12591,16 +12035,16 @@ def TransitionBetweenScreenArrays(OldArray,NewArray,TransitionType=1):
             SpriteArray[0][y][x].velocityV = Old_velocityV + random.random() / 2
             SpriteArray[0][y][x].v = Old_next_v
 
-            
+
           #when particles fall, they are overwriting a spot that is marked as both.  This should not happen.
           #falling dots need to be erased.
-          
+
           #once the old particles fall, we want the BOTH color to swich over to the NEW colors
           elif(BothName in ('both-identical','both-different')):
-            #Canvas.SetPixel(x,y,BothR,BothG,BothB)            
+            #Canvas.SetPixel(x,y,BothR,BothG,BothB)
             Buffer = SetBufferPixel(Buffer, x, y, BothR, BothG, BothB)
             #Buffer = SetBufferPixel(Buffer, x, y, 0, 0, 0)
-          
+
 
       #Canvas = TheMatrix.SwapOnVSync(Canvas)
       CopyScreenArrayToCanvasVSync(Buffer)
@@ -12608,17 +12052,9 @@ def TransitionBetweenScreenArrays(OldArray,NewArray,TransitionType=1):
       #time.sleep(0.01)
     CopyScreenArrayToCanvasVSync(NewArray)
     #time.sleep(1)
-    
+
     ScreenArray = copy.deepcopy(NewArray)
   return
-
-
-
-
-
-
-
-
 
 def CreateSpriteArray(OldArray,NewArray):
   #This function will create a screen array of color animated sprites, one dot in size
@@ -12640,11 +12076,11 @@ def CreateSpriteArray(OldArray,NewArray):
 
   for y in range (0,HatHeight):
     for x in range (0,HatWidth):
-  
+
       OldR, OldG, OldB = OldRGB = OldArray[y][x]
       NewR, NewG, NewB = NewRGB = NewArray[y][x]
-      
-      
+
+
 
       #Give every sprite an empty value
       for j in range (3):
@@ -12656,14 +12092,14 @@ def CreateSpriteArray(OldArray,NewArray):
         SpriteArray[j][y][x].h    = x
         SpriteArray[j][y][x].v    = y
         SpriteArray[j][y][x].velocityV = GRAVITY * 5
-        SpriteArray[j][y][x].v_stop = HatHeight 
-          
+        SpriteArray[j][y][x].v_stop = HatHeight
+
 
 
       #OLD = 0 / NEW = 1 / BOTH = 2
 
       #Old on  New off
-      if ((OldR > 0 or OldG > 0 or OldB > 0) and 
+      if ((OldR > 0 or OldG > 0 or OldB > 0) and
          (NewR == 0 and NewG == 0 and NewB == 0)):
         SpriteArray[0][y][x].name = 'fall'
         SpriteArray[0][y][x].r    = OldR
@@ -12673,11 +12109,11 @@ def CreateSpriteArray(OldArray,NewArray):
         SpriteArray[0][y][x].h    = x
         SpriteArray[0][y][x].v    = y
         SpriteArray[0][y][x].velocityV = GRAVITY * 5
-        SpriteArray[0][y][x].v_stop = HatHeight 
+        SpriteArray[0][y][x].v_stop = HatHeight
 
-        
+
       #New on Old off
-      elif((NewR > 0 or NewG > 0 or NewB > 0) and 
+      elif((NewR > 0 or NewG > 0 or NewB > 0) and
          (OldR == 0 and OldG == 0 and OldB == 0)):
         SpriteArray[1][y][x].name = 'fall'
         SpriteArray[1][y][x].r    = NewR
@@ -12689,7 +12125,7 @@ def CreateSpriteArray(OldArray,NewArray):
         SpriteArray[1][y][x].velocityV = GRAVITY * 5
         SpriteArray[1][y][x].v_stop = y
 
-       
+
       #Both are populated and identical
       elif ((NewR > 0 or NewG > 0 or NewB > 0) and
         (OldR == NewR and OldG == NewG and OldB == NewB)):
@@ -12702,7 +12138,7 @@ def CreateSpriteArray(OldArray,NewArray):
         SpriteArray[2][y][x].h    = x
         SpriteArray[2][y][x].v    = 0 -y -10
         SpriteArray[2][y][x].velocityV = GRAVITY * 5
-        SpriteArray[2][y][x].v_stop = y #not needed really 
+        SpriteArray[2][y][x].v_stop = y #not needed really
 
       #Both are populated but different
       #Fall down old and new
@@ -12746,27 +12182,15 @@ def CreateSpriteArray(OldArray,NewArray):
         SpriteArray[2][y][x].v_stop = y
 
 
-   
-     
-     
-     
-
   return SpriteArray
-
-
-
-
-
 
 def MakeAndShowClock(hh=24,h=0,v=0,RGB=HighGreen,ShadowRGB=ShadowGreen,ZoomFactor=1,Fill=False):
 
   ClearBigLED()
-  ClearBuffers()      
+  ClearBuffers()
   ClockSprite = CreateClockSprite(hh)
   CopySpriteToPixelsZoom(ClockSprite,h-1,v+1,ShadowRGB,(0,0,0),ZoomFactor,          Fill=False)
   CopySpriteToPixelsZoom(ClockSprite,h,v,    RGB,      (0,0,0),ZoomFactor=ZoomFactor,Fill=False)
-
- 
 
 def MakeAndShowTimer(hhmmss,h=0,v=0,RGB=HighGreen,ShadowRGB=ShadowGreen,ZoomFactor=1,Fill=False):
 
@@ -12774,7 +12198,7 @@ def MakeAndShowTimer(hhmmss,h=0,v=0,RGB=HighGreen,ShadowRGB=ShadowGreen,ZoomFact
   #this can be triggerred by a command possibly
 
   ClearBigLED()
-  ClearBuffers()      
+  ClearBuffers()
   StartTime = time.time()
   HHMMSS = '00:00:00'
   TimerSprite = CreateTimerSprite(HHMMSS)
@@ -12783,16 +12207,10 @@ def MakeAndShowTimer(hhmmss,h=0,v=0,RGB=HighGreen,ShadowRGB=ShadowGreen,ZoomFact
   CopySpriteToPixelsZoom(TimerSprite,h-1,v+1,ShadowRGB,(0,0,0),ZoomFactor,          Fill=False)
   CopySpriteToPixelsZoom(TimerSprite,h,v,    RGB,      (0,0,0),ZoomFactor=ZoomFactor,Fill=False)
 
-
-
-
-
-
-
 def UpdateClockWithTransition(ClockSprite,hh=24,h=0,v=0,RGB=HighGreen,ShadowRGB=ShadowGreen,ZoomFactor=1,Fill=False,TransitionType=1):
 
   global ScreenArray
-  
+
   if (ClockSprite.hhmm != datetime.now().strftime('%H:%M')):
   #if (1==1):
 
@@ -12801,7 +12219,7 @@ def UpdateClockWithTransition(ClockSprite,hh=24,h=0,v=0,RGB=HighGreen,ShadowRGB=
     MonthSprite         = CreateMonthSprite()
     DayOfMonthSprite    = CreateDayOfMonthSprite()
 
-      
+
 
 
     #print("ClockSprite.hhm: ",ClockSprite.hhmm, "Other:",datetime.now().strftime('%H:%M'))
@@ -12844,26 +12262,9 @@ def UpdateClockWithTransition(ClockSprite,hh=24,h=0,v=0,RGB=HighGreen,ShadowRGB=
 
     ScreenArray = copy.deepcopy(ScreenArray2)
 
-  return ClockSprite 
-
+  return ClockSprite
 
 #MakeAndShowClock(hh,h=0,v,RGB,ShadowGreen=,ZoomFactor,Fill):
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 def UpdateTimerWithTransition(TimerSprite,BannerSprite,h=0,v=0,RGB=HighGreen,ShadowRGB=ShadowGreen,ZoomFactor=1,Fill=False,TransitionType=1,StartDateTimeUTC='',ForceUpdate=False):
   #take the time as a sprite, and a message to display (the banner sprite)
@@ -12871,12 +12272,12 @@ def UpdateTimerWithTransition(TimerSprite,BannerSprite,h=0,v=0,RGB=HighGreen,Sha
   print("Update timer with transition")
 
   global ScreenArray
-  
+
   hh,mm,ss, HHMMSS = CalculateElapsedTime(StartDateTimeUTC)
   #print ('DurationHHMMSS: ',HHMMSS,end="\r")
   print ('DurationHHMMSS: ',HHMMSS)
   print('HV:',h,v," ForceUpdate:",ForceUpdate)
-  
+
   if (HHMMSS[0:5] != TimerSprite.HHMM or ForceUpdate == True):
   #if (HHMMSS != TimerSprite.HHMM):
     TimerSprite = CreateTimerSprite(HHMMSS)
@@ -12888,32 +12289,16 @@ def UpdateTimerWithTransition(TimerSprite,BannerSprite,h=0,v=0,RGB=HighGreen,Sha
     NewScreenArray = CopySpriteToScreenArrayZoom(TimerSprite,h,v,    RGB,      (0,0,0),ZoomFactor=ZoomFactor,Fill=False,InputScreenArray=NewScreenArray)
     #write the Banner (e.g. UpTime) to the buffer
     NewScreenArray = CopySpriteToScreenArrayZoom(BannerSprite,BannerSprite.h,BannerSprite.v, BannerSprite.RGB, (0,0,0),ZoomFactor=BannerSprite.ZoomFactor,Fill=False,InputScreenArray=NewScreenArray)
-   
+
 
     #ScreenArray = copy.deepcopy(ScreenArray2)
     #CopyScreenArrayToCanvasVSync(ScreenArray2)
     TransitionBetweenScreenArrays(OldArray=ScreenArray,NewArray=NewScreenArray,TransitionType=2)
-    
-    
+
+
   return TimerSprite
 
-  
-
-
-
-
-
-
 #MakeAndShowClock(hh,h=0,v,RGB,ShadowGreen=,ZoomFactor,Fill):
-
-
-
-
-
-
-
-
-
 
 def DisplayDigitalClock(
   ClockStyle  = 1,
@@ -12932,16 +12317,11 @@ def DisplayDigitalClock(
   HHMMSS            = '00:00:00',
   DisplayNumber1    = 0,
   DisplayNumber2    = 0
-  
+
   ):
-
-
-    
-
     ClearBigLED()
     ClearBuffers()
     global ScreenArray
-
 
     print("ClockStyle:",ClockStyle)
     ClockSprite = CreateClockSprite(hh)
@@ -12955,23 +12335,14 @@ def DisplayDigitalClock(
     if (CenterVert  == True):
       v = (HatHeight // 2) - ((ClockSprite.height * ZoomFactor) // 2) - ZoomFactor
 
-
-    
     if (ClockStyle in (1,2)):
       DayOfWeekSprite     = CreateDayOfWeekSprite()
       MonthSprite         = CreateMonthSprite()
       DayOfMonthSprite    = CreateDayOfMonthSprite()
-   
-    
 
- 
-  
-
-
-  
     # Clock at top, random scrolling animations
     if (ClockStyle == 1):
-    
+
       #MakeAndShowClock(hh,h,v,RGB,ShadowGreen,ZoomFactor,Fill=False)
       ScreenArray1  = ([[]])
       ScreenArray1  = [[ (0,0,0) for i in range(HatWidth)] for i in range(HatHeight)]
@@ -12983,18 +12354,18 @@ def DisplayDigitalClock(
       ScreenArray1 = CopySpriteToScreenArrayZoom(ClockSprite,h-1,v+1,ShadowRGB,(0,0,0),ZoomFactor=ZoomFactor,Fill=False,InputScreenArray=ScreenArray)
       ScreenArray1 = CopySpriteToScreenArrayZoom(ClockSprite,h,v,RGB,(0,0,0),ZoomFactor=ZoomFactor,Fill=False,InputScreenArray=ScreenArray1)
       TransitionBetweenScreenArrays(ScreenArray2,ScreenArray1,TransitionType=2)
-  
+
 
       #CopySpriteToPixelsZoom(ClockSprite,h-1,v+1,ShadowRGB,(0,0,0),ZoomFactor,          Fill=False)
       #CopySpriteToPixelsZoom(ClockSprite,h,v,    RGB,      (0,0,0),ZoomFactor=ZoomFactor,Fill=False)
-      
-      
+
+
       #Show Custom Sprite
       CopySpriteToPixelsZoom(DayOfWeekSprite,  DayOfWeekH,  DayOfWeekV,  DayOfWeekRGB,   SpriteFillerRGB,1)
       CopySpriteToPixelsZoom(MonthSprite,      MonthH,      MonthV,      MonthRGB,       SpriteFillerRGB,1)
       CopySpriteToPixelsZoom(DayOfMonthSprite, DayOfMonthH, DayOfMonthV, DayOfMonthRGB , SpriteFillerRGB,1)
 
-      
+
       #MakeAndShowClock(hh,h,v,RGB,ShadowGreen,ZoomFactor,Fill=True)
       ClockSprite = UpdateClockWithTransition(ClockSprite,hh,h,v,RGB,ShadowRGB,ZoomFactor,Fill=True)
 
@@ -13005,7 +12376,7 @@ def DisplayDigitalClock(
         ClockSprite = UpdateClockWithTransition(ClockSprite,hh,h,v,RGB,ShadowRGB,ZoomFactor,Fill=True,TransitionType=2)
 
 
-        
+
         r = random.randint(1,11)
         if (r == 1):
           ClockSprite = UpdateClockWithTransition(ClockSprite,hh,h,v,RGB,ShadowRGB,ZoomFactor,Fill=True)
@@ -13040,7 +12411,7 @@ def DisplayDigitalClock(
             ZoomFactor    = random.randint(1,2),
             sleep         = 0.03
             )
-          
+
 
           MoveAnimatedSpriteAcrossScreenFramesPerStep(
             ThreeBlueGhostPacSprite,
@@ -13060,7 +12431,7 @@ def DisplayDigitalClock(
           #      ZoomFactor    = 3,
           #      sleep         = 0
           #      )
-              
+
 
         elif (r == 4):
           #MakeAndShowClock(hh,h,v,RGB,ShadowGreen,ZoomFactor,Fill=False)
@@ -13208,7 +12579,7 @@ def DisplayDigitalClock(
             ZoomFactor    = random.randint(1,2),
             sleep         = 0.03
             )
-        
+
 
           i = random.randint(0,27)
           MoveAnimatedSpriteAcrossScreenStepsPerFrame(
@@ -13234,7 +12605,7 @@ def DisplayDigitalClock(
             ZoomFactor    = random.randint(2,3),
             sleep         = 0.03
             )
-        
+
 
           i = random.randint(0,27)
           MoveAnimatedSpriteAcrossScreenStepsPerFrame(
@@ -13274,7 +12645,7 @@ def DisplayDigitalClock(
           ClockSprite = UpdateClockWithTransition(ClockSprite,hh,h,v,RGB,ShadowRGB,ZoomFactor,Fill=True,TransitionType=2)
           #MakeAndShowClock(hh,h,v,RGB,ShadowGreen,ZoomFactor,Fill=False)
 
-          
+
           MoveAnimatedSpriteAcrossScreenStepsPerFrame(
             LightBike,
             Position      = 'bottom',
@@ -13335,7 +12706,7 @@ def DisplayDigitalClock(
         elapsed_minutes, elapsed_seconds = divmod(rem, 60)
 
         print(datetime.now().strftime('%H:%M:%S'))
-        
+
 
 
         if (ClockSprite.hhmm != datetime.now().strftime('%H:%M')):
@@ -13345,13 +12716,10 @@ def DisplayDigitalClock(
         if elapsed_minutes >= RunMinutes:
           Done = True
 
-
-
-
     elif (ClockStyle == 2)    :
 
       #ClearBigLED()
-      #ClearBuffers()      
+      #ClearBuffers()
 
       ClockH = HatWidth - (ClockSprite.width * 2)
       ClockSprite = CreateClockSprite(hh)
@@ -13359,26 +12727,26 @@ def DisplayDigitalClock(
       ClockAreaSprite = Sprite((ClockSprite.width*2)+3,(ClockSprite.height*2),0,0,0,[])
       ClockAreaSprite.h = ClockH -3
       ClockAreaSprite.v = 1
-      CopySpriteToScreenArrayZoom(ClockSprite,h=ClockH,v=0,ColorTuple=(150,0,0),FillerTuple=(0,0,0),ZoomFactor=2,Fill=True)
+      CopySpriteToScreenArrayZoom(ClockSprite,h=ClockH,v=0,ColorTuple=(0,0,150),FillerTuple=(0,0,0),ZoomFactor=2,Fill=True)
 
       while (Done == False):
 
         if (ClockSprite.hhmm != datetime.now().strftime('%H:%M')):
           #ClearBuffers() #clean the internal graphic buffers
           ClockSprite = CreateClockSprite(hh)
-          ScreenArray = CopySpriteToScreenArrayZoom(ClockSprite,45,0,(150,0,0),(0,0,0),1,Fill=True)
+          ScreenArray = CopySpriteToScreenArrayZoom(ClockSprite,45,0,(0,0,150),(0,0,0),1,Fill=True)
 
-        
+
         r = random.randint(1,7)
-        
+
 
         #RunningMan
         if (r==1):
-         
+
 
           h = HatWidth - (ClockSprite.width * 2)
           ClockSprite = CreateClockSprite(hh)
-          ScreenArray = CopySpriteToScreenArrayZoom(ClockSprite,h=h,v=0,ColorTuple=(150,0,0),FillerTuple=(0,0,0),ZoomFactor=2,Fill=True,InputScreenArray=ScreenArray)
+          ScreenArray = CopySpriteToScreenArrayZoom(ClockSprite,h=h,v=0,ColorTuple=(0,0,150),FillerTuple=(0,0,0),ZoomFactor=2,Fill=True,InputScreenArray=ScreenArray)
 
           RunningMan3Sprite.framerate = 2
           RunningMan3Sprite.h = -4
@@ -13405,7 +12773,7 @@ def DisplayDigitalClock(
             #RunningMan3Sprite.Erase()
             CopyAnimatedSpriteToPixelsZoom(RunningMan3Sprite,h=-4,v=16, ZoomFactor=1)
             RunningMan3Sprite.IncrementFrame()
-  
+
             #RunningMan2Sprite.EraseFrame(28,14)
             CopyAnimatedSpriteToPixelsZoom(RunningMan2Sprite,h=28,v=16, ZoomFactor=1)
             RunningMan2Sprite.IncrementFrame()
@@ -13419,7 +12787,7 @@ def DisplayDigitalClock(
           if (ClockSprite.hhmm != datetime.now().strftime('%H:%M')):
             #ClearBuffers() #clean the internal graphic buffers
             ClockSprite = CreateClockSprite(hh)
-            CopySpriteToPixelsZoom(ClockSprite,h=h,v=0,ColorTuple=(150,0,0),FillerTuple=(0,0,0),ZoomFactor=2,Fill=True)
+            CopySpriteToPixelsZoom(ClockSprite,h=h,v=0,ColorTuple=(0,0,150),FillerTuple=(0,0,0),ZoomFactor=2,Fill=True)
 
 
           #Fade to Black
@@ -13434,13 +12802,13 @@ def DisplayDigitalClock(
         #robots
         if (r==2):
           #ClearBigLED()
-          #ClearBuffers()      
+          #ClearBuffers()
 
 
           ScreenArray = copy.deepcopy(EmptyArray)
           h = HatWidth - (ClockSprite.width * 2)
           ClockSprite = CreateClockSprite(hh)
-          ScreenArray = CopySpriteToScreenArrayZoom(ClockSprite,h=h,v=0,ColorTuple=(150,0,0),FillerTuple=(0,0,0),ZoomFactor=2,Fill=True)
+          ScreenArray = CopySpriteToScreenArrayZoom(ClockSprite,h=h,v=0,ColorTuple=(0,0,150),FillerTuple=(0,0,0),ZoomFactor=2,Fill=True)
           DotZerkRobotWalking.InitializeScreenArray()
 
 
@@ -13470,7 +12838,7 @@ def DisplayDigitalClock(
             print("ClockSprite.hhm: ",ClockSprite.hhmm, "Other:",datetime.now().strftime('%H:%M'))
             #ClearBuffers() #clean the internal graphic buffers
             ClockSprite = CreateClockSprite(hh)
-            CopySpriteToPixelsZoom(ClockSprite,h,0,(150,0,0),(0,0,0),2,Fill=True)
+            CopySpriteToPixelsZoom(ClockSprite,h,0,(0,0,150),(0,0,0),2,Fill=True)
 
 
           #Fade to Black
@@ -13498,7 +12866,7 @@ def DisplayDigitalClock(
 
           h = HatWidth - (ClockSprite.width * 2)
           ClockSprite = CreateClockSprite(hh)
-          ScreenArray = CopySpriteToScreenArrayZoom(ClockSprite,h=h,v=0,ColorTuple=(150,0,0),FillerTuple=(0,0,0),ZoomFactor=2,Fill=True,InputScreenArray=ScreenArray)
+          ScreenArray = CopySpriteToScreenArrayZoom(ClockSprite,h=h,v=0,ColorTuple=(0,0,150),FillerTuple=(0,0,0),ZoomFactor=2,Fill=True,InputScreenArray=ScreenArray)
 
 
 
@@ -13527,7 +12895,7 @@ def DisplayDigitalClock(
             print("ClockSprite.hhm: ",ClockSprite.hhmm, "Other:",datetime.now().strftime('%H:%M'))
             #ClearBuffers() #clean the internal graphic buffers
             ClockSprite = CreateClockSprite(hh)
-            CopySpriteToPixelsZoom(ClockSprite,h,0,(150,0,0),(0,0,0),2,Fill=True)
+            CopySpriteToPixelsZoom(ClockSprite,h,0,(0,0,150),(0,0,0),2,Fill=True)
 
 
           #Fade to Black
@@ -13545,7 +12913,7 @@ def DisplayDigitalClock(
 
           h = HatWidth - (ClockSprite.width * 2)
           ClockSprite = CreateClockSprite(hh)
-          ScreenArray = CopySpriteToScreenArrayZoom(ClockSprite,h=h,v=0,ColorTuple=(150,0,0),FillerTuple=(0,0,0),ZoomFactor=2,Fill=True,InputScreenArray=ScreenArray)
+          ScreenArray = CopySpriteToScreenArrayZoom(ClockSprite,h=h,v=0,ColorTuple=(0,0,150),FillerTuple=(0,0,0),ZoomFactor=2,Fill=True,InputScreenArray=ScreenArray)
 
 
           #Make a screen array (buffer)
@@ -13568,7 +12936,7 @@ def DisplayDigitalClock(
             ZoomFactor    = r,
             sleep         = 0.03 / r
             )
-          
+
 
           #Check Time
           #if (ClockSprite.hhmm != datetime.now().strftime('%H:%M')):
@@ -13583,10 +12951,10 @@ def DisplayDigitalClock(
             print("ClockSprite.hhm: ",ClockSprite.hhmm, "Other:",datetime.now().strftime('%H:%M'))
             #ClearBuffers() #clean the internal graphic buffers
 
-            ScreenArray1 = CopySpriteToScreenArrayZoom(ClockSprite,ClockH,0,  (150,0,0),(0,0,0),ZoomFactor=1,Fill=True)
+            ScreenArray1 = CopySpriteToScreenArrayZoom(ClockSprite,ClockH,0,  (0,0,150),(0,0,0),ZoomFactor=1,Fill=True)
             ClockSprite = CreateClockSprite(hh)
 
-            ScreenArray2 = CopySpriteToScreenArrayZoom(ClockSprite,ClockH,0,  (150,0,0),(0,0,0),ZoomFactor=1,Fill=True)
+            ScreenArray2 = CopySpriteToScreenArrayZoom(ClockSprite,ClockH,0,  (0,0,150),(0,0,0),ZoomFactor=1,Fill=True)
             TransitionBetweenScreenArrays(ScreenArray1,ScreenArray2)
             #CopySpriteToPixelsZoom(ClockSprite,ClockH,0,(150,0,0),(0,0,0),2,Fill=True)
 
@@ -13604,7 +12972,7 @@ def DisplayDigitalClock(
         if (r==5):
           h = HatWidth - (ClockSprite.width * 2)
           ClockSprite = CreateClockSprite(hh)
-          ScreenArray = CopySpriteToScreenArrayZoom(ClockSprite,h=h,v=0,ColorTuple=(150,0,0),FillerTuple=(0,0,0),ZoomFactor=2,Fill=True,InputScreenArray=ScreenArray)
+          ScreenArray = CopySpriteToScreenArrayZoom(ClockSprite,h=h,v=0,ColorTuple=(0,0,150),FillerTuple=(0,0,0),ZoomFactor=2,Fill=True,InputScreenArray=ScreenArray)
 
           #Make a screen array (buffer)
           #copy sprite frames
@@ -13624,7 +12992,7 @@ def DisplayDigitalClock(
           ship2 = random.randint(5,9)
           ShipSprites[ship2].framerate = 2
           ShipSprites[ship2].InitializeScreenArray()
-                             
+
           ship3 = random.randint(10,15)
           ShipSprites[ship3].framerate = 2
           ShipSprites[ship3].InitializeScreenArray()
@@ -13663,7 +13031,7 @@ def DisplayDigitalClock(
                 CheckForCollision(ShipSprites[ship1], ShipSprites[ship3])):
               ShipSprites[ship1].direction = ReverseDirection8Way(ShipSprites[ship1].direction)
               h1,v1 = h,v
-            if (CheckForCollision(ShipSprites[ship1], ClockAreaSprite)):              
+            if (CheckForCollision(ShipSprites[ship1], ClockAreaSprite)):
               Explosion1.exploding = 1
               Explosion1.h = round(h)
               Explosion1.v = round(v)
@@ -13673,7 +13041,7 @@ def DisplayDigitalClock(
 
             ShipSprites[ship1].IncrementFrame()
             ShipSprites[ship1].EraseFrame(h,v,frame=-1)
-            #If this sprite has collided, use old HV instead 
+            #If this sprite has collided, use old HV instead
             CopyAnimatedSpriteToPixelsZoom(ShipSprites[ship1],h=h1,v=v1, ZoomFactor=1)
 
             h,v = h2,v2
@@ -13683,14 +13051,14 @@ def DisplayDigitalClock(
                 CheckForCollision(ShipSprites[ship2], ShipSprites[ship3])):
               ShipSprites[ship2].direction = ReverseDirection8Way(ShipSprites[ship2].direction)
               h2,v2 = h,v
-                
-            if (CheckForCollision(ShipSprites[ship2], ClockAreaSprite)):              
+
+            if (CheckForCollision(ShipSprites[ship2], ClockAreaSprite)):
               Explosion2.exploding = 1
               Explosion2.h = round(h)
               Explosion2.v = round(v)
               ShipSprites[ship2].direction = ReverseDirection8Way(ShipSprites[ship2].direction)
               h2,v2 = random.randint(0,HatWidth)-ShipSprites[ship1].width,HatHeight-ShipSprites[ship2].height
-              
+
             ShipSprites[ship2].IncrementFrame()
             ShipSprites[ship2].EraseFrame(h,v,frame=-1)
             CopyAnimatedSpriteToPixelsZoom(ShipSprites[ship2],h=h2,v=v2, ZoomFactor=1)
@@ -13701,11 +13069,11 @@ def DisplayDigitalClock(
             h3,v3 = RandomMove(h3,v3,ShipSprites[ship3])
             ShipSprites[ship3].h, ShipSprites[ship3].v = h3,v3
             if (CheckForCollision(ShipSprites[ship3], ShipSprites[ship2]) or
-                CheckForCollision(ShipSprites[ship3], ShipSprites[ship1])): 
+                CheckForCollision(ShipSprites[ship3], ShipSprites[ship1])):
               ShipSprites[ship3].direction = ReverseDirection8Way(ShipSprites[ship3].direction)
               h3,v3 = h,v
 
-            if (CheckForCollision(ShipSprites[ship3], ClockAreaSprite)):              
+            if (CheckForCollision(ShipSprites[ship3], ClockAreaSprite)):
               Explosion3.exploding = 1
               Explosion3.h = round(h)
               Explosion3.v = round(v)
@@ -13733,7 +13101,7 @@ def DisplayDigitalClock(
                 Explosion1.h = -1
                 Explosion1.v = -1
 
-              
+
             if (Explosion2.exploding == 1 ):
               Explosion2.DisplayAnimated(Explosion2.h,Explosion2.v)
 
@@ -13775,17 +13143,17 @@ def DisplayDigitalClock(
               print("ClockSprite.hhm: ",ClockSprite.hhmm, "Other:",datetime.now().strftime('%H:%M'))
               #ClearBuffers() #clean the internal graphic buffers
 
-              ScreenArray1 = CopySpriteToScreenArrayZoom(ClockSprite,ClockH,0,  (150,0,0),(0,0,0),ZoomFactor=2,Fill=True)
+              ScreenArray1 = CopySpriteToScreenArrayZoom(ClockSprite,ClockH,0,  (0,0,150),(0,0,0),ZoomFactor=2,Fill=True)
               ClockSprite = CreateClockSprite(hh)
 
-              ScreenArray2 = CopySpriteToScreenArrayZoom(ClockSprite,ClockH,0,  (150,0,0),(0,0,0),ZoomFactor=2,Fill=True)
+              ScreenArray2 = CopySpriteToScreenArrayZoom(ClockSprite,ClockH,0,  (0,0,150),(0,0,0),ZoomFactor=2,Fill=True)
               TransitionBetweenScreenArrays(ScreenArray1,ScreenArray2)
               #CopySpriteToPixelsZoom(ClockSprite,ClockH,0,(150,0,0),(0,0,0),2,Fill=True)
 
 
 
             time.sleep(0.03)
-          
+
 
           #Fade to Black
           ScreenArray1 = copy.deepcopy(EmptyArray)
@@ -13800,7 +13168,7 @@ def DisplayDigitalClock(
         #animated ships with gravity
         if (r==6):
           ClearBigLED()
-          ClearBuffers()      
+          ClearBuffers()
 
           ClockH = HatWidth - (ClockSprite.width * 2)
           ClockSprite = CreateClockSprite(hh)
@@ -13808,7 +13176,7 @@ def DisplayDigitalClock(
           ClockAreaSprite = Sprite((ClockSprite.width*2)+3,(ClockSprite.height*2),0,0,0,[])
           ClockAreaSprite.h = ClockH -3
           ClockAreaSprite.v = 1
-          ScreenArray = CopySpriteToScreenArrayZoom(ClockSprite,h=h,v=0,ColorTuple=(150,0,0),FillerTuple=(0,0,0),ZoomFactor=2,Fill=True,InputScreenArray=ScreenArray)
+          ScreenArray = CopySpriteToScreenArrayZoom(ClockSprite,h=h,v=0,ColorTuple=(0,0,150),FillerTuple=(0,0,0),ZoomFactor=2,Fill=True,InputScreenArray=ScreenArray)
 
           #Make a screen array (buffer)
           #copy sprite frames
@@ -13825,7 +13193,7 @@ def DisplayDigitalClock(
           ship1 = random.randint(0,8)
           ship2 = random.randint(9,17)
           ship3 = random.randint(18,27)
-          
+
           h1,v1 = 0,0
           h2,v2 = 20,0
           h3,v3 = 50,20
@@ -13864,11 +13232,11 @@ def DisplayDigitalClock(
           ShipSprites[ship3].velocityH = 3 * random.random()
           ShipSprites[ship3].velocityV = 3 * random.random()
           ShipSprites[ship3].InitializeScreenArray()
-          
+
           ShipSprites[ship1].framerate = 1
           ShipSprites[ship2].framerate = 1
           ShipSprites[ship3].framerate = 1
-          
+
 
           #Bounce(ShipSprites[ship1])
 
@@ -13888,7 +13256,7 @@ def DisplayDigitalClock(
             #and they are pushed back with a little bit of energy
             #BounceFromCollision and CheckForCollision could be merged
             BounceFromCollision(ShipSprites[ship1],ClockAreaSprite)
-            if (CheckForCollision(ShipSprites[ship1],ClockAreaSprite)):              
+            if (CheckForCollision(ShipSprites[ship1],ClockAreaSprite)):
               Explosion1.exploding = 1
               MoveSpriteWithGravity(ShipSprites[ship1])
               MoveSpriteWithGravity(ShipSprites[ship1])
@@ -13899,7 +13267,7 @@ def DisplayDigitalClock(
 
 
             BounceFromCollision(ShipSprites[ship2],ClockAreaSprite)
-            if (CheckForCollision(ShipSprites[ship2],ClockAreaSprite)):              
+            if (CheckForCollision(ShipSprites[ship2],ClockAreaSprite)):
               Explosion2.exploding = 1
               MoveSpriteWithGravity(ShipSprites[ship2])
               MoveSpriteWithGravity(ShipSprites[ship2])
@@ -13910,7 +13278,7 @@ def DisplayDigitalClock(
 
 
             BounceFromCollision(ShipSprites[ship3],ClockAreaSprite)
-            if (CheckForCollision(ShipSprites[ship3],ClockAreaSprite)):              
+            if (CheckForCollision(ShipSprites[ship3],ClockAreaSprite)):
               Explosion3.exploding = 1
               MoveSpriteWithGravity(ShipSprites[ship3])
               MoveSpriteWithGravity(ShipSprites[ship3])
@@ -13933,17 +13301,17 @@ def DisplayDigitalClock(
               ShipSprites[ship3].IncrementFrame()
             time.sleep(0.007)
 
-            
+
 
             #Check Time
             if (ClockSprite.hhmm != datetime.now().strftime('%H:%M')):
               print("ClockSprite.hhm: ",ClockSprite.hhmm, "Other:",datetime.now().strftime('%H:%M'))
               #ClearBuffers() #clean the internal graphic buffers
 
-              ScreenArray1 = CopySpriteToScreenArrayZoom(ClockSprite,ClockH,0,  (150,0,0),(0,0,0),ZoomFactor=2,Fill=True)
+              ScreenArray1 = CopySpriteToScreenArrayZoom(ClockSprite,ClockH,0,  (0,0,150),(0,0,0),ZoomFactor=2,Fill=True)
               ClockSprite = CreateClockSprite(hh)
 
-              ScreenArray2 = CopySpriteToScreenArrayZoom(ClockSprite,ClockH,0,  (150,0,0),(0,0,0),ZoomFactor=2,Fill=True)
+              ScreenArray2 = CopySpriteToScreenArrayZoom(ClockSprite,ClockH,0,  (0,0,150),(0,0,0),ZoomFactor=2,Fill=True)
               TransitionBetweenScreenArrays(ScreenArray1,ScreenArray2)
               #CopySpriteToPixelsZoom(ClockSprite,ClockH,0,(150,0,0),(0,0,0),2,Fill=True)
 
@@ -13958,9 +13326,9 @@ def DisplayDigitalClock(
           #ShipSprites[ship2].EraseZoom(h2,v2)
           #ShipSprites[ship3].EraseZoom(h3,v3)
 
-        
-        
-        
+
+
+
         #rSpiderLeg
         if (r==7):
 
@@ -13968,11 +13336,11 @@ def DisplayDigitalClock(
           ClockH = HatWidth - (ClockSprite.width * 2)
           ClockSprite = CreateClockSprite(hh)
           #we need to make a fake sprite to take the place of the clock which is zoomed)
-          ScreenArray = CopySpriteToScreenArrayZoom(ClockSprite,h=h,v=0,ColorTuple=(150,0,0),FillerTuple=(0,0,0),ZoomFactor=2,Fill=True,InputScreenArray=ScreenArray)
+          ScreenArray = CopySpriteToScreenArrayZoom(ClockSprite,h=h,v=0,ColorTuple=(0,0,150),FillerTuple=(0,0,0),ZoomFactor=2,Fill=True,InputScreenArray=ScreenArray)
 
-          ScreenArray = CopySpriteToScreenArrayZoom(ClockSprite,h=ClockH,v=0,ColorTuple=(150,0,0),FillerTuple=(0,0,0),ZoomFactor=2,Fill=True)
+          ScreenArray = CopySpriteToScreenArrayZoom(ClockSprite,h=ClockH,v=0,ColorTuple=(0,0,150),FillerTuple=(0,0,0),ZoomFactor=2,Fill=True)
           ScreenArray1 = copy.deepcopy(ScreenArray)
-          ScreenArray2 = CopySpriteToScreenArrayZoom(ClockSprite,h=h,v=0,ColorTuple=(150,0,0),FillerTuple=(0,0,0),ZoomFactor=2,Fill=True)
+          ScreenArray2 = CopySpriteToScreenArrayZoom(ClockSprite,h=h,v=0,ColorTuple=(0,0,150),FillerTuple=(0,0,0),ZoomFactor=2,Fill=True)
           TransitionBetweenScreenArrays(ScreenArray2,ScreenArray1,TransitionType=1)
 
 
@@ -13985,20 +13353,20 @@ def DisplayDigitalClock(
           TransitionBetweenScreenArrays(ScreenArray2,ScreenArray1,TransitionType=2)
 
 
-          
-          
+
+
           for x in range (1,200):
             CopyAnimatedSpriteToPixelsZoom(BigSpiderLegOutSprite,h=0,v=HatHeight-BigSpiderLegOutSprite.height, ZoomFactor=1)
             BigSpiderLegOutSprite.IncrementFrame()
             time.sleep(0.05)
-          
+
 
           #Check Time
           if (ClockSprite.hhmm != datetime.now().strftime('%H:%M')):
             print("ClockSprite.hhm: ",ClockSprite.hhmm, "Other:",datetime.now().strftime('%H:%M'))
             #ClearBuffers() #clean the internal graphic buffers
             ClockSprite = CreateClockSprite(hh)
-            CopySpriteToPixelsZoom(ClockSprite,h,0,(150,0,0),(0,0,0),2,Fill=True)
+            CopySpriteToPixelsZoom(ClockSprite,h,0,(0,0,150),(0,0,0),2,Fill=True)
 
 
           #Fade to Black
@@ -14012,7 +13380,7 @@ def DisplayDigitalClock(
           #DotZerkRobotWalkingSmall.EraseZoom(40,22,2)
 
           ClockSprite = CreateClockSprite(hh)
-          ScreenArray2 = CopySpriteToScreenArrayZoom(ClockSprite,h=h,v=0,ColorTuple=(150,0,0),FillerTuple=(0,0,0),ZoomFactor=2,Fill=True)
+          ScreenArray2 = CopySpriteToScreenArrayZoom(ClockSprite,h=h,v=0,ColorTuple=(0,0,150),FillerTuple=(0,0,0),ZoomFactor=2,Fill=True)
           TransitionBetweenScreenArrays(EmptyArray,ScreenArray2,TransitionType=2)
 
 
@@ -14026,12 +13394,6 @@ def DisplayDigitalClock(
         print("ElapsedMinues: ",elapsed_minutes)
         if elapsed_minutes >= RunMinutes:
           Done = True
-
-
-
-
-
-
 
 #------------------------------------------------------------------------------
 #  TWITCH DISPLAY                                                            --
@@ -14048,7 +13410,7 @@ async def DisplayTwitchTimer(
   CenterVert  = False,
   h           = 0,
   v           = 0,
-  hh          = 24,
+  hh          = 12,
   RGB         = MedBlue,
   ShadowRGB   = ShadowBlue,
   ZoomFactor  = 2,
@@ -14059,11 +13421,11 @@ async def DisplayTwitchTimer(
   HHMMSS            = '00:00:00',
   DisplayNumber1    = 0,
   DisplayNumber2    = 0
-  
-  ):
-    
 
-    
+  ):
+
+
+
 
     #ClearBigLED()
     #ClearBuffers()
@@ -14071,7 +13433,7 @@ async def DisplayTwitchTimer(
     global TwitchTimerOn
 
 
-    
+
     TimerSprite = CreateTimerSprite(HHMMSS)
     Done        = False
     StartTime   = time.time()
@@ -14082,20 +13444,20 @@ async def DisplayTwitchTimer(
 
     if (CenterVert  == True):
       v = round((HatHeight // 2) - ((TimerSprite.height * ZoomFactor) // 2) - ZoomFactor)
-   
+
     #print("HV",h,v)
 
 
 
 
     #Timer counting up?
-      
+
     #TimerSprite = CreateTimerSprite(HHMMSS)
     #MakeAndShowTimer(hh,h,v,RGB,ShadowGreen,ZoomFactor,Fill=False)
     #TimerSprite = UpdateTimerWithTransition(TimerSprite,h,v,RGB,ShadowRGB,ZoomFactor,Fill=True,StartDateTimeUTC = StartDateTimeUTC)
     #ClearBigLED()
     #ClearBuffers()
-    
+
 
 
 
@@ -14116,8 +13478,8 @@ async def DisplayTwitchTimer(
 
     #CopySpriteToPixelsZoom(TimerSprite,h-1,v+1,ShadowRGB,(0,0,0),ZoomFactor,          Fill=False)
     #CopySpriteToPixelsZoom(TimerSprite,h,v,    RGB,      (0,0,0),ZoomFactor=ZoomFactor,Fill=False)
-    
-    
+
+
     #This will be displayed under the clock
     message = "Uptime"
     BannerSprite = CreateBannerSprite(message)
@@ -14128,22 +13490,22 @@ async def DisplayTwitchTimer(
     ScreenArray = CopySpriteToScreenArrayZoom(BannerSprite,BannerSprite.h,BannerSprite.v,BannerSprite.RGB,(0,0,0),ZoomFactor=1,Fill=False,InputScreenArray=ScreenArray1)
 
 
-      
+
     #MakeAndShowClock(hh,h,v,RGB,ShadowGreen,ZoomFactor,Fill=True)
     TimerSprite = UpdateTimerWithTransition(TimerSprite,BannerSprite,h,v,    RGB,          ShadowRGB,            ZoomFactor,  Fill=True, TransitionType=2,StartDateTimeUTC = StartDateTimeUTC,ForceUpdate=True)
-    
-    
+
+
     #TransitionBetweenScreenArrays(ScreenArray2,ScreenArray,TransitionType=2)
     #CopyScreenArrayToCanvasVSync(ScreenArray)
-    
-    
 
 
-    
+
+
+
     LastAnimation = time.time()
 
     print("Done:",Done," TwitchTimerOn:",TwitchTimerOn)
-    
+
     #Show the timer, sleep for X seconds, show animations every Y seconds
     while (Done == False and TwitchTimerOn == True):
       print("while loop")
@@ -14153,7 +13515,7 @@ async def DisplayTwitchTimer(
       #print("Asyncio sleep")
       await asyncio.sleep(5)
       #time.sleep(1)
-      
+
       #check and exit
       if(TwitchTimerOn == False):
         return
@@ -14200,7 +13562,7 @@ async def DisplayTwitchTimer(
             ZoomFactor    = random.randint(1,2),
             sleep         = 0.03
             )
-          
+
 
           MoveAnimatedSpriteAcrossScreenFramesPerStep(
             ThreeBlueGhostPacSprite,
@@ -14220,7 +13582,7 @@ async def DisplayTwitchTimer(
           #      ZoomFactor    = 3,
           #      sleep         = 0
           #      )
-              
+
 
         elif (r == 4):
           #MakeAndShowClock(hh,h,v,RGB,ShadowGreen,ZoomFactor,Fill=False)
@@ -14374,7 +13736,7 @@ async def DisplayTwitchTimer(
             ZoomFactor    = random.randint(1,2),
             sleep         = 0.03
             )
-        
+
 
           i = random.randint(0,27)
           MoveAnimatedSpriteAcrossScreenStepsPerFrame(
@@ -14400,7 +13762,7 @@ async def DisplayTwitchTimer(
             ZoomFactor    = random.randint(2,3),
             sleep         = 0.03
             )
-        
+
 
           i = random.randint(0,27)
           MoveAnimatedSpriteAcrossScreenStepsPerFrame(
@@ -14442,7 +13804,7 @@ async def DisplayTwitchTimer(
 
           #MakeAndShowClock(hh,h,v,RGB,ShadowGreen,ZoomFactor,Fill=False)
 
-          
+
           MoveAnimatedSpriteAcrossScreenStepsPerFrame(
             LightBike,
             Position      = 'bottom',
@@ -14493,16 +13855,16 @@ async def DisplayTwitchTimer(
               )
 
           print("end of animation")
-        
+
 
 
       #This will end the while loop -- THIS SECTION NEEDS A REWRITE
       elapsed_h,m,s, HHMMSS = CalculateElapsedTime(StartDateTimeUTC)
       #h,m,s = GetElapsedTime(LastAnimation,time.time())
-            
+
       print("HHMMSS: ",HHMMSS)
 
-      
+
 
       if (TimerSprite.HHMM != HHMMSS[0:5]):
         #MakeAndShowClock(hh,h,v,RGB,ShadowGreen,ZoomFactor,Fill=True)
@@ -14521,18 +13883,8 @@ async def DisplayTwitchTimer(
         TwitchTimerOn = False
         print("Exiting Twitch Timer")
 
-
-
-
-
-
-
-
-
-
-
 def DisplayRandomAnimation():
-        
+
   r = random.randint(1,11)
   if (r == 1):
 
@@ -14561,7 +13913,7 @@ def DisplayRandomAnimation():
       ZoomFactor    = random.randint(1,2),
       sleep         = 0.03
       )
-    
+
 
     MoveAnimatedSpriteAcrossScreenFramesPerStep(
       ThreeBlueGhostPacSprite,
@@ -14572,7 +13924,7 @@ def DisplayRandomAnimation():
       sleep         = 0.02
       )
 
-            
+
 
   elif (r == 4):
 
@@ -14715,9 +14067,9 @@ def DisplayRandomAnimation():
       ZoomFactor    = random.randint(1,3),
       sleep         = 0.03
       )
-  
 
-    
+
+
   elif (r == 10):
 
     MoveAnimatedSpriteAcrossScreenStepsPerFrame(
@@ -14741,7 +14093,7 @@ def DisplayRandomAnimation():
 
 
   elif (r == 11):
-    
+
     MoveAnimatedSpriteAcrossScreenStepsPerFrame(
       LightBike,
       Position      = 'bottom',
@@ -14791,26 +14143,18 @@ def DisplayRandomAnimation():
       sleep         = 0
       )
 
+def ScrollScreenArray(ScreenArray,lines,speed):
 
-
-
-
-
-
-
-
-def ScrollScreenArray(ScreenArray,lines,speed):    
-  
   EmptyCap   = [[(0,0,0) for i in range (0,HatWidth)]]
   InsertLine = copy.deepcopy(EmptyCap)
   Buffer     = ScreenArray
 
-  
+
   #Scroll up
   #Delete top row, insert blank on bottom, pushing remaining to the top
 
   for x in range (0,lines):
-    
+
     Buffer = numpy.delete(Buffer,(0),axis=0)
     Buffer = numpy.insert(Buffer,HatHeight-1,InsertLine,axis=0)
     #setpixelsLED(Buffer)
@@ -14819,9 +14163,6 @@ def ScrollScreenArray(ScreenArray,lines,speed):
       time.sleep(speed)
 
   return Buffer
-      
-
-
 
 def BlinkCursor(CursorH=0,CursorV=0,CursorRGB=(0,255,0),CursorDarkRGB=(0,50,0),BlinkSpeed=0.25,BlinkCount=1):
 
@@ -14852,8 +14193,6 @@ def BlinkCursor(CursorH=0,CursorV=0,CursorRGB=(0,255,0),CursorDarkRGB=(0,50,0),B
 
   return
 
-
-        
 def TerminalScroll(ScreenArray, Message="",CursorH=0,CursorV=0,MessageRGB=(0,150,0),CursorRGB=(0,255,0),CursorDarkRGB=(0,50,0), StartingLineFeed=0,TypeSpeed=0.1,ScrollSpeed=0.1):
   LineSize = 6  #this is the height of the LEDarcade text characters + 1
 
@@ -14897,7 +14236,7 @@ def TerminalScroll(ScreenArray, Message="",CursorH=0,CursorV=0,MessageRGB=(0,150
   WordList = Message.split()
   for i in range(0,len(WordList)):
     word = WordList[i] + ' '
-    WordSprite = CreateBannerSprite(word)    
+    WordSprite = CreateBannerSprite(word)
 
     #Make sure we have room to print
     if(CursorH +  WordSprite.width > HatWidth):
@@ -14924,7 +14263,7 @@ def TerminalScroll(ScreenArray, Message="",CursorH=0,CursorV=0,MessageRGB=(0,150
       #we want to keep printing at the bottom line at this point
       CursorV = CursorV - LineSize
 
-   
+
 
 
 
@@ -14932,9 +14271,9 @@ def TerminalScroll(ScreenArray, Message="",CursorH=0,CursorV=0,MessageRGB=(0,150
 
       #convert single character to a sprite
       character = word[i]
-      CharacterSprite = CreateBannerSprite(character)    
+      CharacterSprite = CreateBannerSprite(character)
 
-      
+
       #Make cursor blink at current location
       CopySpriteToPixelsZoom(
         TheSprite = CursorSprite,
@@ -14945,7 +14284,7 @@ def TerminalScroll(ScreenArray, Message="",CursorH=0,CursorV=0,MessageRGB=(0,150
         ZoomFactor = 1,
         Fill = False
       )
-      
+
       if(TypeSpeed >0):
         time.sleep(TypeSpeed)
 
@@ -14962,7 +14301,7 @@ def TerminalScroll(ScreenArray, Message="",CursorH=0,CursorV=0,MessageRGB=(0,150
         Fill = False
       )
       #CopyScreenArrayToCanvasVSync(ScreenArray)
-     
+
 
 
       #copy character to current spot
@@ -14978,9 +14317,9 @@ def TerminalScroll(ScreenArray, Message="",CursorH=0,CursorV=0,MessageRGB=(0,150
       )
       #CopyScreenArrayToCanvasVSync(ScreenArray)
       setpixels(ScreenArray)
-      
+
       CursorH = CursorH + CharacterSprite.width
-      
+
       #leave cursor on at the end of the word
       CopySpriteToPixelsZoom(
         TheSprite = CursorSprite,
@@ -14993,83 +14332,69 @@ def TerminalScroll(ScreenArray, Message="",CursorH=0,CursorV=0,MessageRGB=(0,150
       )
 
 
-  
-  return ScreenArray,CursorH,CursorV
 
+  return ScreenArray,CursorH,CursorV
 
 def deEmojify(InputString):
     return InputString.encode('ascii', 'ignore').decode('ascii')
-
-
-
-
 
 def CalculateElapsedTime(StartDateTimeUTC):
   #get current UTC datetime (timezone naive)
   nowUTC = datetime.utcnow()
 
   #print("nowUTC:",nowUTC,nowUTC.timestamp())
-  
+
   #This creates a timedelta object
   elapsed_time =  nowUTC - StartDateTimeUTC
   elapsed_hours, rem = divmod(elapsed_time.seconds, 3600)
   elapsed_minutes, elapsed_seconds = divmod(rem, 60)
-    
+
   HHMMSS = "{:0>2}:{:0>2}:{:0>2}".format(int(elapsed_hours),int(elapsed_minutes),elapsed_seconds)
-  
+
   return elapsed_hours, elapsed_minutes, elapsed_seconds, HHMMSS
-  
-
-
-
-
 
 def ZoomImage(ImageName,ZoomStart, ZoomStop, ZoomSleep,Step):
   global Canvas
 
   image = Image.open(ImageName)
   image = image.convert('RGB')
- 
+
   ZoomFactor    = 0
-  
-  
+
+
   draw = ImageDraw.Draw(image)  # Declare Draw instance before prims
 
-  
+
   if (ZoomStart <= ZoomStop):
     for ZoomFactor in range (ZoomStart,ZoomStop,Step):
       ResizedImage = image.resize(size=(ZoomFactor,ZoomFactor))
       TheMatrix.SetImage(ResizedImage, (HatWidth/2 -(ZoomFactor/2)),(HatHeight/2 -(ZoomFactor/2)))
       if (ZoomSleep > 0):
         time.sleep(ZoomSleep)
-        
+
   else:
     #for ZoomFactor in reversed(range(ZoomStop, ZoomStart,-Step)):
     for ZoomFactor in range(ZoomStart, ZoomStop,-Step):
       #clear the screen as we zoom to remove leftovers
       ResizedImage = image.resize(size=(ZoomFactor,ZoomFactor))
-      
+
       #zooming out (shrinking the image) will leave artifacts unless we erase them
       if(ZoomFactor < HatWidth or ZoomFactor < HatHeight):
         Canvas.Fill(0,0,0)
       Canvas.SetImage(ResizedImage, (HatWidth/2 -(ZoomFactor/2)),(HatHeight/2 -(ZoomFactor/2)))
       Canvas = TheMatrix.SwapOnVSync(Canvas)
-      
+
       if (ZoomSleep > 0):
         time.sleep(ZoomSleep)
-      
-        
 
-      
-      
+
+
+
+
         #if ZoomFactor <= HatWidth:
         #  draw.rectangle((0,0, ZoomFactor, ZoomFactor), fill=(0, 0, 0))
 
-        #TheMatrix.Clear()        
-
-
-
-
+        #TheMatrix.Clear()
 
 def RotateAndZoomImage(ImageName):
   #image = Image.open("/home/pi/LEDarcade/images/ninja64colors.png")
@@ -15078,14 +14403,14 @@ def RotateAndZoomImage(ImageName):
   image = Image.open(ImageName)
   image = image.convert('RGB')
 
-  for x in range(1,100):    
+  for x in range(1,100):
 
     for r in range(1,100,2):
       ResizedImage = image.rotate(r).resize(size=(r,r))
       TheMatrix.SetImage(ResizedImage, (HatWidth/2 -(r/2)),(HatHeight/2 -(r/2)))
       time.sleep(0.01)
     TheMatrix.Clear()
- 
+
     for r in range(256,1,-2):
       ResizedImage = image.resize(size=(r,r))
       TheMatrix.SetImage(ResizedImage, (HatWidth/2 -(r/2)),(HatHeight/2 -(r/2)))
@@ -15106,9 +14431,6 @@ def RotateAndZoomImage(ImageName):
     TheMatrix.SetImage(NewImage, 64-r/2, -18)
     time.sleep(0.001 )
 
-
-
-
 def GetImageFromURL(URL,SaveName):
   print("")
   print("-- Show GetImageFromURL --")
@@ -15119,7 +14441,6 @@ def GetImageFromURL(URL,SaveName):
     byteImg = io.BytesIO(i.read())
     image = Image.open(byteImg)
     image.save(SaveName)
-
 
 def ShowImage(ImageLocation):
   # Make image fit our screen.
@@ -15134,9 +14455,6 @@ def ShowImage(ImageLocation):
       TheMatrix.Clear()
       TheMatrix.SetImage(image, n, 0)
       time.sleep(0.01)
-
-      
-
 
 def DrawSquare():
 
