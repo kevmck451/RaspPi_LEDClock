@@ -38,10 +38,10 @@ while (1==1):
 
 
   LED.ShowTitleScreen(
-    BigText='IM SHITTING',
+    BigText='I AM',
     BigTextRGB=LED.HighBlue,
     BigTextShadowRGB=LED.ShadowGreen,
-    LittleText='RIGHT',
+    LittleText='SHITTING RIGHT',
     LittleTextRGB=LED.HighYellow,
     LittleTextShadowRGB=LED.ShadowRed,
     ScrollText='NOW!!!!!!!!!!!!',
