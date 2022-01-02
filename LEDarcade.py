@@ -13341,13 +13341,8 @@ def DisplayDigitalClockKevin(
   while (Done == False):
     ClearBigLED()
     ClearBuffers()
-    r69 = random.randint(1, 32)
-    """
-    if (ClockSprite.hhmm != datetime.now().strftime('%H:%M')):
-      # ClearBuffers() #clean the internal graphic buffers
-      ClockSprite = CreateClockSprite(hh)
-      ScreenArray = CopySpriteToScreenArrayZoom(ClockSprite, h, v, (250, 250, 250), (0, 0, 0), 1, Fill=True)
-    """
+    r69 = random.randint(5, 32)
+
     h = r69
     v = (HatHeight // 2) - ((ClockSprite.height * ZoomFactor) // 2) - ZoomFactor
     #ClockSprite = CreateClockSprite(hh)
@@ -13627,11 +13622,17 @@ def DisplayDigitalClockKevin(
     ScreenArray2 = copy.deepcopy(EmptyArray)
     TransitionBetweenScreenArrays(ScreenArray2, ScreenArray1, TransitionType=2)
 
-    for x in range(1, 100):
-      CopyAnimatedSpriteToPixelsZoom(BigSpiderLegOutSprite, h=9, v=HatHeight - BigSpiderLegOutSprite.height,
-                                     ZoomFactor=1)
-      BigSpiderLegOutSprite.IncrementFrame()
-      time.sleep(0.05)
+    ClockSprite = UpdateClockWithTransition(ClockSprite, hh, h, v, RGB, ShadowRGB, ZoomFactor, Fill=True,
+                                            TransitionType=2)
+    # MakeAndShowClock(hh,h,v,RGB,ShadowGreen,ZoomFactor,Fill=True)
+    r55 = random.randint(1, 2)
+    MoveAnimatedSpriteAcrossScreen(BigSpiderWalkingSprite, Position='bottom', direction="right", steps=14 * r55,
+                                   ZoomFactor=r55, sleep=0.05)
+    BigSpiderWalkingSprite.HorizontalFlip()
+    r56 = random.randint(1, 2)
+    MoveAnimatedSpriteAcrossScreen(BigSpiderWalkingSprite, Position='bottom', direction="left", steps=14 * r56,
+                                   ZoomFactor=r56, sleep=0.03)
+    BigSpiderWalkingSprite.HorizontalFlip()
 
   # Check Time
   if (ClockSprite.hhmm != datetime.now().strftime('%H:%M')):
