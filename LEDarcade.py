@@ -12306,7 +12306,7 @@ def DisplayDigitalClock(
   CenterVert  = False,
   h           = 0,
   v           = 0,
-  hh          = 24,
+  hh          = 30,
   RGB         = HighBlue,
   ShadowRGB   = ShadowBlue,
   ZoomFactor  = 2,

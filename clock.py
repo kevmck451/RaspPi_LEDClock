@@ -44,7 +44,7 @@ while 1==1:
         ClockStyle=2,
         CenterHoriz=True,
         v=1,
-        hh=12,
+        hh=30,
         ZoomFactor = 1,
         AnimationDelay=10,
         RunMinutes = 5
@@ -54,7 +54,7 @@ while 1==1:
       ClockStyle = 1,
       CenterHoriz = True,
       v   = 1, 
-      hh  = 12,
+      hh  = 30,
       RGB = LED.HighBlue,
       ShadowRGB     = LED.ShadowBlue,
       ZoomFactor    = 2,
