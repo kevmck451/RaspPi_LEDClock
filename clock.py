@@ -48,7 +48,7 @@ while 1==1:
       hh  = 12,
       RGB = LED.HighBlue,
       ShadowRGB     = LED.ShadowBlue,
-      ZoomFactor    = 3,
+      ZoomFactor    = 4,
       AnimationDelay= 1,
       RunMinutes = 1
     )
