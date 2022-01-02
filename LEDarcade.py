@@ -13363,8 +13363,8 @@ def DisplayDigitalClockKevin(
 
     #Chicken
     if (r==1):
-      #h = HatWidth - (ClockSprite.width * 2)
-      h = HatWidth - (ClockSprite.width * 2)
+      h = (HatWidth // 2) - ((ClockSprite.width * ZoomFactor) // 2) + 1
+      v = (HatHeight // 2) - ((ClockSprite.height * ZoomFactor) // 2) - ZoomFactor
       ClockSprite = CreateClockSprite(hh)
       ScreenArray = CopySpriteToScreenArrayZoom(ClockSprite,h=h,v=0,ColorTuple=(250,250,250),FillerTuple=(0,0,0),ZoomFactor=2,Fill=True,InputScreenArray=ScreenArray)
 
@@ -13388,17 +13388,7 @@ def DisplayDigitalClockKevin(
         )
 
       #Check Time
-      #if (ClockSprite.hhmm != datetime.now().strftime('%H:%M')):
-      #  print("ClockSprite.hhm: ",ClockSprite.hhmm, "Other:",datetime.now().strftime('%H:%M'))
-      #  #ClearBuffers() #clean the internal graphic buffers
-      #  ClockSprite = CreateClockSprite(hh)
-      #  CopySpriteToPixelsZoom(ClockSprite,h,0,(150,0,0),(0,0,0),2,Fill=True)
-
-
-      #Check Time
       if (ClockSprite.hhmm != datetime.now().strftime('%H:%M')):
-        #print("ClockSprite.hhm: ",ClockSprite.hhmm, "Other:",datetime.now().strftime('%H:%M'))
-        #ClearBuffers() #clean the internal graphic buffers
 
         ScreenArray1 = CopySpriteToScreenArrayZoom(ClockSprite,ClockH,0,  (250,250,250),(0,0,0),ZoomFactor=1,Fill=True)
         ClockSprite = CreateClockSprite(hh)
@@ -13415,7 +13405,8 @@ def DisplayDigitalClockKevin(
 
     # animated ships (no gravity, flying around like insects)
     if (r == 2):
-      h = HatWidth - (ClockSprite.width * 2)
+      h = (HatWidth // 2) - ((ClockSprite.width * ZoomFactor) // 2) + 1
+      v = (HatHeight // 2) - ((ClockSprite.height * ZoomFactor) // 2) - ZoomFactor
       ClockSprite = CreateClockSprite(hh)
       ScreenArray = CopySpriteToScreenArrayZoom(ClockSprite, h=h, v=0, ColorTuple=(250, 250, 250),
                                                 FillerTuple=(0, 0, 0), ZoomFactor=2, Fill=True,
