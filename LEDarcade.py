@@ -12339,7 +12339,7 @@ def DisplayDigitalClock(
       h = (HatWidth  // 2)  - ((ClockSprite.width * ZoomFactor) // 2) + 1
 
     if (CenterVert == True):
-      v = (HatWidth  // 2)  - ((ClockSprite.width * ZoomFactor) // 2) + 1
+      v = 9
 
     # Clock at top, random scrolling animations
     if (ClockStyle == 1):
