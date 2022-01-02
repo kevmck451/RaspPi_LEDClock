@@ -13518,11 +13518,21 @@ def DisplayDigitalClockKevin(
     ScreenArray = copy.deepcopy(EmptyArray)
 
     # animated ships with gravity------------------------------
-    ClockSprite = CreateClockSprite(hh)
-    h = (HatWidth // 2) - ((ClockSprite.width * ZoomFactor) // 2) + 1
-    v = (HatHeight // 2) - ((ClockSprite.height * ZoomFactor) // 2) - ZoomFactor
     ClearBigLED()
     ClearBuffers()
+    h = (HatWidth // 2) - ((ClockSprite.width * ZoomFactor) // 2) + 1
+    v = (HatHeight // 2) - ((ClockSprite.height * ZoomFactor) // 2) - ZoomFactor
+    ClockSprite = CreateClockSprite(hh)
+    ScreenArray = CopySpriteToScreenArrayZoom(ClockSprite,h=h,v=0,ColorTuple=(250,250,250),FillerTuple=(0,0,0),ZoomFactor=2,Fill=True,InputScreenArray=ScreenArray)
+
+    #Make a screen array (buffer)
+    #copy sprite frames
+    #fade with falling sand
+    ScreenArray1 = copy.deepcopy(ScreenArray)
+    ScreenArray2 = copy.deepcopy(EmptyArray)
+    TransitionBetweenScreenArrays(ScreenArray2,ScreenArray1,TransitionType=2)
+
+
 
     # Initialize 3 ships
     ship1 = random.randint(0, 8)
@@ -13630,9 +13640,19 @@ def DisplayDigitalClockKevin(
     ScreenArray = copy.deepcopy(EmptyArray)
 
     # rSpiderLeg----------------------------------------
-    ClockSprite = CreateClockSprite(hh)
     h = (HatWidth // 2) - ((ClockSprite.width * ZoomFactor) // 2) + 1
     v = (HatHeight // 2) - ((ClockSprite.height * ZoomFactor) // 2) - ZoomFactor
+    ClockSprite = CreateClockSprite(hh)
+    ScreenArray = CopySpriteToScreenArrayZoom(ClockSprite, h=h, v=0, ColorTuple=(250, 250, 250), FillerTuple=(0, 0, 0),
+                                              ZoomFactor=2, Fill=True, InputScreenArray=ScreenArray)
+
+    # Make a screen array (buffer)
+    # copy sprite frames
+    # fade with falling sand
+    ScreenArray1 = copy.deepcopy(ScreenArray)
+    ScreenArray2 = copy.deepcopy(EmptyArray)
+    TransitionBetweenScreenArrays(ScreenArray2, ScreenArray1, TransitionType=2)
+
     for x in range(1, 200):
       CopyAnimatedSpriteToPixelsZoom(BigSpiderLegOutSprite, h=0, v=HatHeight - BigSpiderLegOutSprite.height,
                                      ZoomFactor=1)
