@@ -13340,12 +13340,12 @@ def DisplayDigitalClockKevin(
                               ZoomFactor=2, Fill=True)
   while (Done == False):
     r69 = random.randint(1, 32)
-
+    """
     if (ClockSprite.hhmm != datetime.now().strftime('%H:%M')):
       # ClearBuffers() #clean the internal graphic buffers
       ClockSprite = CreateClockSprite(hh)
       ScreenArray = CopySpriteToScreenArrayZoom(ClockSprite, h, v, (250, 250, 250), (0, 0, 0), 1, Fill=True)
-
+    """
     h = r69
     v = (HatHeight // 2) - ((ClockSprite.height * ZoomFactor) // 2) - ZoomFactor
     ClockSprite = CreateClockSprite(hh)
@@ -13621,7 +13621,7 @@ def DisplayDigitalClockKevin(
     # rSpiderLeg----------------------------------------
     h = r69
     v = (HatHeight // 2) - ((ClockSprite.height * ZoomFactor) // 2) - ZoomFactor
-    ClockSprite = CreateClockSprite(hh)
+    #ClockSprite = CreateClockSprite(hh)
     ScreenArray = CopySpriteToScreenArrayZoom(ClockSprite, h=h, v=0, ColorTuple=(250, 250, 250), FillerTuple=(0, 0, 0),
                                               ZoomFactor=2, Fill=True, InputScreenArray=ScreenArray)
 
@@ -13642,7 +13642,7 @@ def DisplayDigitalClockKevin(
   if (ClockSprite.hhmm != datetime.now().strftime('%H:%M')):
     ScreenArray1 = CopySpriteToScreenArrayZoom(ClockSprite, h, v, (250, 250, 250), (0, 0, 0), ZoomFactor=1,
                                                Fill=True)
-    ClockSprite = CreateClockSprite(hh)
+    #ClockSprite = CreateClockSprite(hh)
     ScreenArray2 = CopySpriteToScreenArrayZoom(ClockSprite, h, v, (250, 250, 250), (0, 0, 0), ZoomFactor=1,
                                                Fill=True)
     TransitionBetweenScreenArrays(ScreenArray1, ScreenArray2)
