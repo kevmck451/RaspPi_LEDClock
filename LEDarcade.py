@@ -13654,7 +13654,7 @@ def DisplayDigitalClockKevin(
     TransitionBetweenScreenArrays(ScreenArray2, ScreenArray1, TransitionType=2)
 
     for x in range(1, 200):
-      CopyAnimatedSpriteToPixelsZoom(BigSpiderLegOutSprite, h=0, v=HatHeight - BigSpiderLegOutSprite.height,
+      CopyAnimatedSpriteToPixelsZoom(BigSpiderLegOutSprite, h=9, v=HatHeight - BigSpiderLegOutSprite.height,
                                      ZoomFactor=1)
       BigSpiderLegOutSprite.IncrementFrame()
       time.sleep(0.05)
