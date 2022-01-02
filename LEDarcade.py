@@ -12229,16 +12229,16 @@ def UpdateClockWithTransition(ClockSprite,hh=24,h=0,v=0,RGB=HighGreen,ShadowRGB=
 
     ScreenArray1 = CopySpriteToScreenArrayZoom(ClockSprite,h-1,v+1,ShadowRGB,(0,0,0),ZoomFactor,          Fill=False)
     ScreenArray1 = CopySpriteToScreenArrayZoom(ClockSprite,h,v,    RGB,      (0,0,0),ZoomFactor=ZoomFactor,Fill=False,InputScreenArray=ScreenArray1)
-    ScreenArray1 = CopySpriteToScreenArrayZoom(DayOfWeekSprite,DayOfWeekH,DayOfWeekV,DayOfWeekRGB, (0,0,0),ZoomFactor=1,Fill=False,InputScreenArray=ScreenArray1)
-    ScreenArray1 = CopySpriteToScreenArrayZoom(MonthSprite,MonthH,DayOfWeekV,MonthRGB, (0,0,0),ZoomFactor=1,Fill=False,InputScreenArray=ScreenArray1)
-    ScreenArray1 = CopySpriteToScreenArrayZoom(DayOfMonthSprite,DayOfMonthH,DayOfMonthV,DayOfMonthRGB, (0,0,0),ZoomFactor=1,Fill=False,InputScreenArray=ScreenArray1)
+    #ScreenArray1 = CopySpriteToScreenArrayZoom(DayOfWeekSprite,DayOfWeekH,DayOfWeekV,DayOfWeekRGB, (0,0,0),ZoomFactor=1,Fill=False,InputScreenArray=ScreenArray1)
+    #ScreenArray1 = CopySpriteToScreenArrayZoom(MonthSprite,MonthH,DayOfWeekV,MonthRGB, (0,0,0),ZoomFactor=1,Fill=False,InputScreenArray=ScreenArray1)
+    #ScreenArray1 = CopySpriteToScreenArrayZoom(DayOfMonthSprite,DayOfMonthH,DayOfMonthV,DayOfMonthRGB, (0,0,0),ZoomFactor=1,Fill=False,InputScreenArray=ScreenArray1)
 
 
 
     #Just in case the day changes!
-    DayOfWeekSprite     = CreateDayOfWeekSprite()
-    MonthSprite         = CreateMonthSprite()
-    DayOfMonthSprite    = CreateDayOfMonthSprite()
+    #DayOfWeekSprite     = CreateDayOfWeekSprite()
+    #MonthSprite         = CreateMonthSprite()
+    #DayOfMonthSprite    = CreateDayOfMonthSprite()
 
 
     #copy new time to a buffer
@@ -12247,9 +12247,9 @@ def UpdateClockWithTransition(ClockSprite,hh=24,h=0,v=0,RGB=HighGreen,ShadowRGB=
     ClockSprite = CreateClockSprite(hh)
     ScreenArray2 = CopySpriteToScreenArrayZoom(ClockSprite,h-1,v+1,ShadowRGB,(0,0,0),ZoomFactor,          Fill=False)
     ScreenArray2 = CopySpriteToScreenArrayZoom(ClockSprite,h,v,    RGB,      (0,0,0),ZoomFactor=ZoomFactor,Fill=False,InputScreenArray=ScreenArray2)
-    ScreenArray2 = CopySpriteToScreenArrayZoom(DayOfWeekSprite,DayOfWeekH,DayOfWeekV,DayOfWeekRGB, (0,0,0),ZoomFactor=1,Fill=False,InputScreenArray=ScreenArray2)
-    ScreenArray2 = CopySpriteToScreenArrayZoom(MonthSprite,MonthH,DayOfWeekV,MonthRGB, (0,0,0),ZoomFactor=1,Fill=False,InputScreenArray=ScreenArray2)
-    ScreenArray2 = CopySpriteToScreenArrayZoom(DayOfMonthSprite,DayOfMonthH,DayOfMonthV,DayOfMonthRGB, (0,0,0),ZoomFactor=1,Fill=False,InputScreenArray=ScreenArray2)
+    #ScreenArray2 = CopySpriteToScreenArrayZoom(DayOfWeekSprite,DayOfWeekH,DayOfWeekV,DayOfWeekRGB, (0,0,0),ZoomFactor=1,Fill=False,InputScreenArray=ScreenArray2)
+    #ScreenArray2 = CopySpriteToScreenArrayZoom(MonthSprite,MonthH,DayOfWeekV,MonthRGB, (0,0,0),ZoomFactor=1,Fill=False,InputScreenArray=ScreenArray2)
+    #ScreenArray2 = CopySpriteToScreenArrayZoom(DayOfMonthSprite,DayOfMonthH,DayOfMonthV,DayOfMonthRGB, (0,0,0),ZoomFactor=1,Fill=False,InputScreenArray=ScreenArray2)
 
 
     if(TransitionType == 1):
