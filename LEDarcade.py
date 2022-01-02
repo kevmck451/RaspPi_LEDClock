@@ -12345,7 +12345,7 @@ def DisplayDigitalClock(
       ClockSprite = CreateClockSprite(hh)
 
       ScreenArray1 = CopySpriteToScreenArrayZoom(ClockSprite,h-1,v+1,ShadowRGB,(0,0,0),ZoomFactor=ZoomFactor,Fill=False,InputScreenArray=ScreenArray)
-      ScreenArray1 = CopySpriteToScreenArrayZoom(ClockSprite,h,v,RGB,(0,0,0),ZoomFactor=ZoomFactor,Fill=False,InputScreenArray=ScreenArray1)
+      ScreenArray2 = CopySpriteToScreenArrayZoom(ClockSprite,h,v,RGB,(0,0,0),ZoomFactor=ZoomFactor,Fill=False,InputScreenArray=ScreenArray1)
       TransitionBetweenScreenArrays(ScreenArray2,ScreenArray1,TransitionType=2)
 
       #CopySpriteToPixelsZoom(ClockSprite,h-1,v+1,ShadowRGB,(0,0,0),ZoomFactor,          Fill=False)
@@ -12694,7 +12694,7 @@ def DisplayDigitalClock(
         if (ClockSprite.hhmm != datetime.now().strftime('%H:%M')):
           #ClearBuffers() #clean the internal graphic buffers
           ClockSprite = CreateClockSprite(hh)
-          ScreenArray = CopySpriteToScreenArrayZoom(ClockSprite,45,0,(250,250,250),(0,0,0),1,Fill=True)
+          ScreenArray = CopySpriteToScreenArrayZoom(ClockSprite,40,0,(250,250,250),(0,0,0),1,Fill=True)
 
         r = random.randint(1,7)
 

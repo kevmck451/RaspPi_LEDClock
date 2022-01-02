@@ -41,19 +41,6 @@ LED.ShowTitleScreen(
 while 1==1:
 
     LED.DisplayDigitalClock(
-      ClockStyle = 1,
-      CenterHoriz = True,
-      CenterVert=True,
-      v   = 0,
-      hh  = 12,
-      RGB = LED.HighBlue,
-      ShadowRGB     = LED.ShadowBlue,
-      ZoomFactor    = 4,
-      AnimationDelay= 1,
-      RunMinutes = 1
-    )
-
-    LED.DisplayDigitalClock(
         ClockStyle=2,
         CenterHoriz=True,
         CenterVert=True,
@@ -66,8 +53,19 @@ while 1==1:
         RunMinutes = 1
     )
 
+    """
+    LED.DisplayDigitalClock(
+      ClockStyle = 1,
+      CenterHoriz = True,
+      CenterVert=True,
+      v   = 0,
+      hh  = 12,
+      RGB = LED.HighBlue,
+      ShadowRGB     = LED.ShadowBlue,
+      ZoomFactor    = 4,
+      AnimationDelay= 1,
+      RunMinutes = 1
+    )
 
-
-
-
+    """
 
