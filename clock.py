@@ -40,7 +40,7 @@ LED.ShowTitleScreen(
 
 while 1==1:
 
-    LED.DisplayDigitalClockKevin()
+    LED.DisplayDigitalClock()
 
 
 
