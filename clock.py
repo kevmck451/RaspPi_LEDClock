@@ -46,7 +46,7 @@ while 1==1:
         CenterVert=True,
         v=1,
         hh=12,
-        ZoomFactor = 4,
+        ZoomFactor = 5,
         AnimationDelay=10,
         RunMinutes = 5
     )
