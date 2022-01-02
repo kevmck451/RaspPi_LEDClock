@@ -13332,8 +13332,10 @@ def DisplayDigitalClockKevin(
   Done = False
   StartTime = time.time()
 
+  r69 = random.randint(1,32)
+
   if (CenterHoriz == True):
-    h = 12
+    h = r69
 
   if (CenterVert == True):
     v = (HatHeight // 2) - ((ClockSprite.height * ZoomFactor) // 2) - ZoomFactor
@@ -13355,7 +13357,7 @@ def DisplayDigitalClockKevin(
       ScreenArray = CopySpriteToScreenArrayZoom(ClockSprite, h, v, (250, 250, 250), (0, 0, 0), 1, Fill=True)
 
     #Chicken---------------------------------
-    h = 12
+    h = r69
     v = (HatHeight // 2) - ((ClockSprite.height * ZoomFactor) // 2) - ZoomFactor
     ClockSprite = CreateClockSprite(hh)
     ScreenArray = CopySpriteToScreenArrayZoom(ClockSprite,h=h,v=0,ColorTuple=(250,250,250),FillerTuple=(0,0,0),ZoomFactor=2,Fill=True,InputScreenArray=ScreenArray)
@@ -13520,7 +13522,7 @@ def DisplayDigitalClockKevin(
     # animated ships with gravity------------------------------
     ClearBigLED()
     ClearBuffers()
-    h = 12
+    h = r69
     v = (HatHeight // 2) - ((ClockSprite.height * ZoomFactor) // 2) - ZoomFactor
     ClockSprite = CreateClockSprite(hh)
     ScreenArray = CopySpriteToScreenArrayZoom(ClockSprite,h=h,v=0,ColorTuple=(250,250,250),FillerTuple=(0,0,0),ZoomFactor=2,Fill=True,InputScreenArray=ScreenArray)
@@ -13640,7 +13642,7 @@ def DisplayDigitalClockKevin(
     ScreenArray = copy.deepcopy(EmptyArray)
 
     # rSpiderLeg----------------------------------------
-    h = 12
+    h = r69
     v = (HatHeight // 2) - ((ClockSprite.height * ZoomFactor) // 2) - ZoomFactor
     ClockSprite = CreateClockSprite(hh)
     ScreenArray = CopySpriteToScreenArrayZoom(ClockSprite, h=h, v=0, ColorTuple=(250, 250, 250), FillerTuple=(0, 0, 0),
