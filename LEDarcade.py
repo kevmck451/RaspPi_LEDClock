@@ -13332,10 +13332,10 @@ def DisplayDigitalClockKevin(
   Done = False
   StartTime = time.time()
 
-  r69 = random.randint(1,32)
+
 
   if (CenterHoriz == True):
-    h = r69
+    h = 16
 
   if (CenterVert == True):
     v = (HatHeight // 2) - ((ClockSprite.height * ZoomFactor) // 2) - ZoomFactor
@@ -13350,6 +13350,8 @@ def DisplayDigitalClockKevin(
                               ZoomFactor=2, Fill=True)
 
   while (Done == False):
+
+    r69 = random.randint(1, 32)
 
     if (ClockSprite.hhmm != datetime.now().strftime('%H:%M')):
       # ClearBuffers() #clean the internal graphic buffers
