@@ -43,6 +43,7 @@ while 1==1:
     LED.DisplayDigitalClock(
         ClockStyle=2,
         CenterHoriz=True,
+        CenterVert=True,
         v=1,
         hh=12,
         ZoomFactor = 4,
@@ -53,11 +54,12 @@ while 1==1:
     LED.DisplayDigitalClock(
       ClockStyle = 1,
       CenterHoriz = True,
+      CenterVert=False,
       v   = 1, 
       hh  = 12,
       RGB = LED.HighBlue,
       ShadowRGB     = LED.ShadowBlue,
-      ZoomFactor    = 2,
+      ZoomFactor    = 5,
       AnimationDelay= 5,
       RunMinutes = 1
     )

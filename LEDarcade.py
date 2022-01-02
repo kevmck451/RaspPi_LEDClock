@@ -12302,8 +12302,8 @@ def UpdateTimerWithTransition(TimerSprite,BannerSprite,h=0,v=0,RGB=HighGreen,Sha
 
 def DisplayDigitalClock(
   ClockStyle  = 1,
-  CenterHoriz = True,
-  CenterVert  = True,
+  CenterHoriz = False,
+  CenterVert  = False,
   h           = 0,
   v           = 0,
   hh          = 12,
@@ -12725,7 +12725,7 @@ def DisplayDigitalClock(
       ClockSprite = CreateClockSprite(hh)
       #we need to make a fake sprite to take the place of the clock which is zoomed)
       ClockAreaSprite = Sprite((ClockSprite.width*2)+3,(ClockSprite.height*2),0,0,0,[])
-      ClockAreaSprite.h = ClockH -3
+      ClockAreaSprite.h = ClockH - 3
       ClockAreaSprite.v = 1
       CopySpriteToScreenArrayZoom(ClockSprite,h=ClockH,v=0,ColorTuple=(0,0,250),FillerTuple=(0,0,0),ZoomFactor=2,Fill=True)
 
@@ -12763,7 +12763,6 @@ def DisplayDigitalClock(
           ScreenArray2 = copy.deepcopy(EmptyArray)
           TransitionBetweenScreenArrays(ScreenArray2,ScreenArray1,TransitionType=2)
 
-
           for x in range (1,300):
             #RunningMan3Sprite.Erase()
             CopyAnimatedSpriteToPixelsZoom(RunningMan3Sprite,h=-4,v=16, ZoomFactor=1)
@@ -12783,7 +12782,6 @@ def DisplayDigitalClock(
             #ClearBuffers() #clean the internal graphic buffers
             ClockSprite = CreateClockSprite(hh)
             CopySpriteToPixelsZoom(ClockSprite,h=h,v=0,ColorTuple=(0,0,250),FillerTuple=(0,0,0),ZoomFactor=2,Fill=True)
-
 
           #Fade to Black
           ScreenArray1 = copy.deepcopy(EmptyArray)
@@ -12894,9 +12892,6 @@ def DisplayDigitalClock(
           TransitionBetweenScreenArrays(ScreenArray2,ScreenArray1,TransitionType=2)
           ScreenArray = copy.deepcopy(EmptyArray)
 
-
-
-
         #Chicken
         if (r==4):
           h = HatWidth - (ClockSprite.width * 2)
@@ -12955,8 +12950,6 @@ def DisplayDigitalClock(
           ScreenArray2 = copy.deepcopy(ScreenArray)
           TransitionBetweenScreenArrays(ScreenArray2,ScreenArray1,TransitionType=2)
           ScreenArray = copy.deepcopy(EmptyArray)
-
-
 
         #animated ships (no gravity, flying around like insects)
         if (r==5):
@@ -13313,9 +13306,6 @@ def DisplayDigitalClock(
           #ShipSprites[ship2].EraseZoom(h2,v2)
           #ShipSprites[ship3].EraseZoom(h3,v3)
 
-
-
-
         #rSpiderLeg
         if (r==7):
 
@@ -13368,8 +13358,6 @@ def DisplayDigitalClock(
           ClockSprite = CreateClockSprite(hh)
           ScreenArray2 = CopySpriteToScreenArrayZoom(ClockSprite,h=h,v=0,ColorTuple=(0,0,250),FillerTuple=(0,0,0),ZoomFactor=2,Fill=True)
           TransitionBetweenScreenArrays(EmptyArray,ScreenArray2,TransitionType=2)
-
-
 
         #This will end the while loop
         elapsed_time = time.time() - StartTime
