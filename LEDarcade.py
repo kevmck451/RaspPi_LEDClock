@@ -12681,13 +12681,13 @@ def DisplayDigitalClock(
       #ClearBigLED()
       #ClearBuffers()
 
-      ClockH = (HatWidth  // 2)  - ((ClockSprite.width * ZoomFactor) // 2) + 1 #HatWidth - (ClockSprite.width * 2)
+      ClockH = HatWidth - (ClockSprite.width * 2)
       ClockSprite = CreateClockSprite(hh)
       #we need to make a fake sprite to take the place of the clock which is zoomed)
       ClockAreaSprite = Sprite((ClockSprite.width*2)+3,(ClockSprite.height*2),0,0,0,[])
       ClockAreaSprite.h = ClockH - 3
       ClockAreaSprite.v = 1
-      CopySpriteToScreenArrayZoom(ClockSprite,h=ClockH,v=0,ColorTuple=(250,250,250),FillerTuple=(0,0,0),ZoomFactor=2,Fill=True)
+      CopySpriteToScreenArrayZoom(ClockSprite,h=ClockH,v=9,ColorTuple=(250,250,250),FillerTuple=(0,0,0),ZoomFactor=2,Fill=True)
 
       while (Done == False):
 
@@ -12854,12 +12854,10 @@ def DisplayDigitalClock(
 
         #Chicken
         if (r==4):
-          h = HatWidth - (ClockSprite.width * 2)
-
+          #h = HatWidth - (ClockSprite.width * 2)
           h = HatWidth - (ClockSprite.width * 2)
           ClockSprite = CreateClockSprite(hh)
           ScreenArray = CopySpriteToScreenArrayZoom(ClockSprite,h=h,v=0,ColorTuple=(250,250,250),FillerTuple=(0,0,0),ZoomFactor=2,Fill=True,InputScreenArray=ScreenArray)
-
 
           #Make a screen array (buffer)
           #copy sprite frames
@@ -12867,8 +12865,6 @@ def DisplayDigitalClock(
           ScreenArray1 = copy.deepcopy(ScreenArray)
           ScreenArray2 = copy.deepcopy(EmptyArray)
           TransitionBetweenScreenArrays(ScreenArray2,ScreenArray1,TransitionType=2)
-
-
 
           r = random.randint(1,3)
 
@@ -12881,7 +12877,6 @@ def DisplayDigitalClock(
             ZoomFactor    = r,
             sleep         = 0.03 / r
             )
-
 
           #Check Time
           #if (ClockSprite.hhmm != datetime.now().strftime('%H:%M')):
@@ -12903,8 +12898,6 @@ def DisplayDigitalClock(
             TransitionBetweenScreenArrays(ScreenArray1,ScreenArray2)
             #CopySpriteToPixelsZoom(ClockSprite,ClockH,0,(150,0,0),(0,0,0),2,Fill=True)
 
-
-
           #Fade to Black
           ScreenArray1 = copy.deepcopy(EmptyArray)
           ScreenArray2 = copy.deepcopy(ScreenArray)
@@ -12923,10 +12916,6 @@ def DisplayDigitalClock(
           ScreenArray1 = copy.deepcopy(ScreenArray)
           ScreenArray2 = copy.deepcopy(EmptyArray)
           TransitionBetweenScreenArrays(ScreenArray2,ScreenArray1,TransitionType=2)
-
-
-
-
 
           ship1 = random.randint(0,4)
           ShipSprites[ship1].framerate = 2
@@ -12957,9 +12946,6 @@ def DisplayDigitalClock(
           Explosion3.framerate = 1
           Explosion3.h = -1
           Explosion3.v = -1
-
-
-
 
           #print ("ElectricZap frames:",ElectricZap.frames)
           #print ("Explosion1  frames:",Explosion1.frames)
@@ -13071,8 +13057,6 @@ def DisplayDigitalClock(
                 Explosion3.h = -1
                 Explosion3.v = -1
 
-
-
             #Check Time
             #if (ClockSprite.hhmm != datetime.now().strftime('%H:%M')):
             #  print("ClockSprite.hhm: ",ClockSprite.hhmm, "Other:",datetime.now().strftime('%H:%M'))
@@ -13088,12 +13072,9 @@ def DisplayDigitalClock(
 
               ScreenArray1 = CopySpriteToScreenArrayZoom(ClockSprite,ClockH,0,  (250,250,250),(0,0,0),ZoomFactor=2,Fill=True)
               ClockSprite = CreateClockSprite(hh)
-
               ScreenArray2 = CopySpriteToScreenArrayZoom(ClockSprite,ClockH,0,  (250,250,250),(0,0,0),ZoomFactor=2,Fill=True)
               TransitionBetweenScreenArrays(ScreenArray1,ScreenArray2)
               #CopySpriteToPixelsZoom(ClockSprite,ClockH,0,(150,0,0),(0,0,0),2,Fill=True)
-
-
 
             time.sleep(0.03)
 
@@ -13127,10 +13108,6 @@ def DisplayDigitalClock(
           ScreenArray1 = copy.deepcopy(ScreenArray)
           ScreenArray2 = copy.deepcopy(EmptyArray)
           TransitionBetweenScreenArrays(ScreenArray2,ScreenArray1,TransitionType=2)
-
-
-
-
 
           #Initialize 3 ships
           ship1 = random.randint(0,8)
