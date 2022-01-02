@@ -13328,20 +13328,15 @@ def DisplayDigitalClockKevin(
   ClearBuffers()
   global ScreenArray
 
-  # print("ClockStyle:",ClockStyle)
   ClockSprite = CreateClockSprite(hh)
   Done = False
   StartTime = time.time()
-  # print("RunMinutes:",RunMinutes)
 
   if (CenterHoriz == True):
     h = (HatWidth // 2) - ((ClockSprite.width * ZoomFactor) // 2) + 1
 
   if (CenterVert == True):
     v = (HatHeight // 2) - ((ClockSprite.height * ZoomFactor) // 2) - ZoomFactor
-
-  # ClearBigLED()
-  # ClearBuffers()
 
   ClockH = HatWidth - (ClockSprite.width * 2)
   ClockSprite = CreateClockSprite(hh)
@@ -13523,6 +13518,7 @@ def DisplayDigitalClockKevin(
     ScreenArray = copy.deepcopy(EmptyArray)
 
     # animated ships with gravity------------------------------
+    ClockSprite = CreateClockSprite(hh)
     h = (HatWidth // 2) - ((ClockSprite.width * ZoomFactor) // 2) + 1
     v = (HatHeight // 2) - ((ClockSprite.height * ZoomFactor) // 2) - ZoomFactor
     ClearBigLED()
@@ -13634,6 +13630,7 @@ def DisplayDigitalClockKevin(
     ScreenArray = copy.deepcopy(EmptyArray)
 
     # rSpiderLeg----------------------------------------
+    ClockSprite = CreateClockSprite(hh)
     h = (HatWidth // 2) - ((ClockSprite.width * ZoomFactor) // 2) + 1
     v = (HatHeight // 2) - ((ClockSprite.height * ZoomFactor) // 2) - ZoomFactor
     for x in range(1, 200):
