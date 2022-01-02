@@ -13361,6 +13361,140 @@ def DisplayDigitalClockKevin(
     ScreenArray2 = copy.deepcopy(EmptyArray)
     TransitionBetweenScreenArrays(ScreenArray2, ScreenArray1, TransitionType=2)
 
+    ship1 = random.randint(0, 4)
+    ShipSprites[ship1].framerate = 2
+    ShipSprites[ship1].InitializeScreenArray()
+
+    ship2 = random.randint(5, 9)
+    ShipSprites[ship2].framerate = 2
+    ShipSprites[ship2].InitializeScreenArray()
+
+    ship3 = random.randint(10, 15)
+    ShipSprites[ship3].framerate = 2
+    ShipSprites[ship3].InitializeScreenArray()
+
+    h1, v1 = 0, 0
+    h2, v2 = 20, 0
+    h3, v3 = 50, 20
+
+    # ElectricExplosions
+    Explosion1 = copy.deepcopy(ElectricZap)
+    Explosion1.framerate = 1
+    Explosion1.h = -1
+    Explosion1.v = -1
+    Explosion2 = copy.deepcopy(ElectricZap)
+    Explosion2.framerate = 1
+    Explosion2.h = -1
+    Explosion2.v = -1
+    Explosion3 = copy.deepcopy(ElectricZap)
+    Explosion3.framerate = 1
+    Explosion3.h = -1
+    Explosion3.v = -1
+
+    # print ("ElectricZap frames:",ElectricZap.frames)
+    # print ("Explosion1  frames:",Explosion1.frames)
+
+    for x in range(1, 500):
+
+      h, v = h1, v1
+      h1, v1 = RandomMove(h1, v1, ShipSprites[ship1])
+      # h1,v1 = RandomMove(h1,v1,ShipSprites[ship1])
+      ShipSprites[ship1].h, ShipSprites[ship1].v = h1, v1
+      if (CheckForCollision(ShipSprites[ship1], ShipSprites[ship2]) or
+              CheckForCollision(ShipSprites[ship1], ShipSprites[ship3])):
+        ShipSprites[ship1].direction = ReverseDirection8Way(ShipSprites[ship1].direction)
+        h1, v1 = h, v
+      if (CheckForCollision(ShipSprites[ship1], ClockAreaSprite)):
+        Explosion1.exploding = 1
+        Explosion1.h = round(h)
+        Explosion1.v = round(v)
+
+        ShipSprites[ship1].direction = ReverseDirection8Way(ShipSprites[ship1].direction)
+        h1, v1 = random.randint(0, HatWidth) - ShipSprites[ship1].width, HatHeight - ShipSprites[ship1].height
+
+      ShipSprites[ship1].IncrementFrame()
+      ShipSprites[ship1].EraseFrame(h, v, frame=-1)
+      # If this sprite has collided, use old HV instead
+      CopyAnimatedSpriteToPixelsZoom(ShipSprites[ship1], h=h1, v=v1, ZoomFactor=1)
+
+      h, v = h2, v2
+      h2, v2 = RandomMove(h2, v2, ShipSprites[ship2])
+      ShipSprites[ship2].h, ShipSprites[ship2].v = h2, v2
+      if (CheckForCollision(ShipSprites[ship2], ShipSprites[ship1]) or
+              CheckForCollision(ShipSprites[ship2], ShipSprites[ship3])):
+        ShipSprites[ship2].direction = ReverseDirection8Way(ShipSprites[ship2].direction)
+        h2, v2 = h, v
+
+      if (CheckForCollision(ShipSprites[ship2], ClockAreaSprite)):
+        Explosion2.exploding = 1
+        Explosion2.h = round(h)
+        Explosion2.v = round(v)
+        ShipSprites[ship2].direction = ReverseDirection8Way(ShipSprites[ship2].direction)
+        h2, v2 = random.randint(0, HatWidth) - ShipSprites[ship1].width, HatHeight - ShipSprites[ship2].height
+
+      ShipSprites[ship2].IncrementFrame()
+      ShipSprites[ship2].EraseFrame(h, v, frame=-1)
+      CopyAnimatedSpriteToPixelsZoom(ShipSprites[ship2], h=h2, v=v2, ZoomFactor=1)
+
+      h, v = h3, v3
+      h3, v3 = RandomMove(h3, v3, ShipSprites[ship3])
+      ShipSprites[ship3].h, ShipSprites[ship3].v = h3, v3
+      if (CheckForCollision(ShipSprites[ship3], ShipSprites[ship2]) or
+              CheckForCollision(ShipSprites[ship3], ShipSprites[ship1])):
+        ShipSprites[ship3].direction = ReverseDirection8Way(ShipSprites[ship3].direction)
+        h3, v3 = h, v
+
+      if (CheckForCollision(ShipSprites[ship3], ClockAreaSprite)):
+        Explosion3.exploding = 1
+        Explosion3.h = round(h)
+        Explosion3.v = round(v)
+
+        ShipSprites[ship3].direction = ReverseDirection8Way(ShipSprites[ship3].direction)
+        h3, v3 = random.randint(0, HatWidth) - ShipSprites[ship1].width, HatHeight - ShipSprites[ship3].height
+
+      ShipSprites[ship3].IncrementFrame()
+      ShipSprites[ship3].EraseFrame(h, v, frame=-1)
+      CopyAnimatedSpriteToPixelsZoom(ShipSprites[ship3], h=h3, v=v3, ZoomFactor=1)
+
+      if (Explosion1.exploding == 1):
+        Explosion1.DisplayAnimated(Explosion1.h, Explosion1.v)
+
+        # Kill UFOMissile after explosion animation is complete
+        if (Explosion1.currentframe >= Explosion1.frames):
+          Explosion1.EraseFrame(Explosion1.h, Explosion1.v)
+          Explosion1.currentframe = 1
+          Explosion1.exploding = 0
+          Explosion1.alive = 0
+          Explosion1.h = -1
+          Explosion1.v = -1
+
+      if (Explosion2.exploding == 1):
+        Explosion2.DisplayAnimated(Explosion2.h, Explosion2.v)
+
+        # Kill UFOMissile after explosion animation is complete
+        if (Explosion2.currentframe >= Explosion2.frames):
+          Explosion2.EraseFrame(Explosion2.h, Explosion2.v)
+          Explosion2.currentframe = 1
+          Explosion2.exploding = 0
+          Explosion2.alive = 0
+          Explosion2.h = -1
+          Explosion2.v = -1
+
+      if (Explosion3.exploding == 1):
+        Explosion3.DisplayAnimated(Explosion3.h, Explosion3.v)
+
+        # Kill UFOMissile after explosion animation is complete
+        if (Explosion3.currentframe >= Explosion3.frames):
+          Explosion3.EraseFrame(Explosion3.h, Explosion3.v)
+          Explosion3.currentframe = 1
+          Explosion3.exploding = 0
+          Explosion3.alive = 0
+          Explosion3.h = -1
+          Explosion3.v = -1
+
+
+      time.sleep(0.03)
+
     r1 = random.randint(1, 3)
     MoveAnimatedSpriteAcrossScreenStepsPerFrame(
       ChickenRunning,
@@ -13371,7 +13505,7 @@ def DisplayDigitalClockKevin(
       ZoomFactor=r1,
       sleep=0.03 / r1
     )
-    
+
     # animated ships (no gravity, flying around like insects)--------------------
     h = (HatWidth // 2) - ((ClockSprite.width * ZoomFactor) // 2) + 1
     v = (HatHeight // 2) - ((ClockSprite.height * ZoomFactor) // 2) - ZoomFactor
