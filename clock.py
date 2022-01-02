@@ -49,8 +49,8 @@ while 1==1:
       RGB = LED.HighBlue,
       ShadowRGB     = LED.ShadowBlue,
       ZoomFactor    = 4,
-      AnimationDelay= 5,
-      RunMinutes = 3
+      AnimationDelay= 2,
+      RunMinutes = 1
     )
 
     LED.DisplayDigitalClock(
@@ -62,7 +62,7 @@ while 1==1:
         RGB=LED.HighWhite,
         ShadowRGB=LED.ShadowWhite,
         ZoomFactor = 5,
-        AnimationDelay=10,
+        AnimationDelay=8,
         RunMinutes = 1
     )
 
