@@ -12361,9 +12361,9 @@ def DisplayDigitalClock(
 
 
       #Show Custom Sprite
-      CopySpriteToPixelsZoom(DayOfWeekSprite,  DayOfWeekH,  DayOfWeekV,  DayOfWeekRGB,   SpriteFillerRGB,1)
-      CopySpriteToPixelsZoom(MonthSprite,      MonthH,      MonthV,      MonthRGB,       SpriteFillerRGB,1)
-      CopySpriteToPixelsZoom(DayOfMonthSprite, DayOfMonthH, DayOfMonthV, DayOfMonthRGB , SpriteFillerRGB,1)
+      #CopySpriteToPixelsZoom(DayOfWeekSprite,  DayOfWeekH,  DayOfWeekV,  DayOfWeekRGB,   SpriteFillerRGB,1)
+      #CopySpriteToPixelsZoom(MonthSprite,      MonthH,      MonthV,      MonthRGB,       SpriteFillerRGB,1)
+      #CopySpriteToPixelsZoom(DayOfMonthSprite, DayOfMonthH, DayOfMonthV, DayOfMonthRGB , SpriteFillerRGB,1)
 
 
       #MakeAndShowClock(hh,h,v,RGB,ShadowGreen,ZoomFactor,Fill=True)
@@ -12374,8 +12374,6 @@ def DisplayDigitalClock(
 
         time.sleep(AnimationDelay)
         ClockSprite = UpdateClockWithTransition(ClockSprite,hh,h,v,RGB,ShadowRGB,ZoomFactor,Fill=True,TransitionType=2)
-
-
 
         r = random.randint(1,11)
         if (r == 1):
@@ -12431,7 +12429,6 @@ def DisplayDigitalClock(
           #      ZoomFactor    = 3,
           #      sleep         = 0
           #      )
-
 
         elif (r == 4):
           #MakeAndShowClock(hh,h,v,RGB,ShadowGreen,ZoomFactor,Fill=False)
@@ -12500,7 +12497,6 @@ def DisplayDigitalClock(
             )
           LittleShipFlying.HorizontalFlip()
 
-
         elif (r == 6):
           ClockSprite = UpdateClockWithTransition(ClockSprite,hh,h,v,RGB,ShadowRGB,ZoomFactor,Fill=True,TransitionType=2)
           #MakeAndShowClock(hh,h,v,RGB,ShadowGreen,ZoomFactor,Fill=False)
@@ -12527,7 +12523,6 @@ def DisplayDigitalClock(
             )
           DotZerkRobotWalking.HorizontalFlip()
 
-
         elif (r == 7):
           ClockSprite = UpdateClockWithTransition(ClockSprite,hh,h,v,RGB,ShadowRGB,ZoomFactor,Fill=True,TransitionType=2)
           #MakeAndShowClock(hh,h,v,RGB,ShadowGreen,ZoomFactor,Fill=False)
@@ -12552,8 +12547,6 @@ def DisplayDigitalClock(
             )
           DotZerkRobotWalkingSmall.HorizontalFlip()
 
-
-
         if (r == 8):
           ClockSprite = UpdateClockWithTransition(ClockSprite,hh,h,v,RGB,ShadowRGB,ZoomFactor,Fill=True,TransitionType=2)
           #MakeAndShowClock(hh,h,v,RGB,ShadowGreen,ZoomFactor,Fill=False)
@@ -12562,7 +12555,6 @@ def DisplayDigitalClock(
           RunningMan3Sprite.HorizontalFlip()
           RunningMan3Sprite.ScrollAcrossScreen(20,15,'left',0.02 )
           RunningMan3Sprite.HorizontalFlip()
-
 
         elif (r == 9):
           #MakeAndShowClock(hh,h,v,RGB,ShadowGreen,ZoomFactor,Fill=False)
@@ -12640,7 +12632,6 @@ def DisplayDigitalClock(
             )
           LightBike.HorizontalFlip()
 
-
         elif (r == 11):
           ClockSprite = UpdateClockWithTransition(ClockSprite,hh,h,v,RGB,ShadowRGB,ZoomFactor,Fill=True,TransitionType=2)
           #MakeAndShowClock(hh,h,v,RGB,ShadowGreen,ZoomFactor,Fill=False)
@@ -12695,19 +12686,12 @@ def DisplayDigitalClock(
               sleep         = 0
               )
 
-
-
-
-
-
         #This will end the while loop
         elapsed_time = time.time() - StartTime
         elapsed_hours, rem = divmod(elapsed_time, 3600)
         elapsed_minutes, elapsed_seconds = divmod(rem, 60)
 
         print(datetime.now().strftime('%H:%M:%S'))
-
-
 
         if (ClockSprite.hhmm != datetime.now().strftime('%H:%M')):
           #MakeAndShowClock(hh,h,v,RGB,ShadowGreen,ZoomFactor,Fill=True)
