@@ -13340,7 +13340,6 @@ def DisplayDigitalClockKevin(
   if (CenterVert == True):
     v = (HatHeight // 2) - ((ClockSprite.height * ZoomFactor) // 2) - ZoomFactor
 
-
   # ClearBigLED()
   # ClearBuffers()
 
@@ -13350,7 +13349,7 @@ def DisplayDigitalClockKevin(
   ClockAreaSprite = Sprite((ClockSprite.width * 2) + 3, (ClockSprite.height * 2), 0, 0, 0, [])
   ClockAreaSprite.h = ClockH - 3
   ClockAreaSprite.v = 1
-  CopySpriteToScreenArrayZoom(ClockSprite, h=ClockH, v=9, ColorTuple=(250, 250, 250), FillerTuple=(0, 0, 0),
+  CopySpriteToScreenArrayZoom(ClockSprite, h=h, v=9, ColorTuple=(250, 250, 250), FillerTuple=(0, 0, 0),
                               ZoomFactor=2, Fill=True)
 
   while (Done == False):
