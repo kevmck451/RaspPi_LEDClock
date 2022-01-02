@@ -49,7 +49,6 @@ while 1==1:
         ShadowRGB=LED.ShadowWhite,
         ZoomFactor = 5,
         AnimationDelay=2,
-        RunMinutes = 1
     )
 
 

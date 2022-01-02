@@ -13319,7 +13319,6 @@ def DisplayDigitalClockKevin(
         ZoomFactor=2,
         AnimationDelay=10,
         ScrollSleep=0.02,
-        RunMinutes=5,
         StartDateTimeUTC='',
         HHMMSS='00:00:00',
         DisplayNumber1=0,
@@ -13361,62 +13360,10 @@ def DisplayDigitalClockKevin(
       ClockSprite = CreateClockSprite(hh)
       ScreenArray = CopySpriteToScreenArrayZoom(ClockSprite, ClockH, 0, (250, 250, 250), (0, 0, 0), 1, Fill=True)
 
-    r = random.randint(1, 5)
-
-    # space invaders
-    if (r == 1):
-
-      SpaceInvader.framerate = 4
-      SmallInvader.framerate = 2
-      TinyInvader.framerate = 1
-
-      SpaceInvader.InitializeScreenArray()
-      SmallInvader.InitializeScreenArray()
-      TinyInvader.InitializeScreenArray()
-
-      h = HatWidth - (ClockSprite.width * 2)
-      ClockSprite = CreateClockSprite(hh)
-      ScreenArray = CopySpriteToScreenArrayZoom(ClockSprite, h=h, v=0, ColorTuple=(250, 250, 250),
-                                                FillerTuple=(0, 0, 0), ZoomFactor=2, Fill=True,
-                                                InputScreenArray=ScreenArray)
-
-      # Make a screen array (buffer)
-      # copy sprite frames
-      # fade with falling sand
-      ScreenArray1 = copy.deepcopy(ScreenArray)
-      ScreenArray1 = CopyAnimatedSpriteToScreenArrayZoom(SpaceInvader, h=0, v=8, ZoomFactor=2,
-                                                         TheScreenArray=ScreenArray1)
-      ScreenArray1 = CopyAnimatedSpriteToScreenArrayZoom(SmallInvader, h=25, v=16, ZoomFactor=2,
-                                                         TheScreenArray=ScreenArray1)
-      ScreenArray1 = CopyAnimatedSpriteToScreenArrayZoom(TinyInvader, h=45, v=17, ZoomFactor=2,
-                                                         TheScreenArray=ScreenArray1)
-      ScreenArray2 = copy.deepcopy(EmptyArray)
-      TransitionBetweenScreenArrays(ScreenArray2, ScreenArray1, TransitionType=2)
-
-      for x in range(1, 100):
-        CopyAnimatedSpriteToPixelsZoom(SpaceInvader, h=0, v=8, ZoomFactor=2)
-        SpaceInvader.IncrementFrame()
-        CopyAnimatedSpriteToPixelsZoom(SmallInvader, h=25, v=16, ZoomFactor=2)
-        SmallInvader.IncrementFrame()
-        CopyAnimatedSpriteToPixelsZoom(TinyInvader, h=45, v=17, ZoomFactor=2)
-        TinyInvader.IncrementFrame()
-        time.sleep(0.08)
-
-      # Check Time
-      if (ClockSprite.hhmm != datetime.now().strftime('%H:%M')):
-        # print("ClockSprite.hhm: ",ClockSprite.hhmm, "Other:",datetime.now().strftime('%H:%M'))
-        # ClearBuffers() #clean the internal graphic buffers
-        ClockSprite = CreateClockSprite(hh)
-        CopySpriteToPixelsZoom(ClockSprite, h, 0, (250, 250, 250), (0, 0, 0), 2, Fill=True)
-
-      # Fade to Black
-      ScreenArray1 = copy.deepcopy(EmptyArray)
-      ScreenArray2 = copy.deepcopy(ScreenArray)
-      TransitionBetweenScreenArrays(ScreenArray2, ScreenArray1, TransitionType=2)
-      ScreenArray = copy.deepcopy(EmptyArray)
+    r = random.randint(1, 4)
 
     #Chicken
-    if (r==2):
+    if (r==1):
       #h = HatWidth - (ClockSprite.width * 2)
       h = HatWidth - (ClockSprite.width * 2)
       ClockSprite = CreateClockSprite(hh)
@@ -13468,7 +13415,7 @@ def DisplayDigitalClockKevin(
       ScreenArray = copy.deepcopy(EmptyArray)
 
     # animated ships (no gravity, flying around like insects)
-    if (r == 3):
+    if (r == 2):
       h = HatWidth - (ClockSprite.width * 2)
       ClockSprite = CreateClockSprite(hh)
       ScreenArray = CopySpriteToScreenArrayZoom(ClockSprite, h=h, v=0, ColorTuple=(250, 250, 250),
@@ -13646,7 +13593,7 @@ def DisplayDigitalClockKevin(
       # ShipSprites[ship3].Erase()
 
     # animated ships with gravity
-    if (r == 4):
+    if (r == 3):
       ClearBigLED()
       ClearBuffers()
 
@@ -13797,7 +13744,7 @@ def DisplayDigitalClockKevin(
       # ShipSprites[ship3].EraseZoom(h3,v3)
 
     # rSpiderLeg
-    if (r == 5):
+    if (r == 4):
 
       ClockH = HatWidth - (ClockSprite.width * 2)
       ClockSprite = CreateClockSprite(hh)
@@ -13854,8 +13801,6 @@ def DisplayDigitalClockKevin(
 
     # print ("StartTime:    ",StartTime, " Now:",time.time())
     # print("ElapsedMinues: ",elapsed_minutes)
-    if elapsed_minutes >= RunMinutes:
-      Done = True
 
 #==========================================================================================================
 
