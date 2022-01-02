@@ -12367,7 +12367,7 @@ def DisplayDigitalClock(
         ClockSprite = UpdateClockWithTransition(ClockSprite, hh, h, v, RGB, ShadowRGB, ZoomFactor, Fill=True,
                                                 TransitionType=2)
 
-        r = random.randint(1, 11)
+        r = random.randint(1, 12)
         if (r == 1):
           ClockSprite = UpdateClockWithTransition(ClockSprite, hh, h, v, RGB, ShadowRGB, ZoomFactor, Fill=True)
           # MakeAndShowClock(hh,h,v,RGB,ShadowGreen,ZoomFactor,Fill=True)
@@ -12544,7 +12544,7 @@ def DisplayDigitalClock(
           )
           DotZerkRobotWalkingSmall.HorizontalFlip()
 
-        if (r == 8):
+        elif (r == 8):
           ClockSprite = UpdateClockWithTransition(ClockSprite, hh, h, v, RGB, ShadowRGB, ZoomFactor, Fill=True,
                                                   TransitionType=2)
           # MakeAndShowClock(hh,h,v,RGB,ShadowGreen,ZoomFactor,Fill=False)
@@ -12682,6 +12682,27 @@ def DisplayDigitalClock(
               ZoomFactor=1,
               sleep=0
             )
+        # Chicken
+        elif (r == 12):
+          ClockSprite = UpdateClockWithTransition(ClockSprite, hh, h, v, RGB, ShadowRGB, ZoomFactor, Fill=True,
+                                                  TransitionType=2)
+          # MakeAndShowClock(hh,h,v,RGB,ShadowGreen,ZoomFactor,Fill=False)
+
+          r = random.randint(1, 3)
+
+          MoveAnimatedSpriteAcrossScreenStepsPerFrame(
+            ChickenRunning,
+            Position='bottom',
+            Vadjust=1 * r,
+            direction="left",
+            StepsPerFrame=r,
+            ZoomFactor=r,
+            sleep=0.03 / r
+          )
+
+
+
+
 
         # This will end the while loop
         elapsed_time = time.time() - StartTime
@@ -12694,6 +12715,10 @@ def DisplayDigitalClock(
           # MakeAndShowClock(hh,h,v,RGB,ShadowGreen,ZoomFactor,Fill=True)
           ClockSprite = UpdateClockWithTransition(ClockSprite, hh, h, v, RGB, ShadowRGB, ZoomFactor, Fill=True,
                                                   TransitionType=2)
+
+
+
+
 
 
 
