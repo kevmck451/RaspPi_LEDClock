@@ -59,9 +59,11 @@ while 1==1:
         CenterVert=True,
         v=1,
         hh=12,
+        RGB=LED.HighWhite,
+        ShadowRGB=LED.ShadowWhite,
         ZoomFactor = 5,
         AnimationDelay=10,
-        RunMinutes = 3
+        RunMinutes = 1
     )
 
 
