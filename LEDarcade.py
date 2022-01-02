@@ -12306,7 +12306,7 @@ def DisplayDigitalClock(
   CenterVert  = False,
   h           = 0,
   v           = 0,
-  hh          = 30,
+  hh          = 12,
   RGB         = HighBlue,
   ShadowRGB   = ShadowBlue,
   ZoomFactor  = 2,
@@ -12736,13 +12736,10 @@ def DisplayDigitalClock(
           ClockSprite = CreateClockSprite(hh)
           ScreenArray = CopySpriteToScreenArrayZoom(ClockSprite,45,0,(0,0,250),(0,0,0),1,Fill=True)
 
-
         r = random.randint(1,7)
-
 
         #RunningMan
         if (r==1):
-
 
           h = HatWidth - (ClockSprite.width * 2)
           ClockSprite = CreateClockSprite(hh)
@@ -12755,8 +12752,6 @@ def DisplayDigitalClock(
           RunningManSprite.InitializeScreenArray()
           RunningMan2Sprite.InitializeScreenArray()
           RunningMan3Sprite.InitializeScreenArray()
-
-
 
           #Make a screen array (buffer)
           #copy sprite frames
@@ -12796,21 +12791,16 @@ def DisplayDigitalClock(
           TransitionBetweenScreenArrays(ScreenArray2,ScreenArray1,TransitionType=2)
           ScreenArray = copy.deepcopy(EmptyArray)
 
-
-
-
         #robots
         if (r==2):
           #ClearBigLED()
           #ClearBuffers()
-
 
           ScreenArray = copy.deepcopy(EmptyArray)
           h = HatWidth - (ClockSprite.width * 2)
           ClockSprite = CreateClockSprite(hh)
           ScreenArray = CopySpriteToScreenArrayZoom(ClockSprite,h=h,v=0,ColorTuple=(0,0,250),FillerTuple=(0,0,0),ZoomFactor=2,Fill=True)
           DotZerkRobotWalking.InitializeScreenArray()
-
 
           #Make a screen array (buffer)
           #copy sprite frames
