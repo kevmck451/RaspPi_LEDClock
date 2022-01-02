@@ -13306,6 +13306,31 @@ def DisplayDigitalClock(
         if elapsed_minutes >= RunMinutes:
           Done = True
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 #==============================================================================
 
 def DisplayDigitalClockKevin(
@@ -13351,18 +13376,6 @@ def DisplayDigitalClockKevin(
     ScreenArray1 = copy.deepcopy(ScreenArray)
     ScreenArray2 = copy.deepcopy(EmptyArray)
     TransitionBetweenScreenArrays(ScreenArray2, ScreenArray1, TransitionType=2)
-
-    # Chicken---------------------------------
-    r1 = random.randint(1, 3)
-    MoveAnimatedSpriteAcrossScreenStepsPerFrame(
-      ChickenRunning,
-      Position='bottom',
-      Vadjust=1 * r1,
-      direction="left",
-      StepsPerFrame=r1,
-      ZoomFactor=r1,
-      sleep=0.03 / r1
-    )
 
     # animated ships (no gravity, flying around like insects)--------------------
     h = (HatWidth // 2) - ((ClockSprite.width * ZoomFactor) // 2) + 1
@@ -13495,6 +13508,18 @@ def DisplayDigitalClockKevin(
           Explosion3.v = -1
 
       time.sleep(0.03)
+
+    # Chicken---------------------------------
+    r1 = random.randint(1, 3)
+    MoveAnimatedSpriteAcrossScreenStepsPerFrame(
+      ChickenRunning,
+      Position='bottom',
+      Vadjust=1 * r1,
+      direction="left",
+      StepsPerFrame=r1,
+      ZoomFactor=r1,
+      sleep=0.03 / r1
+    )
 
     # animated ships with gravity------------------------------
     ClearBigLED()
@@ -13634,6 +13659,12 @@ def DisplayDigitalClockKevin(
                                    ZoomFactor=r56, sleep=0.03)
     BigSpiderWalkingSprite.HorizontalFlip()
 
+    # Fade to Black
+    ScreenArray1 = copy.deepcopy(EmptyArray)
+    ScreenArray2 = copy.deepcopy(ScreenArray)
+    TransitionBetweenScreenArrays(ScreenArray2, ScreenArray1, TransitionType=2)
+    ScreenArray = copy.deepcopy(EmptyArray)
+      
   # Check Time
   if (ClockSprite.hhmm != datetime.now().strftime('%H:%M')):
     ScreenArray1 = CopySpriteToScreenArrayZoom(ClockSprite, h, v, (250, 250, 250), (0, 0, 0), ZoomFactor=1,
@@ -13645,6 +13676,30 @@ def DisplayDigitalClockKevin(
 
 
 #==========================================================================================================
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 #------------------------------------------------------------------------------
 #  TWITCH DISPLAY                                                            --
