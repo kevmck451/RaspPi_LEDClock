@@ -12323,11 +12323,11 @@ def DisplayDigitalClock(
     ClearBuffers()
     global ScreenArray
 
-    print("ClockStyle:",ClockStyle)
+    #print("ClockStyle:",ClockStyle)
     ClockSprite = CreateClockSprite(hh)
     Done        = False
     StartTime   = time.time()
-    print("RunMinutes:",RunMinutes)
+    #print("RunMinutes:",RunMinutes)
 
     if (CenterHoriz == True):
       h = (HatWidth  // 2)  - ((ClockSprite.width * ZoomFactor) // 2) + 1
