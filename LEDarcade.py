@@ -13309,9 +13309,7 @@ def DisplayDigitalClock(
 #==============================================================================
 
 def DisplayDigitalClockKevin(
-        CenterHoriz=False,
-        CenterVert=False,
-        h=0,
+        h=16,
         v=0,
         hh=12,
         RGB=HighWhite,
@@ -13331,15 +13329,7 @@ def DisplayDigitalClockKevin(
   ClockSprite = CreateClockSprite(hh)
   Done = False
   StartTime = time.time()
-
-
-
-  if (CenterHoriz == True):
-    h = 16
-
-  if (CenterVert == True):
-    v = (HatHeight // 2) - ((ClockSprite.height * ZoomFactor) // 2) - ZoomFactor
-
+  """
   ClockH = HatWidth - (ClockSprite.width * 2)
   ClockSprite = CreateClockSprite(hh)
   # we need to make a fake sprite to take the place of the clock which is zoomed)
@@ -13348,7 +13338,7 @@ def DisplayDigitalClockKevin(
   ClockAreaSprite.v = 1
   CopySpriteToScreenArrayZoom(ClockSprite, h=h, v=v, ColorTuple=(250, 250, 250), FillerTuple=(0, 0, 0),
                               ZoomFactor=2, Fill=True)
-
+  """
   while (Done == False):
 
     r69 = random.randint(1, 32)
