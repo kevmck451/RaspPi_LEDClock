@@ -12316,7 +12316,7 @@ def DisplayDigitalClock(
         hh=12,
         RGB=HighWhite,
         ShadowRGB=ShadowWhite,
-        ZoomFactor=5,
+        ZoomFactor=4,
         AnimationDelay=1,
         ScrollSleep=0.02,
         StartDateTimeUTC='',
@@ -12695,8 +12695,11 @@ def DisplayDigitalClock(
           ClockSprite = UpdateClockWithTransition(ClockSprite, hh, h, v, RGB, ShadowRGB, ZoomFactor, Fill=True,
                                                   TransitionType=2)
 
-        if elapsed_minutes >= RunMinutes:
-          Done = True
+
+
+
+
+
 
 
 
