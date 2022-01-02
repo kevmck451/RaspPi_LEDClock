@@ -13622,7 +13622,7 @@ def DisplayDigitalClockKevin(
     ScreenArray2 = copy.deepcopy(EmptyArray)
     TransitionBetweenScreenArrays(ScreenArray2, ScreenArray1, TransitionType=2)
 
-    ClockSprite = UpdateClockWithTransition(ClockSprite, hh, h, v, RGB, ShadowRGB, ZoomFactor, Fill=True,
+    ClockSprite = UpdateClockWithTransition(ClockSprite, hh, 0, 0, RGB, ShadowRGB, ZoomFactor, Fill=True,
                                             TransitionType=2)
     # MakeAndShowClock(hh,h,v,RGB,ShadowGreen,ZoomFactor,Fill=True)
     r55 = random.randint(1, 2)
