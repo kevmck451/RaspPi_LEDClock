@@ -12721,10 +12721,10 @@ def DisplayDigitalClock(
       #ClearBigLED()
       #ClearBuffers()
 
-      ClockH = HatWidth - (ClockSprite.width * 2)
+      ClockH = HatWidth - (ClockSprite.width * 3)
       ClockSprite = CreateClockSprite(hh)
       #we need to make a fake sprite to take the place of the clock which is zoomed)
-      ClockAreaSprite = Sprite((ClockSprite.width*2)+3,(ClockSprite.height*2),0,0,0,[])
+      ClockAreaSprite = Sprite((ClockSprite.width*3)+3,(ClockSprite.height*3),0,0,0,[])
       ClockAreaSprite.h = ClockH -3
       ClockAreaSprite.v = 1
       CopySpriteToScreenArrayZoom(ClockSprite,h=ClockH,v=0,ColorTuple=(0,0,250),FillerTuple=(0,0,0),ZoomFactor=2,Fill=True)
