@@ -12688,7 +12688,7 @@ def DisplayDigitalClock(
         elapsed_hours, rem = divmod(elapsed_time, 3600)
         elapsed_minutes, elapsed_seconds = divmod(rem, 60)
 
-        print(datetime.now().strftime('%H:%M:%S'))
+        #print(datetime.now().strftime('%H:%M:%S'))
 
         if (ClockSprite.hhmm != datetime.now().strftime('%H:%M')):
           # MakeAndShowClock(hh,h,v,RGB,ShadowGreen,ZoomFactor,Fill=True)
