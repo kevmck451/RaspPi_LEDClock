@@ -12402,7 +12402,7 @@ def DisplayDigitalClock(
             Position='bottom',
             direction="right",
             FramesPerStep=1,
-            ZoomFactor=random.randint(1, 2),
+            ZoomFactor=random.randint(1, 4),
             sleep=0.03
           )
 
@@ -12411,19 +12411,9 @@ def DisplayDigitalClock(
             Position='bottom',
             direction="left",
             FramesPerStep=1,
-            ZoomFactor=random.randint(1, 2),
+            ZoomFactor=random.randint(1, 4),
             sleep=0.02
           )
-
-          # This one works better for big animations
-          # MoveAnimatedSpriteAcrossScreen(
-          #      ThreeGhostPacSprite,
-          #      v             = 15,
-          #      direction     = "right",
-          #      steps         = 2,
-          #      ZoomFactor    = 3,
-          #      sleep         = 0
-          #      )
 
 
         elif (r == 4):
@@ -12443,7 +12433,7 @@ def DisplayDigitalClock(
             Position='bottom',
             direction="right",
             StepsPerFrame=4,
-            ZoomFactor=random.randint(1, 3),
+            ZoomFactor=random.randint(1, 4),
             sleep=0.03
           )
 
@@ -12452,7 +12442,7 @@ def DisplayDigitalClock(
             Position='bottom',
             direction="right",
             StepsPerFrame=4,
-            ZoomFactor=random.randint(1, 3),
+            ZoomFactor=random.randint(1, 4),
             sleep=0.03
           )
 
@@ -12461,7 +12451,7 @@ def DisplayDigitalClock(
             Position='bottom',
             direction="right",
             StepsPerFrame=4,
-            ZoomFactor=random.randint(1, 3),
+            ZoomFactor=random.randint(1, 4),
             sleep=0.03
           )
 
@@ -12470,7 +12460,7 @@ def DisplayDigitalClock(
                                                   TransitionType=2)
           # MakeAndShowClock(hh,h,v,RGB,ShadowGreen,ZoomFactor,Fill=False)
 
-          r = random.randint(1, 3)
+          r = random.randint(1, 4)
           MoveAnimatedSpriteAcrossScreenStepsPerFrame(
             LittleShipFlying,
             Position='bottom',
@@ -12481,7 +12471,7 @@ def DisplayDigitalClock(
           )
           LittleShipFlying.HorizontalFlip()
 
-          r = random.randint(1, 3)
+          r = random.randint(1, 4)
           MoveAnimatedSpriteAcrossScreenStepsPerFrame(
             LittleShipFlying,
             Position='bottom',
@@ -12503,7 +12493,7 @@ def DisplayDigitalClock(
             Position='bottom',
             direction="left",
             StepsPerFrame=2,
-            ZoomFactor=random.randint(1, 2),
+            ZoomFactor=random.randint(1, 4),
             sleep=0.03
           )
           DotZerkRobotWalking.HorizontalFlip()
@@ -12513,7 +12503,7 @@ def DisplayDigitalClock(
             Position='bottom',
             direction="right",
             StepsPerFrame=2,
-            ZoomFactor=random.randint(1, 2),
+            ZoomFactor=random.randint(1, 4),
             sleep=0.03
           )
           DotZerkRobotWalking.HorizontalFlip()
@@ -12529,7 +12519,7 @@ def DisplayDigitalClock(
             Position='bottom',
             direction="left",
             StepsPerFrame=2,
-            ZoomFactor=random.randint(1, 2),
+            ZoomFactor=random.randint(1, 4),
             sleep=0.03
           )
           DotZerkRobotWalkingSmall.HorizontalFlip()
@@ -12539,7 +12529,7 @@ def DisplayDigitalClock(
             Position='bottom',
             direction="right",
             StepsPerFrame=2,
-            ZoomFactor=random.randint(1, 2),
+            ZoomFactor=random.randint(1, 4),
             sleep=0.03
           )
           DotZerkRobotWalkingSmall.HorizontalFlip()
@@ -12568,7 +12558,7 @@ def DisplayDigitalClock(
             Position='bottom',
             direction="left",
             StepsPerFrame=1,
-            ZoomFactor=random.randint(1, 2),
+            ZoomFactor=random.randint(1, 4),
             sleep=0.03
           )
 
@@ -12578,7 +12568,7 @@ def DisplayDigitalClock(
             Position='bottom',
             direction="right",
             StepsPerFrame=1,
-            ZoomFactor=random.randint(1, 2),
+            ZoomFactor=random.randint(1, 4),
             sleep=0.03
           )
 
@@ -12590,7 +12580,7 @@ def DisplayDigitalClock(
             Position='bottom',
             direction="left",
             StepsPerFrame=1,
-            ZoomFactor=random.randint(2, 3),
+            ZoomFactor=random.randint(2, 4),
             sleep=0.03
           )
 
@@ -12600,7 +12590,7 @@ def DisplayDigitalClock(
             Position='bottom',
             direction="right",
             StepsPerFrame=1,
-            ZoomFactor=random.randint(2, 3),
+            ZoomFactor=random.randint(2, 4),
             sleep=0.03
           )
 
@@ -12688,7 +12678,7 @@ def DisplayDigitalClock(
                                                   TransitionType=2)
           # MakeAndShowClock(hh,h,v,RGB,ShadowGreen,ZoomFactor,Fill=False)
 
-          r = random.randint(1, 3)
+          r = random.randint(1, 5)
 
           MoveAnimatedSpriteAcrossScreenStepsPerFrame(
             ChickenRunning,
