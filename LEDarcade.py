@@ -12703,7 +12703,7 @@ def DisplayDigitalClock(
 
           h = HatWidth - (ClockSprite.width * 2)
           ClockSprite = CreateClockSprite(hh)
-          ScreenArray = CopySpriteToScreenArrayZoom(ClockSprite,h=h,v=0,ColorTuple=(0,0,250),FillerTuple=(0,0,0),ZoomFactor=2,Fill=True,InputScreenArray=ScreenArray)
+          ScreenArray = CopySpriteToScreenArrayZoom(ClockSprite,h=h,v=0,ColorTuple=(250,250,250),FillerTuple=(0,0,0),ZoomFactor=2,Fill=True,InputScreenArray=ScreenArray)
 
           RunningMan3Sprite.framerate = 2
           RunningMan3Sprite.h = -4
