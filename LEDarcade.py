@@ -13640,12 +13640,11 @@ def DisplayDigitalClockKevin(
     ScreenArray = CopySpriteToScreenArrayZoom(ClockSprite, h=h, v=0, ColorTuple=(250, 250, 250), FillerTuple=(0, 0, 0),
                                               ZoomFactor=2, Fill=True, InputScreenArray=ScreenArray)
 
-    # Make a screen array (buffer)
-    # copy sprite frames
-    # fade with falling sand
-    ScreenArray1 = copy.deepcopy(ScreenArray)
-    ScreenArray2 = copy.deepcopy(EmptyArray)
+    # Fade to Black
+    ScreenArray1 = copy.deepcopy(EmptyArray)
+    ScreenArray2 = copy.deepcopy(ScreenArray)
     TransitionBetweenScreenArrays(ScreenArray2, ScreenArray1, TransitionType=2)
+    ScreenArray = copy.deepcopy(EmptyArray)
 
     ClockSprite = UpdateClockWithTransition(ClockSprite, hh, 0, 0, RGB, ShadowRGB, ZoomFactor, Fill=True,
                                             TransitionType=2)
@@ -13664,7 +13663,7 @@ def DisplayDigitalClockKevin(
     ScreenArray2 = copy.deepcopy(ScreenArray)
     TransitionBetweenScreenArrays(ScreenArray2, ScreenArray1, TransitionType=2)
     ScreenArray = copy.deepcopy(EmptyArray)
-      
+
   # Check Time
   if (ClockSprite.hhmm != datetime.now().strftime('%H:%M')):
     ScreenArray1 = CopySpriteToScreenArrayZoom(ClockSprite, h, v, (250, 250, 250), (0, 0, 0), ZoomFactor=1,
