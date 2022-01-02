@@ -13347,6 +13347,31 @@ def DisplayDigitalClockKevin(
       ClockSprite = CreateClockSprite(hh)
       ScreenArray = CopySpriteToScreenArrayZoom(ClockSprite, h, v, (250, 250, 250), (0, 0, 0), 1, Fill=True)
 
+      # Chicken---------------------------------
+    h = r69
+    v = (HatHeight // 2) - ((ClockSprite.height * ZoomFactor) // 2) - ZoomFactor
+    ClockSprite = CreateClockSprite(hh)
+    ScreenArray = CopySpriteToScreenArrayZoom(ClockSprite, h=h, v=0, ColorTuple=(250, 250, 250), FillerTuple=(0, 0, 0),
+                                              ZoomFactor=2, Fill=True, InputScreenArray=ScreenArray)
+
+    # Make a screen array (buffer)
+    # copy sprite frames
+    # fade with falling sand
+    ScreenArray1 = copy.deepcopy(ScreenArray)
+    ScreenArray2 = copy.deepcopy(EmptyArray)
+    TransitionBetweenScreenArrays(ScreenArray2, ScreenArray1, TransitionType=2)
+
+    r1 = random.randint(1, 3)
+    MoveAnimatedSpriteAcrossScreenStepsPerFrame(
+      ChickenRunning,
+      Position='bottom',
+      Vadjust=1 * r1,
+      direction="left",
+      StepsPerFrame=r1,
+      ZoomFactor=r1,
+      sleep=0.03 / r1
+    )
+    
     # animated ships (no gravity, flying around like insects)--------------------
     h = (HatWidth // 2) - ((ClockSprite.width * ZoomFactor) // 2) + 1
     v = (HatHeight // 2) - ((ClockSprite.height * ZoomFactor) // 2) - ZoomFactor
@@ -13605,31 +13630,6 @@ def DisplayDigitalClockKevin(
     ScreenArray2 = copy.deepcopy(ScreenArray)
     TransitionBetweenScreenArrays(ScreenArray2, ScreenArray1, TransitionType=2)
     ScreenArray = copy.deepcopy(EmptyArray)
-
-    # Chicken---------------------------------
-    h = r69
-    v = (HatHeight // 2) - ((ClockSprite.height * ZoomFactor) // 2) - ZoomFactor
-    ClockSprite = CreateClockSprite(hh)
-    ScreenArray = CopySpriteToScreenArrayZoom(ClockSprite, h=h, v=0, ColorTuple=(250, 250, 250), FillerTuple=(0, 0, 0),
-                                              ZoomFactor=2, Fill=True, InputScreenArray=ScreenArray)
-
-    # Make a screen array (buffer)
-    # copy sprite frames
-    # fade with falling sand
-    ScreenArray1 = copy.deepcopy(ScreenArray)
-    ScreenArray2 = copy.deepcopy(EmptyArray)
-    TransitionBetweenScreenArrays(ScreenArray2, ScreenArray1, TransitionType=2)
-
-    r1 = random.randint(1, 3)
-    MoveAnimatedSpriteAcrossScreenStepsPerFrame(
-      ChickenRunning,
-      Position='bottom',
-      Vadjust=1 * r1,
-      direction="left",
-      StepsPerFrame=r1,
-      ZoomFactor=r1,
-      sleep=0.03 / r1
-    )
 
     # rSpiderLeg----------------------------------------
     h = r69
