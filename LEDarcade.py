@@ -13339,6 +13339,8 @@ def DisplayDigitalClockKevin(
   CopySpriteToScreenArrayZoom(ClockSprite, h=h, v=v, ColorTuple=(250, 250, 250), FillerTuple=(0, 0, 0),
                               ZoomFactor=2, Fill=True)
   while (Done == False):
+    ClearBigLED()
+    ClearBuffers()
     r69 = random.randint(1, 32)
     """
     if (ClockSprite.hhmm != datetime.now().strftime('%H:%M')):
@@ -13348,13 +13350,9 @@ def DisplayDigitalClockKevin(
     """
     h = r69
     v = (HatHeight // 2) - ((ClockSprite.height * ZoomFactor) // 2) - ZoomFactor
-    ClockSprite = CreateClockSprite(hh)
+    #ClockSprite = CreateClockSprite(hh)
     ScreenArray = CopySpriteToScreenArrayZoom(ClockSprite, h=h, v=0, ColorTuple=(250, 250, 250), FillerTuple=(0, 0, 0),
                                               ZoomFactor=2, Fill=True, InputScreenArray=ScreenArray)
-
-    # Make a screen array (buffer)
-    # copy sprite frames
-    # fade with falling sand
     ScreenArray1 = copy.deepcopy(ScreenArray)
     ScreenArray2 = copy.deepcopy(EmptyArray)
     TransitionBetweenScreenArrays(ScreenArray2, ScreenArray1, TransitionType=2)
@@ -13405,7 +13403,6 @@ def DisplayDigitalClockKevin(
     Explosion3.v = -1
 
     for x in range(1, 500):
-
       h, v = h1, v1
       h1, v1 = RandomMove(h1, v1, ShipSprites[ship1])
       # h1,v1 = RandomMove(h1,v1,ShipSprites[ship1])
@@ -13507,9 +13504,7 @@ def DisplayDigitalClockKevin(
     # animated ships with gravity------------------------------
     ClearBigLED()
     ClearBuffers()
-    h = r69
-    v = (HatHeight // 2) - ((ClockSprite.height * ZoomFactor) // 2) - ZoomFactor
-    ClockSprite = CreateClockSprite(hh)
+    #ClockSprite = CreateClockSprite(hh)
     ScreenArray = CopySpriteToScreenArrayZoom(ClockSprite,h=h,v=0,ColorTuple=(250,250,250),FillerTuple=(0,0,0),ZoomFactor=2,Fill=True,InputScreenArray=ScreenArray)
 
     #Make a screen array (buffer)
