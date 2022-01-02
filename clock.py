@@ -49,7 +49,7 @@ while 1==1:
         RGB=LED.HighWhite,
         ShadowRGB=LED.ShadowWhite,
         ZoomFactor = 5,
-        AnimationDelay=0,
+        AnimationDelay=2,
         RunMinutes = 1
     )
 

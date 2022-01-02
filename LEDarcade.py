@@ -12696,7 +12696,7 @@ def DisplayDigitalClock(
           ClockSprite = CreateClockSprite(hh)
           ScreenArray = CopySpriteToScreenArrayZoom(ClockSprite,40,0,(250,250,250),(0,0,0),1,Fill=True)
 
-        r = random.randint(1,7)
+        r = random.randint(1,9)
 
         #RunningMan
         if (r==1):
@@ -12905,7 +12905,7 @@ def DisplayDigitalClock(
           ScreenArray = copy.deepcopy(EmptyArray)
 
         #animated ships (no gravity, flying around like insects)
-        if (r==5):
+        if (r==5 or r==8 or r==9):
           h = HatWidth - (ClockSprite.width * 2)
           ClockSprite = CreateClockSprite(hh)
           ScreenArray = CopySpriteToScreenArrayZoom(ClockSprite,h=h,v=0,ColorTuple=(250,250,250),FillerTuple=(0,0,0),ZoomFactor=2,Fill=True,InputScreenArray=ScreenArray)
