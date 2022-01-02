@@ -13333,7 +13333,7 @@ def DisplayDigitalClockKevin(
   StartTime = time.time()
 
   if (CenterHoriz == True):
-    h = (HatWidth // 2) - ((ClockSprite.width * ZoomFactor) // 2) + 1
+    h = 12
 
   if (CenterVert == True):
     v = (HatHeight // 2) - ((ClockSprite.height * ZoomFactor) // 2) - ZoomFactor
@@ -13355,7 +13355,7 @@ def DisplayDigitalClockKevin(
       ScreenArray = CopySpriteToScreenArrayZoom(ClockSprite, h, v, (250, 250, 250), (0, 0, 0), 1, Fill=True)
 
     #Chicken---------------------------------
-    h = (HatWidth // 2) - ((ClockSprite.width * ZoomFactor) // 2) + 1
+    h = 12
     v = (HatHeight // 2) - ((ClockSprite.height * ZoomFactor) // 2) - ZoomFactor
     ClockSprite = CreateClockSprite(hh)
     ScreenArray = CopySpriteToScreenArrayZoom(ClockSprite,h=h,v=0,ColorTuple=(250,250,250),FillerTuple=(0,0,0),ZoomFactor=2,Fill=True,InputScreenArray=ScreenArray)
@@ -13520,7 +13520,7 @@ def DisplayDigitalClockKevin(
     # animated ships with gravity------------------------------
     ClearBigLED()
     ClearBuffers()
-    h = (HatWidth // 2) - ((ClockSprite.width * ZoomFactor) // 2) + 1
+    h = 12
     v = (HatHeight // 2) - ((ClockSprite.height * ZoomFactor) // 2) - ZoomFactor
     ClockSprite = CreateClockSprite(hh)
     ScreenArray = CopySpriteToScreenArrayZoom(ClockSprite,h=h,v=0,ColorTuple=(250,250,250),FillerTuple=(0,0,0),ZoomFactor=2,Fill=True,InputScreenArray=ScreenArray)
@@ -13579,7 +13579,7 @@ def DisplayDigitalClockKevin(
     ShipSprites[ship2].framerate = 1
     ShipSprites[ship3].framerate = 1
 
-    for x in range(1, 2000):
+    for x in range(1, 1000):
       # maybe only increment the frame ever X seconds (use a timer?)
       MoveSpriteWithGravity(ShipSprites[ship1])
       MoveSpriteWithGravity(ShipSprites[ship2])
@@ -13640,7 +13640,7 @@ def DisplayDigitalClockKevin(
     ScreenArray = copy.deepcopy(EmptyArray)
 
     # rSpiderLeg----------------------------------------
-    h = (HatWidth // 2) - ((ClockSprite.width * ZoomFactor) // 2) + 1
+    h = 12
     v = (HatHeight // 2) - ((ClockSprite.height * ZoomFactor) // 2) - ZoomFactor
     ClockSprite = CreateClockSprite(hh)
     ScreenArray = CopySpriteToScreenArrayZoom(ClockSprite, h=h, v=0, ColorTuple=(250, 250, 250), FillerTuple=(0, 0, 0),
@@ -13664,7 +13664,6 @@ def DisplayDigitalClockKevin(
     ScreenArray1 = CopySpriteToScreenArrayZoom(ClockSprite, h, v, (250, 250, 250), (0, 0, 0), ZoomFactor=1,
                                                Fill=True)
     ClockSprite = CreateClockSprite(hh)
-
     ScreenArray2 = CopySpriteToScreenArrayZoom(ClockSprite, h, v, (250, 250, 250), (0, 0, 0), ZoomFactor=1,
                                                Fill=True)
     TransitionBetweenScreenArrays(ScreenArray1, ScreenArray2)
