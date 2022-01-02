@@ -12312,7 +12312,7 @@ def DisplayDigitalClock(
         CenterHoriz=True,
         CenterVert=True,
         h=17,
-        v=0,
+        v=9,
         hh=12,
         RGB=HighWhite,
         ShadowRGB=ShadowWhite,
