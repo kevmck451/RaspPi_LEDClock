@@ -12215,9 +12215,9 @@ def UpdateClockWithTransition(ClockSprite,hh=24,h=0,v=0,RGB=HighGreen,ShadowRGB=
   #if (1==1):
 
 
-    DayOfWeekSprite     = CreateDayOfWeekSprite()
-    MonthSprite         = CreateMonthSprite()
-    DayOfMonthSprite    = CreateDayOfMonthSprite()
+    #DayOfWeekSprite     = CreateDayOfWeekSprite()
+    #MonthSprite         = CreateMonthSprite()
+    #DayOfMonthSprite    = CreateDayOfMonthSprite()
 
 
 
@@ -12350,28 +12350,22 @@ def DisplayDigitalClock(
       ScreenArray2  = [[ (0,0,0) for i in range(HatWidth)] for i in range(HatHeight)]
       ClockSprite = CreateClockSprite(hh)
 
-
       ScreenArray1 = CopySpriteToScreenArrayZoom(ClockSprite,h-1,v+1,ShadowRGB,(0,0,0),ZoomFactor=ZoomFactor,Fill=False,InputScreenArray=ScreenArray)
       ScreenArray1 = CopySpriteToScreenArrayZoom(ClockSprite,h,v,RGB,(0,0,0),ZoomFactor=ZoomFactor,Fill=False,InputScreenArray=ScreenArray1)
       TransitionBetweenScreenArrays(ScreenArray2,ScreenArray1,TransitionType=2)
 
-
       #CopySpriteToPixelsZoom(ClockSprite,h-1,v+1,ShadowRGB,(0,0,0),ZoomFactor,          Fill=False)
       #CopySpriteToPixelsZoom(ClockSprite,h,v,    RGB,      (0,0,0),ZoomFactor=ZoomFactor,Fill=False)
-
 
       #Show Custom Sprite
       #CopySpriteToPixelsZoom(DayOfWeekSprite,  DayOfWeekH,  DayOfWeekV,  DayOfWeekRGB,   SpriteFillerRGB,1)
       #CopySpriteToPixelsZoom(MonthSprite,      MonthH,      MonthV,      MonthRGB,       SpriteFillerRGB,1)
       #CopySpriteToPixelsZoom(DayOfMonthSprite, DayOfMonthH, DayOfMonthV, DayOfMonthRGB , SpriteFillerRGB,1)
 
-
       #MakeAndShowClock(hh,h,v,RGB,ShadowGreen,ZoomFactor,Fill=True)
       ClockSprite = UpdateClockWithTransition(ClockSprite,hh,h,v,RGB,ShadowRGB,ZoomFactor,Fill=True)
 
-
       while (Done == False):
-
         time.sleep(AnimationDelay)
         ClockSprite = UpdateClockWithTransition(ClockSprite,hh,h,v,RGB,ShadowRGB,ZoomFactor,Fill=True,TransitionType=2)
 
@@ -12410,7 +12404,6 @@ def DisplayDigitalClock(
             sleep         = 0.03
             )
 
-
           MoveAnimatedSpriteAcrossScreenFramesPerStep(
             ThreeBlueGhostPacSprite,
             Position      = 'bottom',
@@ -12441,7 +12434,6 @@ def DisplayDigitalClock(
           TinyInvader.framerate  = 1
           TinyInvader.InitializeScreenArray()
 
-
           MoveAnimatedSpriteAcrossScreenStepsPerFrame(
             SpaceInvader,
             Position      = 'bottom',
@@ -12451,7 +12443,6 @@ def DisplayDigitalClock(
             sleep         = 0.03
             )
 
-
           MoveAnimatedSpriteAcrossScreenStepsPerFrame(
             SmallInvader,
             Position      = 'bottom',
@@ -12460,7 +12451,6 @@ def DisplayDigitalClock(
             ZoomFactor    = random.randint(1,3),
             sleep         = 0.03
             )
-
 
           MoveAnimatedSpriteAcrossScreenStepsPerFrame(
             TinyInvader,
@@ -12510,8 +12500,6 @@ def DisplayDigitalClock(
             sleep         = 0.03
             )
           DotZerkRobotWalking.HorizontalFlip()
-
-
 
           MoveAnimatedSpriteAcrossScreenStepsPerFrame(
             DotZerkRobotWalking,
@@ -12572,7 +12560,6 @@ def DisplayDigitalClock(
             sleep         = 0.03
             )
 
-
           i = random.randint(0,27)
           MoveAnimatedSpriteAcrossScreenStepsPerFrame(
             ShipSprites[i],
@@ -12582,9 +12569,6 @@ def DisplayDigitalClock(
             ZoomFactor    = random.randint(1,2),
             sleep         = 0.03
             )
-
-
-
 
           i = random.randint(0,27)
           ShipSprites[i].InitializeScreenArray()
@@ -12597,7 +12581,6 @@ def DisplayDigitalClock(
             ZoomFactor    = random.randint(2,3),
             sleep         = 0.03
             )
-
 
           i = random.randint(0,27)
           MoveAnimatedSpriteAcrossScreenStepsPerFrame(
