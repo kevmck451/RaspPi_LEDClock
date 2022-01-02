@@ -13504,12 +13504,6 @@ def DisplayDigitalClockKevin(
 
       time.sleep(0.03)
 
-    # Fade to Black
-    ScreenArray1 = copy.deepcopy(EmptyArray)
-    ScreenArray2 = copy.deepcopy(ScreenArray)
-    TransitionBetweenScreenArrays(ScreenArray2, ScreenArray1, TransitionType=1)
-    ScreenArray = copy.deepcopy(EmptyArray)
-
     # animated ships with gravity------------------------------
     ClearBigLED()
     ClearBuffers()
@@ -13624,12 +13618,6 @@ def DisplayDigitalClockKevin(
         ShipSprites[ship3].IncrementFrame()
       time.sleep(0.007)
 
-    # Fade to Black
-    ScreenArray1 = copy.deepcopy(EmptyArray)
-    ScreenArray2 = copy.deepcopy(ScreenArray)
-    TransitionBetweenScreenArrays(ScreenArray2, ScreenArray1, TransitionType=2)
-    ScreenArray = copy.deepcopy(EmptyArray)
-
     # rSpiderLeg----------------------------------------
     h = r69
     v = (HatHeight // 2) - ((ClockSprite.height * ZoomFactor) // 2) - ZoomFactor
@@ -13644,7 +13632,7 @@ def DisplayDigitalClockKevin(
     ScreenArray2 = copy.deepcopy(EmptyArray)
     TransitionBetweenScreenArrays(ScreenArray2, ScreenArray1, TransitionType=2)
 
-    for x in range(1, 200):
+    for x in range(1, 100):
       CopyAnimatedSpriteToPixelsZoom(BigSpiderLegOutSprite, h=9, v=HatHeight - BigSpiderLegOutSprite.height,
                                      ZoomFactor=1)
       BigSpiderLegOutSprite.IncrementFrame()
@@ -13658,18 +13646,7 @@ def DisplayDigitalClockKevin(
     ScreenArray2 = CopySpriteToScreenArrayZoom(ClockSprite, h, v, (250, 250, 250), (0, 0, 0), ZoomFactor=1,
                                                Fill=True)
     TransitionBetweenScreenArrays(ScreenArray1, ScreenArray2)
-    """
-    # Fade to Black
-    ScreenArray1 = copy.deepcopy(EmptyArray)
-    ScreenArray2 = copy.deepcopy(ScreenArray)
-    TransitionBetweenScreenArrays(ScreenArray2, ScreenArray1, TransitionType=2)
-    ScreenArray = copy.deepcopy(EmptyArray)
 
-    # This will end the while loop
-    elapsed_time = time.time() - StartTime
-    elapsed_hours, rem = divmod(elapsed_time, 3600)
-    elapsed_minutes, elapsed_seconds = divmod(rem, 60)
-    """
 
 #==========================================================================================================
 
