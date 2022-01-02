@@ -45,7 +45,7 @@ while 1==1:
         CenterHoriz=True,
         v=1,
         hh=12,
-        ZoomFactor = 1,
+        ZoomFactor = 2,
         AnimationDelay=10,
         RunMinutes = 5
     )
@@ -57,7 +57,7 @@ while 1==1:
       hh  = 12,
       RGB = LED.HighBlue,
       ShadowRGB     = LED.ShadowBlue,
-      ZoomFactor    = 2,
+      ZoomFactor    = 3,
       AnimationDelay= 5,
       RunMinutes = 1
     )
