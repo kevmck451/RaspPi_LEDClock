@@ -13361,7 +13361,7 @@ def DisplayDigitalClockKevin(
       ClockSprite = CreateClockSprite(hh)
       ScreenArray = CopySpriteToScreenArrayZoom(ClockSprite, ClockH, 0, (250, 250, 250), (0, 0, 0), 1, Fill=True)
 
-    r = random.randint(1, 9)
+    r = random.randint(1, 5)
 
     # space invaders
     if (r == 1):
@@ -13415,7 +13415,6 @@ def DisplayDigitalClockKevin(
       TransitionBetweenScreenArrays(ScreenArray2, ScreenArray1, TransitionType=2)
       ScreenArray = copy.deepcopy(EmptyArray)
 
-
     #Chicken
     if (r==2):
       #h = HatWidth - (ClockSprite.width * 2)
@@ -13467,7 +13466,6 @@ def DisplayDigitalClockKevin(
       ScreenArray2 = copy.deepcopy(ScreenArray)
       TransitionBetweenScreenArrays(ScreenArray2,ScreenArray1,TransitionType=2)
       ScreenArray = copy.deepcopy(EmptyArray)
-
 
     # animated ships (no gravity, flying around like insects)
     if (r == 3):
