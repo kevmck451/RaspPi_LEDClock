@@ -12294,121 +12294,129 @@ def UpdateTimerWithTransition(TimerSprite,BannerSprite,h=0,v=0,RGB=HighGreen,Sha
 
 #MakeAndShowClock(hh,h=0,v,RGB,ShadowGreen=,ZoomFactor,Fill):
 
+
+
+
+
+
+
+
+
+
+
+
+
+
 def DisplayDigitalClock(
-  ClockStyle  = 1,
-  CenterHoriz = False,
-  CenterVert  = False,
-  h           = 0,
-  v           = 0,
-  hh          = 12,
-  RGB         = HighWhite,
-  ShadowRGB   = ShadowBlue,
-  ZoomFactor  = 2,
-  AnimationDelay = 10,
-  ScrollSleep    = 0.02,
-  RunMinutes     = 5,
-  StartDateTimeUTC  = '',
-  HHMMSS            = '00:00:00',
-  DisplayNumber1    = 0,
-  DisplayNumber2    = 0
+        ClockStyle=1,
+        CenterHoriz=True,
+        CenterVert=True,
+        h=0,
+        v=0,
+        hh=12,
+        RGB=HighWhite,
+        ShadowRGB=ShadowWhite,
+        ZoomFactor=5,
+        AnimationDelay=1,
+        ScrollSleep=0.02,
+        StartDateTimeUTC='',
+        HHMMSS='00:00:00',
+        DisplayNumber1=0,
+        DisplayNumber2=0
 
   ):
     ClearBigLED()
     ClearBuffers()
     global ScreenArray
 
-    #print("ClockStyle:",ClockStyle)
+    #print("ClockStyle:", ClockStyle)
     ClockSprite = CreateClockSprite(hh)
-    Done        = False
-    StartTime   = time.time()
-    #print("RunMinutes:",RunMinutes)
+    Done = False
+    StartTime = time.time()
+    #print("RunMinutes:", RunMinutes)
 
     if (CenterHoriz == True):
-      h = (HatWidth  // 2)  - ((ClockSprite.width * ZoomFactor) // 2) + 1
+      h = 0
 
-    if (CenterVert  == True):
-      v = (HatHeight // 2) - ((ClockSprite.height * ZoomFactor) // 2) - ZoomFactor
-
-    if (ClockStyle in (1,2)):
-      DayOfWeekSprite     = CreateDayOfWeekSprite()
-      MonthSprite         = CreateMonthSprite()
-      DayOfMonthSprite    = CreateDayOfMonthSprite()
+    if (CenterVert == True):
+      v = 0
 
     # Clock at top, random scrolling animations
     if (ClockStyle == 1):
 
-      #MakeAndShowClock(hh,h,v,RGB,ShadowGreen,ZoomFactor,Fill=False)
-      ScreenArray1  = ([[]])
-      ScreenArray1  = [[ (0,0,0) for i in range(HatWidth)] for i in range(HatHeight)]
-      ScreenArray2  = ([[]])
-      ScreenArray2  = [[ (0,0,0) for i in range(HatWidth)] for i in range(HatHeight)]
+      # MakeAndShowClock(hh,h,v,RGB,ShadowGreen,ZoomFactor,Fill=False)
+      ScreenArray1 = ([[]])
+      ScreenArray1 = [[(0, 0, 0) for i in range(HatWidth)] for i in range(HatHeight)]
+      ScreenArray2 = ([[]])
+      ScreenArray2 = [[(0, 0, 0) for i in range(HatWidth)] for i in range(HatHeight)]
       ClockSprite = CreateClockSprite(hh)
 
-      ScreenArray1 = CopySpriteToScreenArrayZoom(ClockSprite,h-1,v+1,ShadowRGB,(0,0,0),ZoomFactor=ZoomFactor,Fill=False,InputScreenArray=ScreenArray)
-      ScreenArray2 = CopySpriteToScreenArrayZoom(ClockSprite,h,v,RGB,(0,0,0),ZoomFactor=ZoomFactor,Fill=False,InputScreenArray=ScreenArray1)
-      TransitionBetweenScreenArrays(ScreenArray2,ScreenArray1,TransitionType=2)
+      ScreenArray1 = CopySpriteToScreenArrayZoom(ClockSprite, h - 1, v + 1, ShadowRGB, (0, 0, 0), ZoomFactor=ZoomFactor,
+                                                 Fill=False, InputScreenArray=ScreenArray)
+      ScreenArray1 = CopySpriteToScreenArrayZoom(ClockSprite, h, v, RGB, (0, 0, 0), ZoomFactor=ZoomFactor, Fill=False,
+                                                 InputScreenArray=ScreenArray1)
+      TransitionBetweenScreenArrays(ScreenArray2, ScreenArray1, TransitionType=2)
 
-      #CopySpriteToPixelsZoom(ClockSprite,h-1,v+1,ShadowRGB,(0,0,0),ZoomFactor,          Fill=False)
-      #CopySpriteToPixelsZoom(ClockSprite,h,v,    RGB,      (0,0,0),ZoomFactor=ZoomFactor,Fill=False)
 
-      #Show Custom Sprite
-      #CopySpriteToPixelsZoom(DayOfWeekSprite,  DayOfWeekH,  DayOfWeekV,  DayOfWeekRGB,   SpriteFillerRGB,1)
-      #CopySpriteToPixelsZoom(MonthSprite,      MonthH,      MonthV,      MonthRGB,       SpriteFillerRGB,1)
-      #CopySpriteToPixelsZoom(DayOfMonthSprite, DayOfMonthH, DayOfMonthV, DayOfMonthRGB , SpriteFillerRGB,1)
-
-      #MakeAndShowClock(hh,h,v,RGB,ShadowGreen,ZoomFactor,Fill=True)
-      ClockSprite = UpdateClockWithTransition(ClockSprite,hh,h,v,RGB,ShadowRGB,ZoomFactor,Fill=True)
+      # MakeAndShowClock(hh,h,v,RGB,ShadowGreen,ZoomFactor,Fill=True)
+      ClockSprite = UpdateClockWithTransition(ClockSprite, hh, h, v, RGB, ShadowRGB, ZoomFactor, Fill=True)
 
       while (Done == False):
+
         time.sleep(AnimationDelay)
-        ClockSprite = UpdateClockWithTransition(ClockSprite,hh,h,v,RGB,ShadowRGB,ZoomFactor,Fill=True,TransitionType=2)
+        ClockSprite = UpdateClockWithTransition(ClockSprite, hh, h, v, RGB, ShadowRGB, ZoomFactor, Fill=True,
+                                                TransitionType=2)
 
-        r = random.randint(1,11)
+        r = random.randint(1, 11)
         if (r == 1):
-          ClockSprite = UpdateClockWithTransition(ClockSprite,hh,h,v,RGB,ShadowRGB,ZoomFactor,Fill=True)
-          #MakeAndShowClock(hh,h,v,RGB,ShadowGreen,ZoomFactor,Fill=True)
+          ClockSprite = UpdateClockWithTransition(ClockSprite, hh, h, v, RGB, ShadowRGB, ZoomFactor, Fill=True)
+          # MakeAndShowClock(hh,h,v,RGB,ShadowGreen,ZoomFactor,Fill=True)
 
-          RunningMan2Sprite.ScrollAcrossScreen(20,15,'right', ScrollSleep )
+          RunningMan2Sprite.ScrollAcrossScreen(20, 15, 'right', ScrollSleep)
           RunningMan2Sprite.HorizontalFlip()
-          Rezonator.ScrollAcrossScreen(20,(HatHeight - Rezonator.height),'right', ScrollSleep )
-          RunningMan2Sprite.ScrollAcrossScreen(20,15,'left',0.02 )
-          Rezonator.ScrollAcrossScreen(20,(HatHeight - Rezonator.height),'left', ScrollSleep )
+          Rezonator.ScrollAcrossScreen(20, (HatHeight - Rezonator.height), 'right', ScrollSleep)
+          RunningMan2Sprite.ScrollAcrossScreen(20, 15, 'left', 0.02)
+          Rezonator.ScrollAcrossScreen(20, (HatHeight - Rezonator.height), 'left', ScrollSleep)
           RunningMan2Sprite.HorizontalFlip()
 
         elif (r == 2):
-          ClockSprite = UpdateClockWithTransition(ClockSprite,hh,h,v,RGB,ShadowRGB,ZoomFactor,Fill=True,TransitionType=2)
-          #MakeAndShowClock(hh,h,v,RGB,ShadowGreen,ZoomFactor,Fill=True)
-          r = random.randint(1,2)
-          MoveAnimatedSpriteAcrossScreen(BigSpiderWalkingSprite,Position='bottom',direction="right",steps=14*r,ZoomFactor=r,sleep=0.05)
+          ClockSprite = UpdateClockWithTransition(ClockSprite, hh, h, v, RGB, ShadowRGB, ZoomFactor, Fill=True,
+                                                  TransitionType=2)
+          # MakeAndShowClock(hh,h,v,RGB,ShadowGreen,ZoomFactor,Fill=True)
+          r = random.randint(1, 2)
+          MoveAnimatedSpriteAcrossScreen(BigSpiderWalkingSprite, Position='bottom', direction="right", steps=14 * r,
+                                         ZoomFactor=r, sleep=0.05)
           BigSpiderWalkingSprite.HorizontalFlip()
-          r = random.randint(1,2)
-          MoveAnimatedSpriteAcrossScreen(BigSpiderWalkingSprite,Position='bottom',direction="left",steps=14*r,ZoomFactor=r,sleep=0.03)
+          r = random.randint(1, 2)
+          MoveAnimatedSpriteAcrossScreen(BigSpiderWalkingSprite, Position='bottom', direction="left", steps=14 * r,
+                                         ZoomFactor=r, sleep=0.03)
           BigSpiderWalkingSprite.HorizontalFlip()
 
         elif (r == 3):
-          #MakeAndShowClock(hh,h,v,RGB,ShadowGreen,ZoomFactor,Fill=False)
-          ClockSprite = UpdateClockWithTransition(ClockSprite,hh,h,v,RGB,ShadowRGB,ZoomFactor,Fill=True,TransitionType=2)
+          # MakeAndShowClock(hh,h,v,RGB,ShadowGreen,ZoomFactor,Fill=False)
+          ClockSprite = UpdateClockWithTransition(ClockSprite, hh, h, v, RGB, ShadowRGB, ZoomFactor, Fill=True,
+                                                  TransitionType=2)
 
           MoveAnimatedSpriteAcrossScreenFramesPerStep(
             ThreeGhostPacSprite,
-            Position      = 'bottom',
-            direction     = "right",
-            FramesPerStep = 1,
-            ZoomFactor    = random.randint(1,2),
-            sleep         = 0.03
-            )
+            Position='bottom',
+            direction="right",
+            FramesPerStep=1,
+            ZoomFactor=random.randint(1, 2),
+            sleep=0.03
+          )
 
           MoveAnimatedSpriteAcrossScreenFramesPerStep(
             ThreeBlueGhostPacSprite,
-            Position      = 'bottom',
-            direction     = "left",
-            FramesPerStep = 1,
-            ZoomFactor    = random.randint(1,2),
-            sleep         = 0.02
-            )
+            Position='bottom',
+            direction="left",
+            FramesPerStep=1,
+            ZoomFactor=random.randint(1, 2),
+            sleep=0.02
+          )
 
-          #This one works better for big animations
-          #MoveAnimatedSpriteAcrossScreen(
+          # This one works better for big animations
+          # MoveAnimatedSpriteAcrossScreen(
           #      ThreeGhostPacSprite,
           #      v             = 15,
           #      direction     = "right",
@@ -12417,266 +12425,287 @@ def DisplayDigitalClock(
           #      sleep         = 0
           #      )
 
+
         elif (r == 4):
-          #MakeAndShowClock(hh,h,v,RGB,ShadowGreen,ZoomFactor,Fill=False)
-          ClockSprite = UpdateClockWithTransition(ClockSprite,hh,h,v,RGB,ShadowRGB,ZoomFactor,Fill=True,TransitionType=2)
+          # MakeAndShowClock(hh,h,v,RGB,ShadowGreen,ZoomFactor,Fill=False)
+          ClockSprite = UpdateClockWithTransition(ClockSprite, hh, h, v, RGB, ShadowRGB, ZoomFactor, Fill=True,
+                                                  TransitionType=2)
 
           SpaceInvader.framerate = 2
           SpaceInvader.InitializeScreenArray()
           SmallInvader.framerate = 2
           SmallInvader.InitializeScreenArray()
-          TinyInvader.framerate  = 1
+          TinyInvader.framerate = 1
           TinyInvader.InitializeScreenArray()
 
           MoveAnimatedSpriteAcrossScreenStepsPerFrame(
             SpaceInvader,
-            Position      = 'bottom',
-            direction     = "right",
-            StepsPerFrame = 4,
-            ZoomFactor    = random.randint(1,3),
-            sleep         = 0.03
-            )
+            Position='bottom',
+            direction="right",
+            StepsPerFrame=4,
+            ZoomFactor=random.randint(1, 3),
+            sleep=0.03
+          )
 
           MoveAnimatedSpriteAcrossScreenStepsPerFrame(
             SmallInvader,
-            Position      = 'bottom',
-            direction     = "right",
-            StepsPerFrame = 4,
-            ZoomFactor    = random.randint(1,3),
-            sleep         = 0.03
-            )
+            Position='bottom',
+            direction="right",
+            StepsPerFrame=4,
+            ZoomFactor=random.randint(1, 3),
+            sleep=0.03
+          )
 
           MoveAnimatedSpriteAcrossScreenStepsPerFrame(
             TinyInvader,
-            Position      = 'bottom',
-            direction     = "right",
-            StepsPerFrame = 4,
-            ZoomFactor    = random.randint(1,3),
-            sleep         = 0.03
-            )
+            Position='bottom',
+            direction="right",
+            StepsPerFrame=4,
+            ZoomFactor=random.randint(1, 3),
+            sleep=0.03
+          )
 
         elif (r == 5):
-          ClockSprite = UpdateClockWithTransition(ClockSprite,hh,h,v,RGB,ShadowRGB,ZoomFactor,Fill=True,TransitionType=2)
-          #MakeAndShowClock(hh,h,v,RGB,ShadowGreen,ZoomFactor,Fill=False)
+          ClockSprite = UpdateClockWithTransition(ClockSprite, hh, h, v, RGB, ShadowRGB, ZoomFactor, Fill=True,
+                                                  TransitionType=2)
+          # MakeAndShowClock(hh,h,v,RGB,ShadowGreen,ZoomFactor,Fill=False)
 
-          r = random.randint(1,3)
+          r = random.randint(1, 3)
           MoveAnimatedSpriteAcrossScreenStepsPerFrame(
             LittleShipFlying,
-            Position      = 'bottom',
-            direction     = "right",
-            StepsPerFrame = 4 * r,
-            ZoomFactor    = r,
-            sleep         = 0.03 / r
-            )
+            Position='bottom',
+            direction="right",
+            StepsPerFrame=4 * r,
+            ZoomFactor=r,
+            sleep=0.03 / r
+          )
           LittleShipFlying.HorizontalFlip()
 
-          r = random.randint(1,3)
+          r = random.randint(1, 3)
           MoveAnimatedSpriteAcrossScreenStepsPerFrame(
             LittleShipFlying,
-            Position      = 'bottom',
-            direction     = "left",
-            StepsPerFrame = 4 * r,
-            ZoomFactor    = r,
-            sleep         = 0.03 / r
-            )
+            Position='bottom',
+            direction="left",
+            StepsPerFrame=4 * r,
+            ZoomFactor=r,
+            sleep=0.03 / r
+          )
           LittleShipFlying.HorizontalFlip()
+
 
         elif (r == 6):
-          ClockSprite = UpdateClockWithTransition(ClockSprite,hh,h,v,RGB,ShadowRGB,ZoomFactor,Fill=True,TransitionType=2)
-          #MakeAndShowClock(hh,h,v,RGB,ShadowGreen,ZoomFactor,Fill=False)
+          ClockSprite = UpdateClockWithTransition(ClockSprite, hh, h, v, RGB, ShadowRGB, ZoomFactor, Fill=True,
+                                                  TransitionType=2)
+          # MakeAndShowClock(hh,h,v,RGB,ShadowGreen,ZoomFactor,Fill=False)
 
           MoveAnimatedSpriteAcrossScreenStepsPerFrame(
             DotZerkRobotWalking,
-            Position      = 'bottom',
-            direction     = "left",
-            StepsPerFrame = 2,
-            ZoomFactor    = random.randint(1,2),
-            sleep         = 0.03
-            )
+            Position='bottom',
+            direction="left",
+            StepsPerFrame=2,
+            ZoomFactor=random.randint(1, 2),
+            sleep=0.03
+          )
           DotZerkRobotWalking.HorizontalFlip()
 
           MoveAnimatedSpriteAcrossScreenStepsPerFrame(
             DotZerkRobotWalking,
-            Position      = 'bottom',
-            direction     = "right",
-            StepsPerFrame = 2,
-            ZoomFactor    = random.randint(1,2),
-            sleep         = 0.03
-            )
+            Position='bottom',
+            direction="right",
+            StepsPerFrame=2,
+            ZoomFactor=random.randint(1, 2),
+            sleep=0.03
+          )
           DotZerkRobotWalking.HorizontalFlip()
+
 
         elif (r == 7):
-          ClockSprite = UpdateClockWithTransition(ClockSprite,hh,h,v,RGB,ShadowRGB,ZoomFactor,Fill=True,TransitionType=2)
-          #MakeAndShowClock(hh,h,v,RGB,ShadowGreen,ZoomFactor,Fill=False)
+          ClockSprite = UpdateClockWithTransition(ClockSprite, hh, h, v, RGB, ShadowRGB, ZoomFactor, Fill=True,
+                                                  TransitionType=2)
+          # MakeAndShowClock(hh,h,v,RGB,ShadowGreen,ZoomFactor,Fill=False)
 
           MoveAnimatedSpriteAcrossScreenStepsPerFrame(
             DotZerkRobotWalkingSmall,
-            Position      = 'bottom',
-            direction     = "left",
-            StepsPerFrame = 2,
-            ZoomFactor    = random.randint(1,2),
-            sleep         = 0.03
-            )
+            Position='bottom',
+            direction="left",
+            StepsPerFrame=2,
+            ZoomFactor=random.randint(1, 2),
+            sleep=0.03
+          )
           DotZerkRobotWalkingSmall.HorizontalFlip()
 
           MoveAnimatedSpriteAcrossScreenStepsPerFrame(
             DotZerkRobotWalkingSmall,
-            Position      = 'bottom',
-            direction     = "right",
-            StepsPerFrame = 2,
-            ZoomFactor    = random.randint(1,2),
-            sleep         = 0.03
-            )
+            Position='bottom',
+            direction="right",
+            StepsPerFrame=2,
+            ZoomFactor=random.randint(1, 2),
+            sleep=0.03
+          )
           DotZerkRobotWalkingSmall.HorizontalFlip()
 
         if (r == 8):
-          ClockSprite = UpdateClockWithTransition(ClockSprite,hh,h,v,RGB,ShadowRGB,ZoomFactor,Fill=True,TransitionType=2)
-          #MakeAndShowClock(hh,h,v,RGB,ShadowGreen,ZoomFactor,Fill=False)
+          ClockSprite = UpdateClockWithTransition(ClockSprite, hh, h, v, RGB, ShadowRGB, ZoomFactor, Fill=True,
+                                                  TransitionType=2)
+          # MakeAndShowClock(hh,h,v,RGB,ShadowGreen,ZoomFactor,Fill=False)
 
-          RunningMan3Sprite.ScrollAcrossScreen(20,15,'right', ScrollSleep )
+          RunningMan3Sprite.ScrollAcrossScreen(20, 15, 'right', ScrollSleep)
           RunningMan3Sprite.HorizontalFlip()
-          RunningMan3Sprite.ScrollAcrossScreen(20,15,'left',0.02 )
+          RunningMan3Sprite.ScrollAcrossScreen(20, 15, 'left', 0.02)
           RunningMan3Sprite.HorizontalFlip()
+
 
         elif (r == 9):
-          #MakeAndShowClock(hh,h,v,RGB,ShadowGreen,ZoomFactor,Fill=False)
-          ClockSprite = UpdateClockWithTransition(ClockSprite,hh,h,v,RGB,ShadowRGB,ZoomFactor,Fill=True,TransitionType=2)
+          # MakeAndShowClock(hh,h,v,RGB,ShadowGreen,ZoomFactor,Fill=False)
+          ClockSprite = UpdateClockWithTransition(ClockSprite, hh, h, v, RGB, ShadowRGB, ZoomFactor, Fill=True,
+                                                  TransitionType=2)
 
-          i = random.randint(0,27)
+          i = random.randint(0, 27)
           ShipSprites[i].InitializeScreenArray()
 
           MoveAnimatedSpriteAcrossScreenStepsPerFrame(
             ShipSprites[i],
-            Position      = 'bottom',
-            direction     = "left",
-            StepsPerFrame = 1,
-            ZoomFactor    = random.randint(1,2),
-            sleep         = 0.03
-            )
+            Position='bottom',
+            direction="left",
+            StepsPerFrame=1,
+            ZoomFactor=random.randint(1, 2),
+            sleep=0.03
+          )
 
-          i = random.randint(0,27)
+          i = random.randint(0, 27)
           MoveAnimatedSpriteAcrossScreenStepsPerFrame(
             ShipSprites[i],
-            Position      = 'bottom',
-            direction     = "right",
-            StepsPerFrame = 1,
-            ZoomFactor    = random.randint(1,2),
-            sleep         = 0.03
-            )
+            Position='bottom',
+            direction="right",
+            StepsPerFrame=1,
+            ZoomFactor=random.randint(1, 2),
+            sleep=0.03
+          )
 
-          i = random.randint(0,27)
+          i = random.randint(0, 27)
           ShipSprites[i].InitializeScreenArray()
 
           MoveAnimatedSpriteAcrossScreenStepsPerFrame(
             ShipSprites[i],
-            Position      = 'bottom',
-            direction     = "left",
-            StepsPerFrame = 1,
-            ZoomFactor    = random.randint(2,3),
-            sleep         = 0.03
-            )
+            Position='bottom',
+            direction="left",
+            StepsPerFrame=1,
+            ZoomFactor=random.randint(2, 3),
+            sleep=0.03
+          )
 
-          i = random.randint(0,27)
+          i = random.randint(0, 27)
           MoveAnimatedSpriteAcrossScreenStepsPerFrame(
             ShipSprites[i],
-            Position      = 'bottom',
-            direction     = "right",
-            StepsPerFrame = 1,
-            ZoomFactor    = random.randint(2,3),
-            sleep         = 0.03
-            )
+            Position='bottom',
+            direction="right",
+            StepsPerFrame=1,
+            ZoomFactor=random.randint(2, 3),
+            sleep=0.03
+          )
 
         elif (r == 10):
-          ClockSprite = UpdateClockWithTransition(ClockSprite,hh,h,v,RGB,ShadowRGB,ZoomFactor,Fill=True,TransitionType=2)
-          #MakeAndShowClock(hh,h,v,RGB,ShadowGreen,ZoomFactor,Fill=False)
+          ClockSprite = UpdateClockWithTransition(ClockSprite, hh, h, v, RGB, ShadowRGB, ZoomFactor, Fill=True,
+                                                  TransitionType=2)
+          # MakeAndShowClock(hh,h,v,RGB,ShadowGreen,ZoomFactor,Fill=False)
 
           MoveAnimatedSpriteAcrossScreenStepsPerFrame(
             LightBike,
-            Position      = 'bottom',
-            direction     = "left",
-            StepsPerFrame = 2,
-            ZoomFactor    = 1,
-            sleep         = 0.005
-            )
+            Position='bottom',
+            direction="left",
+            StepsPerFrame=2,
+            ZoomFactor=1,
+            sleep=0.005
+          )
           LightBike.HorizontalFlip()
           MoveAnimatedSpriteAcrossScreenStepsPerFrame(
             LightBike,
-            Position      = 'bottom',
-            direction     = "right",
-            StepsPerFrame = 2,
-            ZoomFactor    = 1,
-            sleep         = 0.005
-            )
+            Position='bottom',
+            direction="right",
+            StepsPerFrame=2,
+            ZoomFactor=1,
+            sleep=0.005
+          )
           LightBike.HorizontalFlip()
+
 
         elif (r == 11):
-          ClockSprite = UpdateClockWithTransition(ClockSprite,hh,h,v,RGB,ShadowRGB,ZoomFactor,Fill=True,TransitionType=2)
-          #MakeAndShowClock(hh,h,v,RGB,ShadowGreen,ZoomFactor,Fill=False)
+          ClockSprite = UpdateClockWithTransition(ClockSprite, hh, h, v, RGB, ShadowRGB, ZoomFactor, Fill=True,
+                                                  TransitionType=2)
+          # MakeAndShowClock(hh,h,v,RGB,ShadowGreen,ZoomFactor,Fill=False)
 
           MoveAnimatedSpriteAcrossScreenStepsPerFrame(
             LightBike,
-            Position      = 'bottom',
-            direction     = "left",
-            StepsPerFrame = 2,
-            ZoomFactor    = 1,
-            sleep         = 0.003
-            )
+            Position='bottom',
+            direction="left",
+            StepsPerFrame=2,
+            ZoomFactor=1,
+            sleep=0.003
+          )
           LightBike.HorizontalFlip()
 
           MoveAnimatedSpriteAcrossScreenStepsPerFrame(
             Rezonator,
-            Position      = 'bottom',
-            direction     = "left",
-            StepsPerFrame = 2,
-            ZoomFactor    = 1,
-            sleep         = 0.005
-            )
+            Position='bottom',
+            direction="left",
+            StepsPerFrame=2,
+            ZoomFactor=1,
+            sleep=0.005
+          )
 
           MoveAnimatedSpriteAcrossScreenStepsPerFrame(
             LightBike,
-            Position      = 'bottom',
-            direction     = "right",
-            StepsPerFrame = 2,
-            ZoomFactor    = 1,
-            sleep         = 0.001
-            )
+            Position='bottom',
+            direction="right",
+            StepsPerFrame=2,
+            ZoomFactor=1,
+            sleep=0.001
+          )
           LightBike.HorizontalFlip()
 
-          if random.randint(1,2) == 1:
+          if random.randint(1, 2) == 1:
             MoveAnimatedSpriteAcrossScreenStepsPerFrame(
               BigRezonator,
-              Position      = 'bottom',
-              direction     = "right",
-              StepsPerFrame = 2,
-              ZoomFactor    = 1,
-              sleep         = 0
-              )
+              Position='bottom',
+              direction="right",
+              StepsPerFrame=2,
+              ZoomFactor=1,
+              sleep=0
+            )
 
           else:
             MoveAnimatedSpriteAcrossScreenStepsPerFrame(
               BigRezonator2,
-              Position      = 'bottom',
-              direction     = "right",
-              StepsPerFrame = 2,
-              ZoomFactor    = 1,
-              sleep         = 0
-              )
+              Position='bottom',
+              direction="right",
+              StepsPerFrame=2,
+              ZoomFactor=1,
+              sleep=0
+            )
 
-        #This will end the while loop
+        # This will end the while loop
         elapsed_time = time.time() - StartTime
         elapsed_hours, rem = divmod(elapsed_time, 3600)
         elapsed_minutes, elapsed_seconds = divmod(rem, 60)
 
-        #print(datetime.now().strftime('%H:%M:%S'))
+        print(datetime.now().strftime('%H:%M:%S'))
 
         if (ClockSprite.hhmm != datetime.now().strftime('%H:%M')):
-          #MakeAndShowClock(hh,h,v,RGB,ShadowGreen,ZoomFactor,Fill=True)
-          ClockSprite = UpdateClockWithTransition(ClockSprite,hh,h,v,RGB,ShadowRGB,ZoomFactor,Fill=True,TransitionType=2)
+          # MakeAndShowClock(hh,h,v,RGB,ShadowGreen,ZoomFactor,Fill=True)
+          ClockSprite = UpdateClockWithTransition(ClockSprite, hh, h, v, RGB, ShadowRGB, ZoomFactor, Fill=True,
+                                                  TransitionType=2)
 
         if elapsed_minutes >= RunMinutes:
           Done = True
 
-    elif (ClockStyle == 2)    :
+
+
+
+
+
+
+
+    elif (ClockStyle == 2):
 
       #ClearBigLED()
       #ClearBuffers()

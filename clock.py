@@ -40,13 +40,8 @@ LED.ShowTitleScreen(
 
 while 1==1:
 
-    LED.DisplayDigitalClockKevin(
-        hh=12,
-        RGB=LED.HighWhite,
-        ShadowRGB=LED.ShadowWhite,
-        ZoomFactor = 5,
-        AnimationDelay=2,
-    )
+    LED.DisplayDigitalClockKevin()
+
 
 
 
