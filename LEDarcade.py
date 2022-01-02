@@ -12694,11 +12694,12 @@ def DisplayDigitalClock(
         if (ClockSprite.hhmm != datetime.now().strftime('%H:%M')):
           #ClearBuffers() #clean the internal graphic buffers
           ClockSprite = CreateClockSprite(hh)
-          ScreenArray = CopySpriteToScreenArrayZoom(ClockSprite,40,0,(250,250,250),(0,0,0),1,Fill=True)
+          ScreenArray = CopySpriteToScreenArrayZoom(ClockSprite,ClockH,0,(250,250,250),(0,0,0),1,Fill=True)
 
         r = random.randint(1,9)
 
         #RunningMan
+        """
         if (r==1):
 
           h = HatWidth - (ClockSprite.width * 2)
@@ -12748,8 +12749,9 @@ def DisplayDigitalClock(
           ScreenArray2 = copy.deepcopy(ScreenArray)
           TransitionBetweenScreenArrays(ScreenArray2,ScreenArray1,TransitionType=2)
           ScreenArray = copy.deepcopy(EmptyArray)
-
+        """
         #robots
+        """
         if (r==2):
           #ClearBigLED()
           #ClearBuffers()
@@ -12799,7 +12801,7 @@ def DisplayDigitalClock(
 
           #DotZerkRobotWalking.EraseZoom(0,16,2)
           #DotZerkRobotWalkingSmall.EraseZoom(40,22,2)
-
+        """
         #space invaders
         if (r==3):
 
@@ -12852,6 +12854,7 @@ def DisplayDigitalClock(
           TransitionBetweenScreenArrays(ScreenArray2,ScreenArray1,TransitionType=2)
           ScreenArray = copy.deepcopy(EmptyArray)
 
+        """
         #Chicken
         if (r==4):
           #h = HatWidth - (ClockSprite.width * 2)
@@ -12903,9 +12906,10 @@ def DisplayDigitalClock(
           ScreenArray2 = copy.deepcopy(ScreenArray)
           TransitionBetweenScreenArrays(ScreenArray2,ScreenArray1,TransitionType=2)
           ScreenArray = copy.deepcopy(EmptyArray)
+          """
 
         #animated ships (no gravity, flying around like insects)
-        if (r==5 or r==8 or r==9):
+        if (r==5):
           h = HatWidth - (ClockSprite.width * 2)
           ClockSprite = CreateClockSprite(hh)
           ScreenArray = CopySpriteToScreenArrayZoom(ClockSprite,h=h,v=0,ColorTuple=(250,250,250),FillerTuple=(0,0,0),ZoomFactor=2,Fill=True,InputScreenArray=ScreenArray)
@@ -13077,7 +13081,6 @@ def DisplayDigitalClock(
               #CopySpriteToPixelsZoom(ClockSprite,ClockH,0,(150,0,0),(0,0,0),2,Fill=True)
 
             time.sleep(0.03)
-
 
           #Fade to Black
           ScreenArray1 = copy.deepcopy(EmptyArray)
@@ -13266,13 +13269,10 @@ def DisplayDigitalClock(
           TransitionBetweenScreenArrays(ScreenArray2,ScreenArray1,TransitionType=2)
 
 
-
-
           for x in range (1,200):
             CopyAnimatedSpriteToPixelsZoom(BigSpiderLegOutSprite,h=0,v=HatHeight-BigSpiderLegOutSprite.height, ZoomFactor=1)
             BigSpiderLegOutSprite.IncrementFrame()
             time.sleep(0.05)
-
 
           #Check Time
           if (ClockSprite.hhmm != datetime.now().strftime('%H:%M')):
@@ -13305,6 +13305,561 @@ def DisplayDigitalClock(
         #print("ElapsedMinues: ",elapsed_minutes)
         if elapsed_minutes >= RunMinutes:
           Done = True
+
+#==============================================================================
+
+def DisplayDigitalClockKevin(
+        CenterHoriz=False,
+        CenterVert=False,
+        h=0,
+        v=0,
+        hh=12,
+        RGB=HighWhite,
+        ShadowRGB=ShadowBlue,
+        ZoomFactor=2,
+        AnimationDelay=10,
+        ScrollSleep=0.02,
+        RunMinutes=5,
+        StartDateTimeUTC='',
+        HHMMSS='00:00:00',
+        DisplayNumber1=0,
+        DisplayNumber2=0
+):
+  ClearBigLED()
+  ClearBuffers()
+  global ScreenArray
+
+  # print("ClockStyle:",ClockStyle)
+  ClockSprite = CreateClockSprite(hh)
+  Done = False
+  StartTime = time.time()
+  # print("RunMinutes:",RunMinutes)
+
+  if (CenterHoriz == True):
+    h = (HatWidth // 2) - ((ClockSprite.width * ZoomFactor) // 2) + 1
+
+  if (CenterVert == True):
+    v = (HatHeight // 2) - ((ClockSprite.height * ZoomFactor) // 2) - ZoomFactor
+
+
+  # ClearBigLED()
+  # ClearBuffers()
+
+  ClockH = HatWidth - (ClockSprite.width * 2)
+  ClockSprite = CreateClockSprite(hh)
+  # we need to make a fake sprite to take the place of the clock which is zoomed)
+  ClockAreaSprite = Sprite((ClockSprite.width * 2) + 3, (ClockSprite.height * 2), 0, 0, 0, [])
+  ClockAreaSprite.h = ClockH - 3
+  ClockAreaSprite.v = 1
+  CopySpriteToScreenArrayZoom(ClockSprite, h=ClockH, v=9, ColorTuple=(250, 250, 250), FillerTuple=(0, 0, 0),
+                              ZoomFactor=2, Fill=True)
+
+  while (Done == False):
+
+    if (ClockSprite.hhmm != datetime.now().strftime('%H:%M')):
+      # ClearBuffers() #clean the internal graphic buffers
+      ClockSprite = CreateClockSprite(hh)
+      ScreenArray = CopySpriteToScreenArrayZoom(ClockSprite, ClockH, 0, (250, 250, 250), (0, 0, 0), 1, Fill=True)
+
+    r = random.randint(1, 9)
+
+    # space invaders
+    if (r == 1):
+
+      SpaceInvader.framerate = 4
+      SmallInvader.framerate = 2
+      TinyInvader.framerate = 1
+
+      SpaceInvader.InitializeScreenArray()
+      SmallInvader.InitializeScreenArray()
+      TinyInvader.InitializeScreenArray()
+
+      h = HatWidth - (ClockSprite.width * 2)
+      ClockSprite = CreateClockSprite(hh)
+      ScreenArray = CopySpriteToScreenArrayZoom(ClockSprite, h=h, v=0, ColorTuple=(250, 250, 250),
+                                                FillerTuple=(0, 0, 0), ZoomFactor=2, Fill=True,
+                                                InputScreenArray=ScreenArray)
+
+      # Make a screen array (buffer)
+      # copy sprite frames
+      # fade with falling sand
+      ScreenArray1 = copy.deepcopy(ScreenArray)
+      ScreenArray1 = CopyAnimatedSpriteToScreenArrayZoom(SpaceInvader, h=0, v=8, ZoomFactor=2,
+                                                         TheScreenArray=ScreenArray1)
+      ScreenArray1 = CopyAnimatedSpriteToScreenArrayZoom(SmallInvader, h=25, v=16, ZoomFactor=2,
+                                                         TheScreenArray=ScreenArray1)
+      ScreenArray1 = CopyAnimatedSpriteToScreenArrayZoom(TinyInvader, h=45, v=17, ZoomFactor=2,
+                                                         TheScreenArray=ScreenArray1)
+      ScreenArray2 = copy.deepcopy(EmptyArray)
+      TransitionBetweenScreenArrays(ScreenArray2, ScreenArray1, TransitionType=2)
+
+      for x in range(1, 100):
+        CopyAnimatedSpriteToPixelsZoom(SpaceInvader, h=0, v=8, ZoomFactor=2)
+        SpaceInvader.IncrementFrame()
+        CopyAnimatedSpriteToPixelsZoom(SmallInvader, h=25, v=16, ZoomFactor=2)
+        SmallInvader.IncrementFrame()
+        CopyAnimatedSpriteToPixelsZoom(TinyInvader, h=45, v=17, ZoomFactor=2)
+        TinyInvader.IncrementFrame()
+        time.sleep(0.08)
+
+      # Check Time
+      if (ClockSprite.hhmm != datetime.now().strftime('%H:%M')):
+        # print("ClockSprite.hhm: ",ClockSprite.hhmm, "Other:",datetime.now().strftime('%H:%M'))
+        # ClearBuffers() #clean the internal graphic buffers
+        ClockSprite = CreateClockSprite(hh)
+        CopySpriteToPixelsZoom(ClockSprite, h, 0, (250, 250, 250), (0, 0, 0), 2, Fill=True)
+
+      # Fade to Black
+      ScreenArray1 = copy.deepcopy(EmptyArray)
+      ScreenArray2 = copy.deepcopy(ScreenArray)
+      TransitionBetweenScreenArrays(ScreenArray2, ScreenArray1, TransitionType=2)
+      ScreenArray = copy.deepcopy(EmptyArray)
+
+
+    #Chicken
+    if (r==2):
+      #h = HatWidth - (ClockSprite.width * 2)
+      h = HatWidth - (ClockSprite.width * 2)
+      ClockSprite = CreateClockSprite(hh)
+      ScreenArray = CopySpriteToScreenArrayZoom(ClockSprite,h=h,v=0,ColorTuple=(250,250,250),FillerTuple=(0,0,0),ZoomFactor=2,Fill=True,InputScreenArray=ScreenArray)
+
+      #Make a screen array (buffer)
+      #copy sprite frames
+      #fade with falling sand
+      ScreenArray1 = copy.deepcopy(ScreenArray)
+      ScreenArray2 = copy.deepcopy(EmptyArray)
+      TransitionBetweenScreenArrays(ScreenArray2,ScreenArray1,TransitionType=2)
+
+      r = random.randint(1,3)
+
+      MoveAnimatedSpriteAcrossScreenStepsPerFrame(
+        ChickenRunning,
+        Position      = 'bottom',
+        Vadjust       = 1 * r,
+        direction     = "left",
+        StepsPerFrame = r,
+        ZoomFactor    = r,
+        sleep         = 0.03 / r
+        )
+
+      #Check Time
+      #if (ClockSprite.hhmm != datetime.now().strftime('%H:%M')):
+      #  print("ClockSprite.hhm: ",ClockSprite.hhmm, "Other:",datetime.now().strftime('%H:%M'))
+      #  #ClearBuffers() #clean the internal graphic buffers
+      #  ClockSprite = CreateClockSprite(hh)
+      #  CopySpriteToPixelsZoom(ClockSprite,h,0,(150,0,0),(0,0,0),2,Fill=True)
+
+
+      #Check Time
+      if (ClockSprite.hhmm != datetime.now().strftime('%H:%M')):
+        #print("ClockSprite.hhm: ",ClockSprite.hhmm, "Other:",datetime.now().strftime('%H:%M'))
+        #ClearBuffers() #clean the internal graphic buffers
+
+        ScreenArray1 = CopySpriteToScreenArrayZoom(ClockSprite,ClockH,0,  (250,250,250),(0,0,0),ZoomFactor=1,Fill=True)
+        ClockSprite = CreateClockSprite(hh)
+
+        ScreenArray2 = CopySpriteToScreenArrayZoom(ClockSprite,ClockH,0,  (250,250,250),(0,0,0),ZoomFactor=1,Fill=True)
+        TransitionBetweenScreenArrays(ScreenArray1,ScreenArray2)
+        #CopySpriteToPixelsZoom(ClockSprite,ClockH,0,(150,0,0),(0,0,0),2,Fill=True)
+
+      #Fade to Black
+      ScreenArray1 = copy.deepcopy(EmptyArray)
+      ScreenArray2 = copy.deepcopy(ScreenArray)
+      TransitionBetweenScreenArrays(ScreenArray2,ScreenArray1,TransitionType=2)
+      ScreenArray = copy.deepcopy(EmptyArray)
+
+
+    # animated ships (no gravity, flying around like insects)
+    if (r == 3):
+      h = HatWidth - (ClockSprite.width * 2)
+      ClockSprite = CreateClockSprite(hh)
+      ScreenArray = CopySpriteToScreenArrayZoom(ClockSprite, h=h, v=0, ColorTuple=(250, 250, 250),
+                                                FillerTuple=(0, 0, 0), ZoomFactor=2, Fill=True,
+                                                InputScreenArray=ScreenArray)
+
+      # Make a screen array (buffer)
+      # copy sprite frames
+      # fade with falling sand
+      ScreenArray1 = copy.deepcopy(ScreenArray)
+      ScreenArray2 = copy.deepcopy(EmptyArray)
+      TransitionBetweenScreenArrays(ScreenArray2, ScreenArray1, TransitionType=2)
+
+      ship1 = random.randint(0, 4)
+      ShipSprites[ship1].framerate = 2
+      ShipSprites[ship1].InitializeScreenArray()
+
+      ship2 = random.randint(5, 9)
+      ShipSprites[ship2].framerate = 2
+      ShipSprites[ship2].InitializeScreenArray()
+
+      ship3 = random.randint(10, 15)
+      ShipSprites[ship3].framerate = 2
+      ShipSprites[ship3].InitializeScreenArray()
+
+      h1, v1 = 0, 0
+      h2, v2 = 20, 0
+      h3, v3 = 50, 20
+
+      # ElectricExplosions
+      Explosion1 = copy.deepcopy(ElectricZap)
+      Explosion1.framerate = 1
+      Explosion1.h = -1
+      Explosion1.v = -1
+      Explosion2 = copy.deepcopy(ElectricZap)
+      Explosion2.framerate = 1
+      Explosion2.h = -1
+      Explosion2.v = -1
+      Explosion3 = copy.deepcopy(ElectricZap)
+      Explosion3.framerate = 1
+      Explosion3.h = -1
+      Explosion3.v = -1
+
+      # print ("ElectricZap frames:",ElectricZap.frames)
+      # print ("Explosion1  frames:",Explosion1.frames)
+
+      for x in range(1, 500):
+
+        h, v = h1, v1
+        h1, v1 = RandomMove(h1, v1, ShipSprites[ship1])
+        # h1,v1 = RandomMove(h1,v1,ShipSprites[ship1])
+        ShipSprites[ship1].h, ShipSprites[ship1].v = h1, v1
+        if (CheckForCollision(ShipSprites[ship1], ShipSprites[ship2]) or
+                CheckForCollision(ShipSprites[ship1], ShipSprites[ship3])):
+          ShipSprites[ship1].direction = ReverseDirection8Way(ShipSprites[ship1].direction)
+          h1, v1 = h, v
+        if (CheckForCollision(ShipSprites[ship1], ClockAreaSprite)):
+          Explosion1.exploding = 1
+          Explosion1.h = round(h)
+          Explosion1.v = round(v)
+
+          ShipSprites[ship1].direction = ReverseDirection8Way(ShipSprites[ship1].direction)
+          h1, v1 = random.randint(0, HatWidth) - ShipSprites[ship1].width, HatHeight - ShipSprites[ship1].height
+
+        ShipSprites[ship1].IncrementFrame()
+        ShipSprites[ship1].EraseFrame(h, v, frame=-1)
+        # If this sprite has collided, use old HV instead
+        CopyAnimatedSpriteToPixelsZoom(ShipSprites[ship1], h=h1, v=v1, ZoomFactor=1)
+
+        h, v = h2, v2
+        h2, v2 = RandomMove(h2, v2, ShipSprites[ship2])
+        ShipSprites[ship2].h, ShipSprites[ship2].v = h2, v2
+        if (CheckForCollision(ShipSprites[ship2], ShipSprites[ship1]) or
+                CheckForCollision(ShipSprites[ship2], ShipSprites[ship3])):
+          ShipSprites[ship2].direction = ReverseDirection8Way(ShipSprites[ship2].direction)
+          h2, v2 = h, v
+
+        if (CheckForCollision(ShipSprites[ship2], ClockAreaSprite)):
+          Explosion2.exploding = 1
+          Explosion2.h = round(h)
+          Explosion2.v = round(v)
+          ShipSprites[ship2].direction = ReverseDirection8Way(ShipSprites[ship2].direction)
+          h2, v2 = random.randint(0, HatWidth) - ShipSprites[ship1].width, HatHeight - ShipSprites[ship2].height
+
+        ShipSprites[ship2].IncrementFrame()
+        ShipSprites[ship2].EraseFrame(h, v, frame=-1)
+        CopyAnimatedSpriteToPixelsZoom(ShipSprites[ship2], h=h2, v=v2, ZoomFactor=1)
+
+        h, v = h3, v3
+        h3, v3 = RandomMove(h3, v3, ShipSprites[ship3])
+        ShipSprites[ship3].h, ShipSprites[ship3].v = h3, v3
+        if (CheckForCollision(ShipSprites[ship3], ShipSprites[ship2]) or
+                CheckForCollision(ShipSprites[ship3], ShipSprites[ship1])):
+          ShipSprites[ship3].direction = ReverseDirection8Way(ShipSprites[ship3].direction)
+          h3, v3 = h, v
+
+        if (CheckForCollision(ShipSprites[ship3], ClockAreaSprite)):
+          Explosion3.exploding = 1
+          Explosion3.h = round(h)
+          Explosion3.v = round(v)
+
+          ShipSprites[ship3].direction = ReverseDirection8Way(ShipSprites[ship3].direction)
+          h3, v3 = random.randint(0, HatWidth) - ShipSprites[ship1].width, HatHeight - ShipSprites[ship3].height
+
+        ShipSprites[ship3].IncrementFrame()
+        ShipSprites[ship3].EraseFrame(h, v, frame=-1)
+        CopyAnimatedSpriteToPixelsZoom(ShipSprites[ship3], h=h3, v=v3, ZoomFactor=1)
+
+        if (Explosion1.exploding == 1):
+          Explosion1.DisplayAnimated(Explosion1.h, Explosion1.v)
+
+          # Kill UFOMissile after explosion animation is complete
+          if (Explosion1.currentframe >= Explosion1.frames):
+            Explosion1.EraseFrame(Explosion1.h, Explosion1.v)
+            Explosion1.currentframe = 1
+            Explosion1.exploding = 0
+            Explosion1.alive = 0
+            Explosion1.h = -1
+            Explosion1.v = -1
+
+        if (Explosion2.exploding == 1):
+          Explosion2.DisplayAnimated(Explosion2.h, Explosion2.v)
+
+          # Kill UFOMissile after explosion animation is complete
+          if (Explosion2.currentframe >= Explosion2.frames):
+            Explosion2.EraseFrame(Explosion2.h, Explosion2.v)
+            Explosion2.currentframe = 1
+            Explosion2.exploding = 0
+            Explosion2.alive = 0
+            Explosion2.h = -1
+            Explosion2.v = -1
+
+        if (Explosion3.exploding == 1):
+          Explosion3.DisplayAnimated(Explosion3.h, Explosion3.v)
+
+          # Kill UFOMissile after explosion animation is complete
+          if (Explosion3.currentframe >= Explosion3.frames):
+            Explosion3.EraseFrame(Explosion3.h, Explosion3.v)
+            Explosion3.currentframe = 1
+            Explosion3.exploding = 0
+            Explosion3.alive = 0
+            Explosion3.h = -1
+            Explosion3.v = -1
+
+        # Check Time
+        # if (ClockSprite.hhmm != datetime.now().strftime('%H:%M')):
+        #  print("ClockSprite.hhm: ",ClockSprite.hhmm, "Other:",datetime.now().strftime('%H:%M'))
+        #  #ClearBuffers() #clean the internal graphic buffers
+        #  ClockSprite = CreateClockSprite(hh)
+        #  CopySpriteToPixelsZoom(ClockSprite,ClockH,0,(150,0,0),(0,0,0),2,Fill=True)
+
+        # Check Time
+        if (ClockSprite.hhmm != datetime.now().strftime('%H:%M')):
+          # print("ClockSprite.hhm: ",ClockSprite.hhmm, "Other:",datetime.now().strftime('%H:%M'))
+          # ClearBuffers() #clean the internal graphic buffers
+
+          ScreenArray1 = CopySpriteToScreenArrayZoom(ClockSprite, ClockH, 0, (250, 250, 250), (0, 0, 0), ZoomFactor=2,
+                                                     Fill=True)
+          ClockSprite = CreateClockSprite(hh)
+          ScreenArray2 = CopySpriteToScreenArrayZoom(ClockSprite, ClockH, 0, (250, 250, 250), (0, 0, 0), ZoomFactor=2,
+                                                     Fill=True)
+          TransitionBetweenScreenArrays(ScreenArray1, ScreenArray2)
+          # CopySpriteToPixelsZoom(ClockSprite,ClockH,0,(150,0,0),(0,0,0),2,Fill=True)
+
+        time.sleep(0.03)
+
+      # Fade to Black
+      ScreenArray1 = copy.deepcopy(EmptyArray)
+      ScreenArray2 = copy.deepcopy(ScreenArray)
+      TransitionBetweenScreenArrays(ScreenArray2, ScreenArray1, TransitionType=1)
+      ScreenArray = copy.deepcopy(EmptyArray)
+
+      # ShipSprites[ship1].Erase()
+      # ShipSprites[ship2].Erase()
+      # ShipSprites[ship3].Erase()
+
+    # animated ships with gravity
+    if (r == 4):
+      ClearBigLED()
+      ClearBuffers()
+
+      ClockH = HatWidth - (ClockSprite.width * 2)
+      ClockSprite = CreateClockSprite(hh)
+      # we need to make a fake sprite to take the place of the clock which is zoomed)
+      ClockAreaSprite = Sprite((ClockSprite.width * 2) + 3, (ClockSprite.height * 2), 0, 0, 0, [])
+      ClockAreaSprite.h = ClockH - 3
+      ClockAreaSprite.v = 1
+      ScreenArray = CopySpriteToScreenArrayZoom(ClockSprite, h=h, v=0, ColorTuple=(250, 250, 250),
+                                                FillerTuple=(0, 0, 0), ZoomFactor=2, Fill=True,
+                                                InputScreenArray=ScreenArray)
+
+      # Make a screen array (buffer)
+      # copy sprite frames
+      # fade with falling sand
+      ScreenArray1 = copy.deepcopy(ScreenArray)
+      ScreenArray2 = copy.deepcopy(EmptyArray)
+      TransitionBetweenScreenArrays(ScreenArray2, ScreenArray1, TransitionType=2)
+
+      # Initialize 3 ships
+      ship1 = random.randint(0, 8)
+      ship2 = random.randint(9, 17)
+      ship3 = random.randint(18, 27)
+
+      h1, v1 = 0, 0
+      h2, v2 = 20, 0
+      h3, v3 = 50, 20
+
+      # ElectricExplosions
+      Explosion1 = copy.deepcopy(ElectricZap)
+      Explosion1.framerate = 1
+      Explosion1.h = -1
+      Explosion1.v = -1
+      Explosion2 = copy.deepcopy(ElectricZap)
+      Explosion2.framerate = 1
+      Explosion2.h = -1
+      Explosion2.v = -1
+      Explosion3 = copy.deepcopy(ElectricZap)
+      Explosion3.framerate = 1
+      Explosion3.h = -1
+      Explosion3.v = -1
+
+      ShipSprites[ship1].h = random.randint(0, 10)
+      ShipSprites[ship1].v = 0
+      ShipSprites[ship1].velocityH = 1 * random.random()
+      ShipSprites[ship1].velocityV = 1 * random.random()
+      ShipSprites[ship1].InitializeScreenArray()
+
+      ShipSprites[ship2].h = random.randint(11, 20)
+      ShipSprites[ship2].v = 15
+      ShipSprites[ship2].velocityH = 2 * random.random()
+      ShipSprites[ship2].velocityV = 2 * random.random()
+      ShipSprites[ship2].InitializeScreenArray()
+
+      ShipSprites[ship3].h = random.randint(0, 10)
+      ShipSprites[ship3].v = 25
+      ShipSprites[ship3].velocityH = 3 * random.random()
+      ShipSprites[ship3].velocityV = 3 * random.random()
+      ShipSprites[ship3].InitializeScreenArray()
+
+      ShipSprites[ship1].framerate = 1
+      ShipSprites[ship2].framerate = 1
+      ShipSprites[ship3].framerate = 1
+
+      # Bounce(ShipSprites[ship1])
+
+      # print("ShipName:",ShipSprites[ship1].name)
+      # print("ShipName:",ShipSprites[ship2].name)
+      # print("ShipName:",ShipSprites[ship3].name)
+
+      for x in range(1, 2000):
+        # maybe only increment the frame ever X seconds (use a timer?)
+        MoveSpriteWithGravity(ShipSprites[ship1])
+        MoveSpriteWithGravity(ShipSprites[ship2])
+        MoveSpriteWithGravity(ShipSprites[ship3])
+
+        # The logic needs to be reworked and simplified
+        # we want the critters to bounce off the clock and each other
+        # when they hit the lock area an explosion / spark will appear
+        # and they are pushed back with a little bit of energy
+        # BounceFromCollision and CheckForCollision could be merged
+        BounceFromCollision(ShipSprites[ship1], ClockAreaSprite)
+        if (CheckForCollision(ShipSprites[ship1], ClockAreaSprite)):
+          Explosion1.exploding = 1
+          MoveSpriteWithGravity(ShipSprites[ship1])
+          MoveSpriteWithGravity(ShipSprites[ship1])
+
+        DisplayExplosionIfExploding(Explosion1, ShipSprites[ship1].h, ShipSprites[ship1].v)
+        BounceFromCollision(ShipSprites[ship1], ShipSprites[ship2])
+        BounceFromCollision(ShipSprites[ship1], ShipSprites[ship3])
+
+        BounceFromCollision(ShipSprites[ship2], ClockAreaSprite)
+        if (CheckForCollision(ShipSprites[ship2], ClockAreaSprite)):
+          Explosion2.exploding = 1
+          MoveSpriteWithGravity(ShipSprites[ship2])
+          MoveSpriteWithGravity(ShipSprites[ship2])
+
+        DisplayExplosionIfExploding(Explosion2, ShipSprites[ship2].h, ShipSprites[ship2].v)
+        BounceFromCollision(ShipSprites[ship2], ShipSprites[ship1])
+        BounceFromCollision(ShipSprites[ship2], ShipSprites[ship3])
+
+        BounceFromCollision(ShipSprites[ship3], ClockAreaSprite)
+        if (CheckForCollision(ShipSprites[ship3], ClockAreaSprite)):
+          Explosion3.exploding = 1
+          MoveSpriteWithGravity(ShipSprites[ship3])
+          MoveSpriteWithGravity(ShipSprites[ship3])
+        DisplayExplosionIfExploding(Explosion3, ShipSprites[ship3].h, ShipSprites[ship3].v)
+        BounceFromCollision(ShipSprites[ship3], ShipSprites[ship1])
+        BounceFromCollision(ShipSprites[ship3], ShipSprites[ship2])
+
+        RandomBounceFromFloor(ShipSprites[ship1])
+        if (ShipSprites[ship1].velocityV < 0.001):
+          Explosion1.exploding
+        RandomBounceFromFloor(ShipSprites[ship2])
+        RandomBounceFromFloor(ShipSprites[ship3])
+
+        # advance frame every X ticks
+        m, r = divmod(x, TICKSPERFRAME)
+        if (r == 0):
+          ShipSprites[ship1].IncrementFrame()
+          ShipSprites[ship2].IncrementFrame()
+          ShipSprites[ship3].IncrementFrame()
+        time.sleep(0.007)
+
+        # Check Time
+        if (ClockSprite.hhmm != datetime.now().strftime('%H:%M')):
+          # print("ClockSprite.hhm: ",ClockSprite.hhmm, "Other:",datetime.now().strftime('%H:%M'))
+          # ClearBuffers() #clean the internal graphic buffers
+
+          ScreenArray1 = CopySpriteToScreenArrayZoom(ClockSprite, ClockH, 0, (250, 250, 250), (0, 0, 0), ZoomFactor=2,
+                                                     Fill=True)
+          ClockSprite = CreateClockSprite(hh)
+
+          ScreenArray2 = CopySpriteToScreenArrayZoom(ClockSprite, ClockH, 0, (250, 250, 250), (0, 0, 0), ZoomFactor=2,
+                                                     Fill=True)
+          TransitionBetweenScreenArrays(ScreenArray1, ScreenArray2)
+          # CopySpriteToPixelsZoom(ClockSprite,ClockH,0,(150,0,0),(0,0,0),2,Fill=True)
+
+      # Fade to Black
+      ScreenArray1 = copy.deepcopy(EmptyArray)
+      ScreenArray2 = copy.deepcopy(ScreenArray)
+      TransitionBetweenScreenArrays(ScreenArray2, ScreenArray1, TransitionType=2)
+      ScreenArray = copy.deepcopy(EmptyArray)
+
+      # ShipSprites[ship1].EraseZoom(h1,v1)
+      # ShipSprites[ship2].EraseZoom(h2,v2)
+      # ShipSprites[ship3].EraseZoom(h3,v3)
+
+    # rSpiderLeg
+    if (r == 5):
+
+      ClockH = HatWidth - (ClockSprite.width * 2)
+      ClockSprite = CreateClockSprite(hh)
+      # we need to make a fake sprite to take the place of the clock which is zoomed)
+      ScreenArray = CopySpriteToScreenArrayZoom(ClockSprite, h=h, v=0, ColorTuple=(250, 250, 250),
+                                                FillerTuple=(0, 0, 0), ZoomFactor=2, Fill=True,
+                                                InputScreenArray=ScreenArray)
+
+      ScreenArray = CopySpriteToScreenArrayZoom(ClockSprite, h=ClockH, v=0, ColorTuple=(250, 250, 250),
+                                                FillerTuple=(0, 0, 0), ZoomFactor=2, Fill=True)
+      ScreenArray1 = copy.deepcopy(ScreenArray)
+      ScreenArray2 = CopySpriteToScreenArrayZoom(ClockSprite, h=h, v=0, ColorTuple=(250, 250, 250),
+                                                 FillerTuple=(0, 0, 0), ZoomFactor=2, Fill=True)
+      TransitionBetweenScreenArrays(ScreenArray2, ScreenArray1, TransitionType=1)
+
+      # Make a screen array (buffer)
+      # copy sprite frames
+      # fade with falling sand
+      ScreenArray1 = copy.deepcopy(ScreenArray)
+      ScreenArray2 = copy.deepcopy(EmptyArray)
+      TransitionBetweenScreenArrays(ScreenArray2, ScreenArray1, TransitionType=2)
+
+      for x in range(1, 200):
+        CopyAnimatedSpriteToPixelsZoom(BigSpiderLegOutSprite, h=0, v=HatHeight - BigSpiderLegOutSprite.height,
+                                       ZoomFactor=1)
+        BigSpiderLegOutSprite.IncrementFrame()
+        time.sleep(0.05)
+
+      # Check Time
+      if (ClockSprite.hhmm != datetime.now().strftime('%H:%M')):
+        # print("ClockSprite.hhm: ",ClockSprite.hhmm, "Other:",datetime.now().strftime('%H:%M'))
+        # ClearBuffers() #clean the internal graphic buffers
+        ClockSprite = CreateClockSprite(hh)
+        CopySpriteToPixelsZoom(ClockSprite, h, 0, (250, 250, 250), (0, 0, 0), 2, Fill=True)
+
+      # Fade to Black
+      ScreenArray1 = copy.deepcopy(EmptyArray)
+      ScreenArray2 = copy.deepcopy(ScreenArray)
+      TransitionBetweenScreenArrays(ScreenArray2, ScreenArray1, TransitionType=2)
+      ScreenArray = copy.deepcopy(EmptyArray)
+
+      # DotZerkRobotWalking.EraseZoom(0,16,2)
+      # DotZerkRobotWalkingSmall.EraseZoom(40,22,2)
+
+      ClockSprite = CreateClockSprite(hh)
+      ScreenArray2 = CopySpriteToScreenArrayZoom(ClockSprite, h=h, v=0, ColorTuple=(250, 250, 250),
+                                                 FillerTuple=(0, 0, 0), ZoomFactor=2, Fill=True)
+      TransitionBetweenScreenArrays(EmptyArray, ScreenArray2, TransitionType=2)
+
+    # This will end the while loop
+    elapsed_time = time.time() - StartTime
+    elapsed_hours, rem = divmod(elapsed_time, 3600)
+    elapsed_minutes, elapsed_seconds = divmod(rem, 60)
+
+    # print ("StartTime:    ",StartTime, " Now:",time.time())
+    # print("ElapsedMinues: ",elapsed_minutes)
+    if elapsed_minutes >= RunMinutes:
+      Done = True
+
+#==========================================================================================================
 
 #------------------------------------------------------------------------------
 #  TWITCH DISPLAY                                                            --
