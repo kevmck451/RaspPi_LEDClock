@@ -21,7 +21,7 @@ print ("")
 #--------------------------------------
 
 LED.ShowTitleScreen(
-    BigText             = "KEVIN'S",
+    BigText             = "KEV'S",
     BigTextRGB          = LED.HighBlue,
     BigTextShadowRGB    = LED.ShadowBlue,
     LittleText          = 'BADASS CLOCK',
@@ -41,6 +41,16 @@ LED.ShowTitleScreen(
 while 1==1:
 
     LED.DisplayDigitalClock(
+        ClockStyle=2,
+        CenterHoriz=True,
+        v=1,
+        hh=12,
+        ZoomFactor = 1,
+        AnimationDelay=5,
+        RunMinutes = 5
+    )
+
+    LED.DisplayDigitalClock(
       ClockStyle = 1,
       CenterHoriz = True,
       v   = 1, 
@@ -52,14 +62,6 @@ while 1==1:
       RunMinutes = 1
     )
 
-    LED.DisplayDigitalClock(
-        ClockStyle=2,
-        CenterHoriz=True,
-        v=1,
-        hh=12,
-        ZoomFactor = 1,
-        AnimationDelay=5,
-        RunMinutes = 5
-    )
+
 
 
