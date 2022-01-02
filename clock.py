@@ -41,7 +41,6 @@ LED.ShowTitleScreen(
 while 1==1:
 
     LED.DisplayDigitalClockKevin(
-        ClockStyle=2,
         CenterHoriz=True,
         CenterVert=True,
         v=1,
