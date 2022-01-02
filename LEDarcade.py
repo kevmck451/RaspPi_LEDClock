@@ -12346,14 +12346,14 @@ def DisplayDigitalClock(
       #MakeAndShowClock(hh,h,v,RGB,ShadowGreen,ZoomFactor,Fill=False)
       ScreenArray1  = ([[]])
       ScreenArray1  = [[ (0,0,0) for i in range(HatWidth)] for i in range(HatHeight)]
-      #ScreenArray2  = ([[]])
-      #ScreenArray2  = [[ (0,0,0) for i in range(HatWidth)] for i in range(HatHeight)]
+      ScreenArray2  = ([[]])
+      ScreenArray2  = [[ (0,0,0) for i in range(HatWidth)] for i in range(HatHeight)]
       ClockSprite = CreateClockSprite(hh)
 
 
       ScreenArray1 = CopySpriteToScreenArrayZoom(ClockSprite,h-1,v+1,ShadowRGB,(0,0,0),ZoomFactor=ZoomFactor,Fill=False,InputScreenArray=ScreenArray)
       ScreenArray1 = CopySpriteToScreenArrayZoom(ClockSprite,h,v,RGB,(0,0,0),ZoomFactor=ZoomFactor,Fill=False,InputScreenArray=ScreenArray1)
-      #TransitionBetweenScreenArrays(ScreenArray2,ScreenArray1,TransitionType=2)
+      TransitionBetweenScreenArrays(ScreenArray2,ScreenArray1,TransitionType=2)
 
 
       #CopySpriteToPixelsZoom(ClockSprite,h-1,v+1,ShadowRGB,(0,0,0),ZoomFactor,          Fill=False)
@@ -12690,7 +12690,7 @@ def DisplayDigitalClock(
         elapsed_hours, rem = divmod(elapsed_time, 3600)
         elapsed_minutes, elapsed_seconds = divmod(rem, 60)
 
-        print(datetime.now().strftime('%H:%M:%S'))
+        #print(datetime.now().strftime('%H:%M:%S'))
 
         if (ClockSprite.hhmm != datetime.now().strftime('%H:%M')):
           #MakeAndShowClock(hh,h,v,RGB,ShadowGreen,ZoomFactor,Fill=True)

@@ -44,11 +44,11 @@ while 1==1:
       ClockStyle = 1,
       CenterHoriz = True,
       CenterVert=True,
-      v   = 1,
+      v   = 0,
       hh  = 12,
       RGB = LED.HighBlue,
       ShadowRGB     = LED.ShadowBlue,
-      ZoomFactor    = 5,
+      ZoomFactor    = 4.5,
       AnimationDelay= 5,
       RunMinutes = 3
     )
