@@ -12307,7 +12307,7 @@ def DisplayDigitalClock(
   h           = 0,
   v           = 0,
   hh          = 12,
-  RGB         = HighBlue,
+  RGB         = HighWhite,
   ShadowRGB   = ShadowBlue,
   ZoomFactor  = 2,
   AnimationDelay = 10,
@@ -12635,7 +12635,6 @@ def DisplayDigitalClock(
         elif (r == 11):
           ClockSprite = UpdateClockWithTransition(ClockSprite,hh,h,v,RGB,ShadowRGB,ZoomFactor,Fill=True,TransitionType=2)
           #MakeAndShowClock(hh,h,v,RGB,ShadowGreen,ZoomFactor,Fill=False)
-
 
           MoveAnimatedSpriteAcrossScreenStepsPerFrame(
             LightBike,
