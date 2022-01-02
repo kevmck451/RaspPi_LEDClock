@@ -13359,7 +13359,7 @@ def DisplayDigitalClockKevin(
       ClockSprite = CreateClockSprite(hh)
       ScreenArray = CopySpriteToScreenArrayZoom(ClockSprite, h, v, (250, 250, 250), (0, 0, 0), 1, Fill=True)
 
-    #Chicken
+    #Chicken---------------------------------
     h = (HatWidth // 2) - ((ClockSprite.width * ZoomFactor) // 2) + 1
     v = (HatHeight // 2) - ((ClockSprite.height * ZoomFactor) // 2) - ZoomFactor
     ClockSprite = CreateClockSprite(hh)
@@ -13383,7 +13383,9 @@ def DisplayDigitalClockKevin(
       sleep         = 0.03 / r1
       )
 
-    # animated ships (no gravity, flying around like insects)
+    # animated ships (no gravity, flying around like insects)--------------------
+    h = (HatWidth // 2) - ((ClockSprite.width * ZoomFactor) // 2) + 1
+    v = (HatHeight // 2) - ((ClockSprite.height * ZoomFactor) // 2) - ZoomFactor
     ship1 = random.randint(0, 4)
     ShipSprites[ship1].framerate = 2
     ShipSprites[ship1].InitializeScreenArray()
@@ -13413,9 +13415,6 @@ def DisplayDigitalClockKevin(
     Explosion3.framerate = 1
     Explosion3.h = -1
     Explosion3.v = -1
-
-    # print ("ElectricZap frames:",ElectricZap.frames)
-    # print ("Explosion1  frames:",Explosion1.frames)
 
     for x in range(1, 500):
 
@@ -13523,7 +13522,9 @@ def DisplayDigitalClockKevin(
     TransitionBetweenScreenArrays(ScreenArray2, ScreenArray1, TransitionType=1)
     ScreenArray = copy.deepcopy(EmptyArray)
 
-    # animated ships with gravity
+    # animated ships with gravity------------------------------
+    h = (HatWidth // 2) - ((ClockSprite.width * ZoomFactor) // 2) + 1
+    v = (HatHeight // 2) - ((ClockSprite.height * ZoomFactor) // 2) - ZoomFactor
     ClearBigLED()
     ClearBuffers()
 
@@ -13632,7 +13633,9 @@ def DisplayDigitalClockKevin(
     TransitionBetweenScreenArrays(ScreenArray2, ScreenArray1, TransitionType=2)
     ScreenArray = copy.deepcopy(EmptyArray)
 
-    # rSpiderLeg
+    # rSpiderLeg----------------------------------------
+    h = (HatWidth // 2) - ((ClockSprite.width * ZoomFactor) // 2) + 1
+    v = (HatHeight // 2) - ((ClockSprite.height * ZoomFactor) // 2) - ZoomFactor
     for x in range(1, 200):
       CopyAnimatedSpriteToPixelsZoom(BigSpiderLegOutSprite, h=0, v=HatHeight - BigSpiderLegOutSprite.height,
                                      ZoomFactor=1)
@@ -13641,14 +13644,13 @@ def DisplayDigitalClockKevin(
 
   # Check Time
   if (ClockSprite.hhmm != datetime.now().strftime('%H:%M')):
-    ScreenArray1 = CopySpriteToScreenArrayZoom(ClockSprite, ClockH, 0, (250, 250, 250), (0, 0, 0), ZoomFactor=1,
+    ScreenArray1 = CopySpriteToScreenArrayZoom(ClockSprite, h, v, (250, 250, 250), (0, 0, 0), ZoomFactor=1,
                                                Fill=True)
     ClockSprite = CreateClockSprite(hh)
 
-    ScreenArray2 = CopySpriteToScreenArrayZoom(ClockSprite, ClockH, 0, (250, 250, 250), (0, 0, 0), ZoomFactor=1,
+    ScreenArray2 = CopySpriteToScreenArrayZoom(ClockSprite, h, v, (250, 250, 250), (0, 0, 0), ZoomFactor=1,
                                                Fill=True)
     TransitionBetweenScreenArrays(ScreenArray1, ScreenArray2)
-    # CopySpriteToPixelsZoom(ClockSprite,ClockH,0,(150,0,0),(0,0,0),2,Fill=True)
 
     # Fade to Black
     ScreenArray1 = copy.deepcopy(EmptyArray)
@@ -13661,8 +13663,6 @@ def DisplayDigitalClockKevin(
     elapsed_hours, rem = divmod(elapsed_time, 3600)
     elapsed_minutes, elapsed_seconds = divmod(rem, 60)
 
-    # print ("StartTime:    ",StartTime, " Now:",time.time())
-    # print("ElapsedMinues: ",elapsed_minutes)
 
 #==========================================================================================================
 
