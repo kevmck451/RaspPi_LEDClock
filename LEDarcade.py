@@ -13349,7 +13349,7 @@ def DisplayDigitalClockKevin(
   ClockAreaSprite = Sprite((ClockSprite.width * 2) + 3, (ClockSprite.height * 2), 0, 0, 0, [])
   ClockAreaSprite.h = ClockH - 3
   ClockAreaSprite.v = 1
-  CopySpriteToScreenArrayZoom(ClockSprite, h=h, v=9, ColorTuple=(250, 250, 250), FillerTuple=(0, 0, 0),
+  CopySpriteToScreenArrayZoom(ClockSprite, h=h, v=v, ColorTuple=(250, 250, 250), FillerTuple=(0, 0, 0),
                               ZoomFactor=2, Fill=True)
 
   while (Done == False):
@@ -13357,7 +13357,7 @@ def DisplayDigitalClockKevin(
     if (ClockSprite.hhmm != datetime.now().strftime('%H:%M')):
       # ClearBuffers() #clean the internal graphic buffers
       ClockSprite = CreateClockSprite(hh)
-      ScreenArray = CopySpriteToScreenArrayZoom(ClockSprite, ClockH, 0, (250, 250, 250), (0, 0, 0), 1, Fill=True)
+      ScreenArray = CopySpriteToScreenArrayZoom(ClockSprite, h, v, (250, 250, 250), (0, 0, 0), 1, Fill=True)
 
     r = random.randint(1, 4)
 

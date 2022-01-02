@@ -43,7 +43,6 @@ while 1==1:
     LED.DisplayDigitalClockKevin(
         CenterHoriz=True,
         CenterVert=True,
-        v=1,
         hh=12,
         RGB=LED.HighWhite,
         ShadowRGB=LED.ShadowWhite,
