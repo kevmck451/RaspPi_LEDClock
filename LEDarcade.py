@@ -12346,8 +12346,8 @@ def DisplayDigitalClock(
       #MakeAndShowClock(hh,h,v,RGB,ShadowGreen,ZoomFactor,Fill=False)
       ScreenArray1  = ([[]])
       ScreenArray1  = [[ (0,0,0) for i in range(HatWidth)] for i in range(HatHeight)]
-      ScreenArray2  = ([[]])
-      ScreenArray2  = [[ (0,0,0) for i in range(HatWidth)] for i in range(HatHeight)]
+      #ScreenArray2  = ([[]])
+      #ScreenArray2  = [[ (0,0,0) for i in range(HatWidth)] for i in range(HatHeight)]
       ClockSprite = CreateClockSprite(hh)
 
 
