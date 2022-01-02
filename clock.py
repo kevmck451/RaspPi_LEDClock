@@ -19,7 +19,7 @@ print ("")
 #--------------------------------------
 #  SHOW TITLE SCREEN                 --
 #--------------------------------------
-
+"""
 LED.ShowTitleScreen(
     BigText             = "KEV'S",
     BigTextRGB          = LED.HighBlue,
@@ -33,7 +33,7 @@ LED.ShowTitleScreen(
     DisplayTime         = 1,           # time in seconds to wait before exiting 
     ExitEffect          = 0            # 0=Random / 1=shrink / 2=zoom out / 3=bounce / 4=fade /5=fallingsand
     )
-
+"""
 #--------------------------------------
 #  SHOW CLOCKS                       --
 #--------------------------------------
