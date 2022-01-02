@@ -12835,7 +12835,7 @@ def DisplayDigitalClock(
 
           #Check Time
           if (ClockSprite.hhmm != datetime.now().strftime('%H:%M')):
-            print("ClockSprite.hhm: ",ClockSprite.hhmm, "Other:",datetime.now().strftime('%H:%M'))
+            #print("ClockSprite.hhm: ",ClockSprite.hhmm, "Other:",datetime.now().strftime('%H:%M'))
             #ClearBuffers() #clean the internal graphic buffers
             ClockSprite = CreateClockSprite(hh)
             CopySpriteToPixelsZoom(ClockSprite,h,0,(0,0,250),(0,0,0),2,Fill=True)
@@ -12892,7 +12892,7 @@ def DisplayDigitalClock(
 
           #Check Time
           if (ClockSprite.hhmm != datetime.now().strftime('%H:%M')):
-            print("ClockSprite.hhm: ",ClockSprite.hhmm, "Other:",datetime.now().strftime('%H:%M'))
+            #print("ClockSprite.hhm: ",ClockSprite.hhmm, "Other:",datetime.now().strftime('%H:%M'))
             #ClearBuffers() #clean the internal graphic buffers
             ClockSprite = CreateClockSprite(hh)
             CopySpriteToPixelsZoom(ClockSprite,h,0,(0,0,250),(0,0,0),2,Fill=True)
@@ -12948,7 +12948,7 @@ def DisplayDigitalClock(
 
           #Check Time
           if (ClockSprite.hhmm != datetime.now().strftime('%H:%M')):
-            print("ClockSprite.hhm: ",ClockSprite.hhmm, "Other:",datetime.now().strftime('%H:%M'))
+            #print("ClockSprite.hhm: ",ClockSprite.hhmm, "Other:",datetime.now().strftime('%H:%M'))
             #ClearBuffers() #clean the internal graphic buffers
 
             ScreenArray1 = CopySpriteToScreenArrayZoom(ClockSprite,ClockH,0,  (0,0,250),(0,0,0),ZoomFactor=1,Fill=True)
@@ -13140,7 +13140,7 @@ def DisplayDigitalClock(
 
             #Check Time
             if (ClockSprite.hhmm != datetime.now().strftime('%H:%M')):
-              print("ClockSprite.hhm: ",ClockSprite.hhmm, "Other:",datetime.now().strftime('%H:%M'))
+              #print("ClockSprite.hhm: ",ClockSprite.hhmm, "Other:",datetime.now().strftime('%H:%M'))
               #ClearBuffers() #clean the internal graphic buffers
 
               ScreenArray1 = CopySpriteToScreenArrayZoom(ClockSprite,ClockH,0,  (0,0,250),(0,0,0),ZoomFactor=2,Fill=True)
@@ -13212,9 +13212,6 @@ def DisplayDigitalClock(
           Explosion3.h = -1
           Explosion3.v = -1
 
-
-
-
           ShipSprites[ship1].h = random.randint(0,10)
           ShipSprites[ship1].v = 0
           ShipSprites[ship1].velocityH = 1 * random.random()
@@ -13240,9 +13237,9 @@ def DisplayDigitalClock(
 
           #Bounce(ShipSprites[ship1])
 
-          print("ShipName:",ShipSprites[ship1].name)
-          print("ShipName:",ShipSprites[ship2].name)
-          print("ShipName:",ShipSprites[ship3].name)
+          #print("ShipName:",ShipSprites[ship1].name)
+          #print("ShipName:",ShipSprites[ship2].name)
+          #print("ShipName:",ShipSprites[ship3].name)
 
           for x in range (1,2000):
             #maybe only increment the frame ever X seconds (use a timer?)
@@ -13305,7 +13302,7 @@ def DisplayDigitalClock(
 
             #Check Time
             if (ClockSprite.hhmm != datetime.now().strftime('%H:%M')):
-              print("ClockSprite.hhm: ",ClockSprite.hhmm, "Other:",datetime.now().strftime('%H:%M'))
+              #print("ClockSprite.hhm: ",ClockSprite.hhmm, "Other:",datetime.now().strftime('%H:%M'))
               #ClearBuffers() #clean the internal graphic buffers
 
               ScreenArray1 = CopySpriteToScreenArrayZoom(ClockSprite,ClockH,0,  (0,0,250),(0,0,0),ZoomFactor=2,Fill=True)
@@ -13331,7 +13328,6 @@ def DisplayDigitalClock(
 
         #rSpiderLeg
         if (r==7):
-
 
           ClockH = HatWidth - (ClockSprite.width * 2)
           ClockSprite = CreateClockSprite(hh)
@@ -13363,7 +13359,7 @@ def DisplayDigitalClock(
 
           #Check Time
           if (ClockSprite.hhmm != datetime.now().strftime('%H:%M')):
-            print("ClockSprite.hhm: ",ClockSprite.hhmm, "Other:",datetime.now().strftime('%H:%M'))
+            #print("ClockSprite.hhm: ",ClockSprite.hhmm, "Other:",datetime.now().strftime('%H:%M'))
             #ClearBuffers() #clean the internal graphic buffers
             ClockSprite = CreateClockSprite(hh)
             CopySpriteToPixelsZoom(ClockSprite,h,0,(0,0,250),(0,0,0),2,Fill=True)
@@ -13391,7 +13387,7 @@ def DisplayDigitalClock(
         elapsed_minutes, elapsed_seconds = divmod(rem, 60)
 
         #print ("StartTime:    ",StartTime, " Now:",time.time())
-        print("ElapsedMinues: ",elapsed_minutes)
+        #print("ElapsedMinues: ",elapsed_minutes)
         if elapsed_minutes >= RunMinutes:
           Done = True
 
